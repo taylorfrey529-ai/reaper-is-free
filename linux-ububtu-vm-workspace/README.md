@@ -2,6 +2,14 @@
 
 GitHub backup snapshot of the ChatGPT Linux/Ubuntu-style REAPER workspace as of 2026-09-08.
 
+## Boot handoff
+
+For a fresh ChatGPT workspace/conversation, start with [`BOOT-HANDOFF.md`](BOOT-HANDOFF.md). It contains the authoritative recover -> restore -> desktop boot -> Virtual Apollo -> REAPER -> playback -> agent-ear -> screenshot verification sequence.
+
+Canonical backup commit referenced by the handoff:
+
+`350f07895fbca399dfe0c50ca1e4c5723e9a9a58`
+
 ## Backed up here
 
 The committed source/config snapshot contains the reproducible workspace state:
