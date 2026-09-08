@@ -10,6 +10,18 @@ Canonical backup commit referenced by the handoff:
 
 `350f07895fbca399dfe0c50ca1e4c5723e9a9a58`
 
+## Runtime bundles
+
+The current external runtime payload authority is recorded in [`RUNTIME-BUNDLES.md`](RUNTIME-BUNDLES.md), with exact SHA-256 values in [`runtime-bundles/SHA256SUMS`](runtime-bundles/SHA256SUMS).
+
+Before a reconstruction uses local runtime archives, run:
+
+```bash
+bash verify-runtime-bundles.sh /mnt/data
+```
+
+Filename alone is not sufficient authority; the hashes must match.
+
 ## Backed up here
 
 The committed source/config snapshot contains the reproducible workspace state:
@@ -53,4 +65,4 @@ Full local compressed snapshot SHA-256:
 
 ## Large/runtime data policy
 
-The GitHub backup intentionally excludes third-party REAPER application binaries, Vulkan SDK/Mesa/LLVM payloads, Chromium caches, runtime PIDs/FIFOs/logs, rolling agent-ear buffers, and generated WAV binaries. Important local binary/audio/evidence hashes are recorded in `BINARY-MANIFEST.md`. The full local compressed archive remains available separately from the workspace session.
+The GitHub backup intentionally excludes third-party REAPER application binaries, Vulkan SDK/Mesa/LLVM payloads, Chromium caches, runtime PIDs/FIFOs/logs, rolling agent-ear buffers, and generated WAV binaries. Important local binary/audio/evidence hashes are recorded in `BINARY-MANIFEST.md`. The exact identities of the current supplied runtime archives are recorded in `RUNTIME-BUNDLES.md`. The full local compressed archive remains available separately from the workspace session.
