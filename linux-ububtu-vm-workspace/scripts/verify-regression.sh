@@ -5,9 +5,9 @@ TMP=$(mktemp -d)
 trap 'rm -rf "$TMP"' EXIT
 
 required=(
-  README.md RECALL.md SNAPSHOT-INTEGRITY.md BOOT-HANDOFF.md restore.sh SHA256SUMS
+  README.md RECALL.md SNAPSHOT-INTEGRITY.md BOOT-HANDOFF-CURRENT.md restore.sh SHA256SUMS
   BINARY-MANIFEST.md RUNTIME-BUNDLES.md verify-runtime-bundles.sh
-  source-snapshot.tar.gz.b64 scripts/start-live-session.py
+  source-snapshot.parts/SHA256SUMS scripts/start-live-session.py
 )
 for rel in "${required[@]}"; do
   [ -e "$HERE/$rel" ] || { echo "MISSING $rel" >&2; exit 1; }
@@ -16,26 +16,14 @@ done
 bash -n "$HERE/restore.sh"
 bash -n "$HERE/verify-runtime-bundles.sh"
 python3 -m py_compile "$HERE/scripts/start-live-session.py"
+(cd "$HERE/source-snapshot.parts" && sha256sum -c SHA256SUMS)
 
-# Prove the repository's currently committed payload is accepted, tar-valid,
-# and contains the canonical REAPER/Virtual-Apollo continuity locks.
-bash "$HERE/restore.sh" "$TMP/current" >/dev/null
-ARCHIVE="$TMP/current/source-snapshot.tar.gz"
+bash "$HERE/restore.sh" "$TMP/restored" >/dev/null
+ARCHIVE="$TMP/restored/source-snapshot.tar.gz"
+EXPECTED=$(awk '$2=="source-snapshot.tar.gz"{print $1; exit}' "$HERE/SHA256SUMS")
 ACTUAL=$(sha256sum "$ARCHIVE" | awk '{print $1}')
-LEGACY=$(awk '$2=="source-snapshot.tar.gz"{print $1; exit}' "$HERE/SHA256SUMS")
-TRANSPORT=$(awk '$2=="source-snapshot.tar.gz.b64"{print $1; exit}' "$HERE/SHA256SUMS")
-[ "$ACTUAL" = "$LEGACY" ] || [ "$ACTUAL" = "$TRANSPORT" ] || {
-  echo "Snapshot identity regression: $ACTUAL" >&2
-  exit 1
-}
-
-# Re-encode the exact accepted archive as textual base64 and prove transport
-# compatibility without changing the underlying archive bytes.
-COMPAT="$TMP/compat"
-mkdir -p "$COMPAT"
-cp "$HERE/restore.sh" "$HERE/SHA256SUMS" "$COMPAT/"
-base64 "$ARCHIVE" > "$COMPAT/source-snapshot.tar.gz.b64"
-bash "$COMPAT/restore.sh" "$TMP/base64" >/dev/null
+[ "$EXPECTED" = "$ACTUAL" ] || { echo "Current source snapshot hash regression" >&2; exit 1; }
+tar -tzf "$ARCHIVE" >/dev/null
 
 for token in \
   'linux_audio_mode=1' \
@@ -46,10 +34,14 @@ for token in \
   'linux_audio_bufs=3' \
   'linux_audio_nch_in=2' \
   'linux_audio_nch_out=2'; do
-  grep -Rqs -- "$token" "$TMP/current" || {
+  grep -Rqs -- "$token" "$TMP/restored" || {
     echo "Continuity token missing from restored snapshot: $token" >&2
     exit 1
   }
 done
+
+# The historical corrupt transport must never be admitted as the current source snapshot.
+REJECTED=$(awk '$2=="source-snapshot.tar.gz.b64.rejected-corrupt-github-blob"{print $1; exit}' "$HERE/SHA256SUMS")
+[ "$ACTUAL" != "$REJECTED" ] || { echo "Rejected corrupt transport was re-admitted" >&2; exit 1; }
 
 echo "linux-ububtu-vm-workspace regression verification PASSED"

@@ -1,3 +1,4 @@
-92327daed33fc5b352987c33a06700ac24ee09e8ef835c0ec57a535d4c1dba84  source-snapshot.tar.gz
-8276f6dda44535734ed0da4bf395df5bd32c16583246e02af63882a6e4db1f28  source-snapshot.tar.gz.b64
+92327daed33fc5b352987c33a06700ac24ee09e8ef835c0ec57a535d4c1dba84  source-snapshot.tar.gz.historical-record
+be32a0d06c9836b8bdbba56d01e98fd8fe0c1adb705bb54b473780f24805beac  source-snapshot.tar.gz
+8276f6dda44535734ed0da4bf395df5bd32c16583246e02af63882a6e4db1f28  source-snapshot.tar.gz.b64.rejected-corrupt-github-blob
 c67b69e513484e0a5870bd7f55a34a280b3b771b7a5b825cc9ef5bfb932bb31a  full-local-snapshot.tar.gz

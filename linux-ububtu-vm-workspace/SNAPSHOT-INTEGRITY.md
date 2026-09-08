@@ -1,32 +1,42 @@
-# Snapshot integrity and transport identities
+# Snapshot integrity and recovery provenance
 
-This file exists to prevent a discovered restore regression from being forgotten.
+This file records the 2026-09-08 GitHub restore regression and the repair that prevents it from recurring.
 
-## Verified facts
+## Byte authorities
 
-The handoff and canonical backup commit `350f07895fbca399dfe0c50ca1e4c5723e9a9a58` record the historical source/config archive SHA-256 as:
+- Full local backup — **verified original authority**, 6,456,501 bytes:
+  `c67b69e513484e0a5870bd7f55a34a280b3b771b7a5b825cc9ef5bfb932bb31a`
+- Historical source/config hash recorded by commit `350f07895fbca399dfe0c50ca1e4c5723e9a9a58`:
+  `92327daed33fc5b352987c33a06700ac24ee09e8ef835c0ec57a535d4c1dba84`
+- Corrupt GitHub blob that previously occupied `source-snapshot.tar.gz.b64` — **rejected, never restore from it**:
+  `8276f6dda44535734ed0da4bf395df5bd32c16583246e02af63882a6e4db1f28`
+- Current reconstructed source/config archive — deterministically rebuilt from the checksum-verified full local backup:
+  `be32a0d06c9836b8bdbba56d01e98fd8fe0c1adb705bb54b473780f24805beac`
 
-`92327daed33fc5b352987c33a06700ac24ee09e8ef835c0ec57a535d4c1dba84`
+## What happened
 
-The exact full local backup independently verified at 6,456,501 bytes is:
+The historical `.b64` GitHub path actually contained raw gzip bytes. A fresh GitHub Actions checkout proved that blob did not match the handoff-recorded source hash. After temporarily recording its observed hash, the next regression run proved the gzip stream itself was truncated (`Unexpected EOF`). It is therefore retained only as a rejected historical identity in `SHA256SUMS`; it is not an admitted recovery source.
 
-`c67b69e513484e0a5870bd7f55a34a280b3b771b7a5b825cc9ef5bfb932bb31a`
+## Current repository snapshot
 
-During a clean GitHub Actions checkout on 2026-09-08, the actual bytes committed at `linux-ububtu-vm-workspace/source-snapshot.tar.gz.b64` were detected as **raw gzip**, not textual base64, and hashed to:
+The valid current source/config snapshot was rebuilt from the independently verified full backup `c67b69…bb31`. Large generated WAVs, screenshots, wallpaper imagery, and third-party runtime binaries were excluded; source, configuration, project files, Openbox/X11 launchers, graphics scripts, and Virtual Apollo implementation/state were retained.
 
-`8276f6dda44535734ed0da4bf395df5bd32c16583246e02af63882a6e4db1f28`
+The archive is deterministic (`tar --sort=name`, fixed mtime/ownership, `gzip -n`) and stored as small UTF-8 base64 chunks under:
 
-That committed repository transport hash is now explicitly recorded in `SHA256SUMS` instead of being silently conflated with the historical source-archive hash.
+`source-snapshot.parts/part-*.b64`
+
+Each part has its own SHA-256 in `source-snapshot.parts/SHA256SUMS`. `restore.sh` verifies every part, assembles/decodes the archive, verifies `be32a0…beac`, validates the tar stream, and only then extracts it.
 
 ## Precedence
 
-1. When available, the full local backup with SHA-256 `c67b69…bb31` is the strongest byte-level recovery authority.
-2. The GitHub source/config payload may be used only when its decoded/raw archive bytes match either the historical source-archive identity or the explicitly recorded committed repository-transport identity.
-3. After hash admission, the tar must validate and the regression gate must confirm the canonical ALSA / `apollo_spdif` continuity locks before the snapshot is treated as recoverable.
-4. Runtime archives remain separate and must match `RUNTIME-BUNDLES.md`.
+1. Prefer the exact full local backup `c67b69…bb31` when available.
+2. For GitHub-only recovery, use the current split source/config snapshot verified as `be32a0…beac`.
+3. A separately recovered historical source archive may be accepted only if it exactly matches `92327d…ba84`.
+4. Never accept `8276f6…1f28`; that identity is explicitly rejected as corrupt.
+5. Runtime archives are independent and must pass `verify-runtime-bundles.sh`.
 
-## Why two source hashes are retained
+## State vocabulary
 
-They describe two observed byte identities, not two silently interchangeable backups. The historical handoff hash is preserved for provenance. The repository transport hash describes what GitHub actually stores at the historical `.b64` path. Deleting either value would erase evidence of the mismatch and make the restore failure likely to recur.
-
-`restore.sh` therefore detects gzip vs base64 by bytes, verifies against the admitted identities, validates the tar stream, and only then extracts it.
+- **Restored** — recovered from a checksum-admitted backup/snapshot.
+- **Reconstructed** — recreated from an admitted authority because an excluded or corrupt transport was unavailable.
+- **Verified live** — actually executed and observed in the current runtime.
