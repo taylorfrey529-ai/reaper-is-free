@@ -1,13 +1,19 @@
-name: linux-ububtu-vm-workspace regression
+name: reaper-is-free recovery regression
 
 on:
   push:
-    branches: [linux-ububtu-vm-workspace]
+    branches:
+      - main
+      - linux-ububtu-vm-workspace
     paths:
+      - 'README.md'
+      - 'RECALL.md'
       - 'linux-ububtu-vm-workspace/**'
       - '.github/workflows/linux-ububtu-vm-workspace-regression.yml'
   pull_request:
     paths:
+      - 'README.md'
+      - 'RECALL.md'
       - 'linux-ububtu-vm-workspace/**'
       - '.github/workflows/linux-ububtu-vm-workspace-regression.yml'
 
@@ -15,9 +21,17 @@ permissions:
   contents: read
 
 jobs:
-  source-config-regression:
+  recovery-regression:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Verify restore compatibility and continuity locks
+      - name: Verify source/config recovery and continuity locks
         run: bash linux-ububtu-vm-workspace/scripts/verify-regression.sh
+      - name: Verify repository recall surface
+        run: |
+          test -s README.md
+          test -s RECALL.md
+          grep -Fq 'be32a0d06c9836b8bdbba56d01e98fd8fe0c1adb705bb54b473780f24805beac' RECALL.md
+          grep -Fq 'linux_audio_mode=1' RECALL.md
+          grep -Fq 'apollo_spdif' RECALL.md
+          grep -Fq 'start-live-session.py' RECALL.md
