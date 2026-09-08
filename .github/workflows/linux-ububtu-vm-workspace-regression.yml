@@ -8,12 +8,16 @@ on:
     paths:
       - 'README.md'
       - 'RECALL.md'
+      - 'GOLDEN-MASTER.md'
+      - 'golden-master/**'
       - 'linux-ububtu-vm-workspace/**'
       - '.github/workflows/linux-ububtu-vm-workspace-regression.yml'
   pull_request:
     paths:
       - 'README.md'
       - 'RECALL.md'
+      - 'GOLDEN-MASTER.md'
+      - 'golden-master/**'
       - 'linux-ububtu-vm-workspace/**'
       - '.github/workflows/linux-ububtu-vm-workspace-regression.yml'
 
@@ -25,13 +29,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Verify source/config recovery and continuity locks
+      - name: Verify source/config recovery, Golden Master record, and continuity locks
         run: bash linux-ububtu-vm-workspace/scripts/verify-regression.sh
       - name: Verify repository recall surface
         run: |
           test -s README.md
           test -s RECALL.md
+          test -s GOLDEN-MASTER.md
           grep -Fq 'be32a0d06c9836b8bdbba56d01e98fd8fe0c1adb705bb54b473780f24805beac' RECALL.md
+          grep -Fq '74a13a11fe232bca5bd8a320d11ee0c2e17ce5c2e53d76c74ee9714276a95b1f' RECALL.md
           grep -Fq 'linux_audio_mode=1' RECALL.md
           grep -Fq 'apollo_spdif' RECALL.md
           grep -Fq 'start-live-session.py' RECALL.md

@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "golden_master": "GM-2026-09-08",
+  "golden_master_id": "sha256:74a13a11fe232bca5bd8a320d11ee0c2e17ce5c2e53d76c74ee9714276a95b1f",
+  "definition": "SHA-256 of golden-master/SHA256SUMS, including final byte identities of all six required payloads",
+  "repository": "taylorfrey529-ai/reaper-is-free",
+  "authority_base_commit": "4eb2616567dcfbda9b2eb48736049f283c2377ce",
+  "snapshot_date": "2026-09-08",
+  "total_payload_bytes": 888467386,
+  "storage": {
+    "provider": "Google Drive",
+    "folder_name": "REAPER 7.79 Golden Master/GM-2026-09-08",
+    "folder_id": "1XkDhdvB218Z5ttGNU3CZsL89RmmXU6Ij",
+    "visibility_at_admission": "private/not_shared",
+    "rule": "Treat the snapshot folder as immutable. Recovery is admitted only after local SHA-256 verification."
+  },
+  "payloads": [
+    {
+      "name": "linux-ububtu-vm-workspace-backup.tar.gz",
+      "bytes": 6456501,
+      "sha256": "c67b69e513484e0a5870bd7f55a34a280b3b771b7a5b825cc9ef5bfb932bb31a",
+      "role": "Exact full local workspace backup",
+      "transport": "direct",
+      "drive_file_id": "1MaA_haBkff2F7U2jPkNHxcillIkaFHAt"
+    },
+    {
+      "name": "operating-system.zip",
+      "bytes": 96356195,
+      "sha256": "060c674c9855aee0cb1c14a0e895c8cecfe2fb001a8fee12904956c5951fbb30",
+      "role": "Ubuntu operating-system payload",
+      "transport": "direct",
+      "drive_file_id": "1-y65d-zbSltq4gRt00uY4LBHKsTjZ2i8"
+    },
+    {
+      "name": "toolchains.zip",
+      "bytes": 326141054,
+      "sha256": "568650bc01243a4eee7abaa6512ef4ae58e34e1a11c0178b7f76acbe57fec711",
+      "role": "Toolchain payload including .NET SDK 10.0.302 Linux x64",
+      "transport": "ordered_64MiB_parts",
+      "drive_folder_id": "13hRY1UxJUMkcFjx9hGtHnJoK-1f_uCMo",
+      "parts": [
+        {"name":"part-00","bytes":67108864,"sha256":"f0b31daa590afed0f95dee3af1187ba285f7b7f9310aa342986fadb53461f864","drive_file_id":"1saVUB1ggE-rSzcpfF9va4bg1TwvmOaDP"},
+        {"name":"part-01","bytes":67108864,"sha256":"92a5629a258764f65993a1b125beed4026a72dfe372bc4a170ca304157b1bc09","drive_file_id":"19yJqWZkNZytuEC3X6hPt4ca7e5gYihUZ"},
+        {"name":"part-02","bytes":67108864,"sha256":"17f95eda91c0bb60d5a054ec7763f28ffe348a01a37a543cac18d6dad343e7a9","drive_file_id":"1r7NQL_AWnaYeNrErpkknND5cFyB0QgKx"},
+        {"name":"part-03","bytes":67108864,"sha256":"43a621acc3708d1fb3e939a5a7378dae31a769c8da73a6dcd5d8199233368150","drive_file_id":"1OQ5MrrymaTNw1OWd_G-waFYpaemwaZPf"},
+        {"name":"part-04","bytes":57705598,"sha256":"388f86155848e8f5de27c442bf2181ecd160606f4b2a04f00d453c8e22254f43","drive_file_id":"13IAOuobNi31reFgC8LvulYX3U0V5FLxT"}
+      ]
+    },
+    {
+      "name": "packages.zip",
+      "bytes": 83156062,
+      "sha256": "3a70c1dbdccdf68b766df2c68bcd82e597de7ffafdb8fd2d7f0ec86ffdcad1a2",
+      "role": "Ubuntu 24.04 amd64 package payload",
+      "transport": "direct",
+      "drive_file_id": "18eygW6PB4XFzKFX6eQU1Hn2nx8remMug"
+    },
+    {
+      "name": "audio.zip",
+      "bytes": 53274996,
+      "sha256": "093f590ba02b0284dc676d7f8ae499ead6fd93316524f7872cfa3c6fda0660bd",
+      "role": "Audio payload including REAPER 7.79 Linux x86_64",
+      "transport": "direct",
+      "drive_file_id": "1IuK-N6Hk_vT0Wkjng-0HjCMgpjITtKjV"
+    },
+    {
+      "name": "graphics.zip",
+      "bytes": 323082578,
+      "sha256": "746fba7dbf8ef9a72c2596c51f57c81b5112f5537a6001989e2abcf9b907a72d",
+      "role": "Graphics payload including Vulkan SDK 1.4.321.1 Linux x86_64",
+      "transport": "ordered_64MiB_parts",
+      "drive_folder_id": "1gIm3buZErXHRvTISRVCZBYo614bMg1r9",
+      "parts": [
+        {"name":"part-00","bytes":67108864,"sha256":"31c6dbf2114b33948d4a6a1b0fa42b431ae5f40a16ac5e2280221a0524a22a8b","drive_file_id":"1a3ffOzcVhUN8SYe6bAxHcVuYBTB0lD4Z"},
+        {"name":"part-01","bytes":67108864,"sha256":"937cea7d1a43fb2c212be22c97fc18c7a7931fe238e2ac8f772a8f0be790f46a","drive_file_id":"1WRKTCUJFPlzL-JouUymlTghKgQqy8E8k"},
+        {"name":"part-02","bytes":67108864,"sha256":"c0d903af0d84f0ccb57e6507db4148e3a57cbbd9796960733706fe265a7e5661","drive_file_id":"1RMB0pLyj25xIOLU1G5ctWZANa02e2D9i"},
+        {"name":"part-03","bytes":67108864,"sha256":"85c02d49b97c121565a76b129c49eb7b141a913066a4382d827eca9cc6f7db51","drive_file_id":"1kXxEXnHlL1XKSi5KREuMLVtiPVxzoaye"},
+        {"name":"part-04","bytes":54647122,"sha256":"0b5be2d3565811b6c014974e45268cbf5e389173fa83c50cbb806a21e9b28428","drive_file_id":"11ZXrlEhgALMNLSH74kfzV6QzdjGwJlIS"}
+      ]
+    }
+  ]
+}
