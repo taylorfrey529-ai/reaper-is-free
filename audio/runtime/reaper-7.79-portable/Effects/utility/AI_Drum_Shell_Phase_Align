@@ -1,0 +1,42 @@
+desc:AI Drum Shell Phase Align
+// Non-destructive shell-to-overhead time alignment.
+// Positive values delay this shell track. Negative values use PDC to advance it.
+// Generated for the local REAPER 7.79 workspace.
+
+slider1:0<-100,100,0.001>Shell alignment offset (ms)
+
+in_pin:left input
+in_pin:right input
+out_pin:left output
+out_pin:right output
+
+@init
+bpos = 0;
+bufsize = max(1024, ceil(srate * 0.25));
+pdc_top_ch = 2;
+pdc_bot_ch = 0;
+ext_tail_size = srate;
+
+@slider
+requested = slider1 * srate * 0.001;
+requested >= 0 ? requested = floor(requested + 0.5) : requested = ceil(requested - 0.5);
+requested < 0 ? (
+  pdc_delay = -requested;
+  delaylen = 0;
+) : (
+  pdc_delay = 0;
+  delaylen = requested;
+);
+
+@sample
+bpos[0] = spl0;
+bpos[1] = spl1;
+
+rdpos = bpos - delaylen * 2;
+rdpos < 0 ? rdpos += bufsize * 2;
+
+spl0 = rdpos[0];
+spl1 = rdpos[1];
+
+bpos += 2;
+bpos >= bufsize * 2 ? bpos = 0;

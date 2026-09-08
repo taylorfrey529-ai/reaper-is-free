@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eu
+BASE="/mnt/data/audio/runtime/reaper-7.79-portable"
+if [ ! -x "$BASE/reaper" ]; then
+  echo "REAPER runtime not found: $BASE/reaper" >&2
+  exit 127
+fi
+exec "$BASE/reaper" "$@"
