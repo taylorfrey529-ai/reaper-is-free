@@ -1,61 +1,30 @@
 # linux-ububtu-vm-workspace
 
-GitHub backup snapshot of the ChatGPT Linux/Ubuntu-style REAPER workspace as of 2026-09-08.
+GitHub backup and recovery authority for the ChatGPT Linux/Ubuntu-style REAPER 7.79 workspace.
 
-## Boot handoff
+## Start here
 
-For a fresh ChatGPT workspace/conversation, start with [`BOOT-HANDOFF.md`](BOOT-HANDOFF.md). It contains the authoritative recover -> restore -> desktop boot -> Virtual Apollo -> REAPER -> playback -> agent-ear -> screenshot verification sequence.
+- [`RECALL.md`](RECALL.md) — short fresh-session recovery card and one-command boot path.
+- [`BOOT-HANDOFF.md`](BOOT-HANDOFF.md) — full recover -> restore -> desktop -> Virtual Apollo -> REAPER -> playback -> agent-ear -> screenshot acceptance procedure.
+- [`RUNTIME-BUNDLES.md`](RUNTIME-BUNDLES.md) — exact identities of external runtime payloads.
+- [`BINARY-MANIFEST.md`](BINARY-MANIFEST.md) — known binary/audio/evidence identities.
 
-Canonical backup commit referenced by the handoff:
+Canonical backup commit retained by the handoff:
 
 `350f07895fbca399dfe0c50ca1e4c5723e9a9a58`
 
-## Runtime bundles
-
-The current external runtime payload authority is recorded in [`RUNTIME-BUNDLES.md`](RUNTIME-BUNDLES.md), with exact SHA-256 values in [`runtime-bundles/SHA256SUMS`](runtime-bundles/SHA256SUMS).
-
-Before a reconstruction uses local runtime archives, run:
-
-```bash
-bash verify-runtime-bundles.sh /mnt/data
-```
-
-Filename alone is not sufficient authority; the hashes must match.
-
-## Backed up here
-
-The committed source/config snapshot contains the reproducible workspace state:
-
-- X11/Openbox desktop shell, startup/stop/verification scripts, and launcher configuration.
-- REAPER 7.79 user configuration needed for the current workspace.
-- ASIO-Routing-Project RPP and Lua import/routing scripts.
-- Virtual Apollo x4-style S/PDIF userspace interface source, ALSA configuration, telemetry state, and control scripts.
-- Vulkan/X11 bootstrap and verification source.
-- SHA-256 inventory for the larger local snapshot.
-
-## Restore
+## Regression-safe source restore
 
 Run:
 
 ```bash
-bash restore.sh [output-directory]
+bash scripts/verify-regression.sh
+bash restore.sh /mnt/data/linux-ububtu-vm-workspace-restored
 ```
 
-The restore script decodes `source-snapshot.tar.gz.b64`, verifies its SHA-256, and extracts the source/config snapshot.
+`restore.sh` verifies the canonical source/config SHA-256 before extraction. It also preserves compatibility with both historical transport forms of `source-snapshot.tar.gz.b64`: textual base64 and raw gzip bytes. Do not infer encoding from the filename.
 
-## Audio state
-
-- REAPER backend: ALSA (`linux_audio_mode=1`)
-- Interface name: `apollo_spdif`
-- Stereo S/PDIF: 2 input / 2 output
-- Sample rate: 48 kHz
-- Buffer: 256 samples x 3
-- REAPER project tempo: 120 BPM
-- Generated drum arrangement: 8 bars / 16 seconds
-
-## Snapshot integrity
-
-Source/config snapshot SHA-256:
+Expected source/config snapshot SHA-256:
 
 `92327daed33fc5b352987c33a06700ac24ee09e8ef835c0ec57a535d4c1dba84`
 
@@ -63,6 +32,40 @@ Full local compressed snapshot SHA-256:
 
 `c67b69e513484e0a5870bd7f55a34a280b3b771b7a5b825cc9ef5bfb932bb31a`
 
-## Large/runtime data policy
+## Runtime bundles
 
-The GitHub backup intentionally excludes third-party REAPER application binaries, Vulkan SDK/Mesa/LLVM payloads, Chromium caches, runtime PIDs/FIFOs/logs, rolling agent-ear buffers, and generated WAV binaries. Important local binary/audio/evidence hashes are recorded in `BINARY-MANIFEST.md`. The exact identities of the current supplied runtime archives are recorded in `RUNTIME-BUNDLES.md`. The full local compressed archive remains available separately from the workspace session.
+Before using local runtime archives, run:
+
+```bash
+bash verify-runtime-bundles.sh /mnt/data
+```
+
+Filename alone is not authority; hashes must match `RUNTIME-BUNDLES.md`.
+
+Large third-party/runtime binaries remain external to normal Git storage. The committed source/config snapshot contains the reproducible desktop, project/configuration, graphics source, and Virtual Apollo implementation required to reconstruct the live workspace.
+
+## Live boot
+
+Once the source/config roots and exact runtime dependencies are present:
+
+```bash
+python3 scripts/start-live-session.py
+```
+
+The launcher starts/reuses X11/Openbox on `:88`, starts Virtual Apollo, enforces the canonical REAPER ALSA/S/PDIF settings, opens the existing `ASIO-Routing-Project`, and reports the real REAPER license/evaluation UI state without bypassing it.
+
+## Canonical audio state
+
+```text
+REAPER backend: ALSA (linux_audio_mode=1)
+Interface: apollo_spdif
+Stereo S/PDIF: 2 input / 2 output
+Sample rate: 48 kHz
+Buffer: 256 samples x 3
+Project tempo: 120 BPM
+Generated drum arrangement: 8 bars / 16 seconds
+```
+
+## Regression-prevention rule
+
+Do not replace established backup state from assumptions. Preserve approved continuity, verify hashes before promotion, and run `scripts/verify-regression.sh` before publishing changes to this workspace.

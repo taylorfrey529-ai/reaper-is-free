@@ -1,0 +1,23 @@
+name: linux-ububtu-vm-workspace regression
+
+on:
+  push:
+    branches: [linux-ububtu-vm-workspace]
+    paths:
+      - 'linux-ububtu-vm-workspace/**'
+      - '.github/workflows/linux-ububtu-vm-workspace-regression.yml'
+  pull_request:
+    paths:
+      - 'linux-ububtu-vm-workspace/**'
+      - '.github/workflows/linux-ububtu-vm-workspace-regression.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  source-config-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify restore compatibility and continuity locks
+        run: bash linux-ububtu-vm-workspace/scripts/verify-regression.sh
