@@ -9,9 +9,11 @@ Use this file when a fresh ChatGPT workspace needs to recover the REAPER 7.79 Li
 - Backup root: `linux-ububtu-vm-workspace/`
 - Canonical backup commit retained by the handoff: `350f07895fbca399dfe0c50ca1e4c5723e9a9a58`
 - Full local backup SHA-256: `c67b69e513484e0a5870bd7f55a34a280b3b771b7a5b825cc9ef5bfb932bb31a`
-- Source/config snapshot SHA-256: `92327daed33fc5b352987c33a06700ac24ee09e8ef835c0ec57a535d4c1dba84`
+- Historical handoff source-archive SHA-256: `92327daed33fc5b352987c33a06700ac24ee09e8ef835c0ec57a535d4c1dba84`
+- Current committed raw-gzip repository transport SHA-256: `8276f6dda44535734ed0da4bf395df5bd32c16583246e02af63882a6e4db1f28`
+- Integrity precedence and mismatch record: `SNAPSHOT-INTEGRITY.md`
 
-`BOOT-HANDOFF.md` remains the detailed continuity authority. This file is the short operational index.
+`BOOT-HANDOFF.md` remains the detailed operational handoff, but `SNAPSHOT-INTEGRITY.md` supersedes its historical snapshot-transport wording where the two conflict. This file is the short operational index.
 
 ## Fresh-start sequence
 
@@ -69,7 +71,7 @@ The backup preserves REAPER's legitimate license/evaluation state. The launcher 
 
 ## Restore transport compatibility
 
-Do not manually run `base64 -d source-snapshot.tar.gz.b64` as a recovery shortcut. The historical path has existed in two transport forms: textual base64 and raw gzip bytes. `restore.sh` detects the actual bytes, verifies the canonical SHA-256, validates the tar stream, and only then extracts it.
+Do not manually run `base64 -d source-snapshot.tar.gz.b64` as a recovery shortcut. GitHub currently stores raw gzip bytes at that historical `.b64` path. `restore.sh` detects gzip vs base64, verifies the result against the admitted identities in `SHA256SUMS`, validates the tar stream, and only then extracts it. `SNAPSHOT-INTEGRITY.md` explains why the historical handoff hash and the committed repository transport hash are both retained.
 
 ## State vocabulary
 

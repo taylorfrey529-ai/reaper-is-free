@@ -5,9 +5,10 @@ GitHub backup and recovery authority for the ChatGPT Linux/Ubuntu-style REAPER 7
 ## Start here
 
 - [`RECALL.md`](RECALL.md) — short fresh-session recovery card and one-command boot path.
-- [`BOOT-HANDOFF.md`](BOOT-HANDOFF.md) — full recover -> restore -> desktop -> Virtual Apollo -> REAPER -> playback -> agent-ear -> screenshot acceptance procedure.
+- [`BOOT-HANDOFF.md`](BOOT-HANDOFF.md) — full recover -> restore -> desktop -> Virtual Apollo -> REAPER -> playback -> agent-ear -> screenshot acceptance procedure. For snapshot transport/hash discrepancies, `SNAPSHOT-INTEGRITY.md` has precedence.
 - [`RUNTIME-BUNDLES.md`](RUNTIME-BUNDLES.md) — exact identities of external runtime payloads.
 - [`BINARY-MANIFEST.md`](BINARY-MANIFEST.md) — known binary/audio/evidence identities.
+- [`SNAPSHOT-INTEGRITY.md`](SNAPSHOT-INTEGRITY.md) — provenance and the admitted historical/repository snapshot byte identities.
 
 Canonical backup commit retained by the handoff:
 
@@ -22,11 +23,15 @@ bash scripts/verify-regression.sh
 bash restore.sh /mnt/data/linux-ububtu-vm-workspace-restored
 ```
 
-`restore.sh` verifies the canonical source/config SHA-256 before extraction. It also preserves compatibility with both historical transport forms of `source-snapshot.tar.gz.b64`: textual base64 and raw gzip bytes. Do not infer encoding from the filename.
+`restore.sh` detects the payload format by bytes, admits only hashes recorded in `SHA256SUMS`, validates the gzip/tar stream, and only then extracts. See `SNAPSHOT-INTEGRITY.md`: the handoff-recorded source archive hash and the raw-gzip bytes actually stored by GitHub are distinct identities and are deliberately preserved rather than silently conflated.
 
-Expected source/config snapshot SHA-256:
+Historical handoff source-archive SHA-256:
 
 `92327daed33fc5b352987c33a06700ac24ee09e8ef835c0ec57a535d4c1dba84`
+
+Current committed raw-gzip repository transport SHA-256:
+
+`8276f6dda44535734ed0da4bf395df5bd32c16583246e02af63882a6e4db1f28`
 
 Full local compressed snapshot SHA-256:
 
