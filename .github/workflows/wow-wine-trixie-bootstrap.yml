@@ -1,0 +1,109 @@
+name: WoW Wine Trixie bootstrap
+
+on:
+  push:
+    branches:
+      - wow-wine-trixie-bootstrap-2026-09-10
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    container: debian:trixie-slim
+    steps:
+      - name: Install Trixie Wine build dependencies
+        shell: bash
+        run: |
+          set -euxo pipefail
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+            ca-certificates git build-essential flex bison pkg-config \
+            gcc-mingw-w64-i686 gcc-mingw-w64-x86-64 \
+            libx11-dev libxext-dev libxrender-dev libxrandr-dev libxcursor-dev \
+            libxi-dev libxinerama-dev libxxf86vm-dev libxfixes-dev libxcomposite-dev \
+            libfreetype-dev libfontconfig1-dev libasound2-dev libpulse-dev \
+            libgl-dev libegl-dev libvulkan-dev libdbus-1-dev libudev-dev \
+            libgnutls28-dev libjpeg-dev libpng-dev libtiff-dev zlib1g-dev \
+            libxml2-dev libxslt1-dev libkrb5-dev libcups2-dev \
+            xvfb xauth file xz-utils
+
+      - name: Fetch exact Wine 11.17 source
+        shell: bash
+        run: |
+          set -euxo pipefail
+          git clone --depth 1 --branch wine-11.17 https://github.com/wine-mirror/wine.git /tmp/wine-src
+          test "$(git -C /tmp/wine-src describe --tags --exact-match)" = wine-11.17
+          git -C /tmp/wine-src rev-parse HEAD | tee /tmp/WINE-SOURCE-COMMIT.txt
+
+      - name: Configure new WoW64 build
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p /tmp/wine-build /opt/wine-trixie-11.17
+          cd /tmp/wine-build
+          /tmp/wine-src/configure \
+            --enable-archs=i386,x86_64 \
+            --prefix=/opt/wine-trixie-11.17 \
+            --disable-tests
+          grep -E '^(configure:|checking|WARNING:|config.status:)' config.log | tail -80 || true
+
+      - name: Build and install
+        shell: bash
+        run: |
+          set -euxo pipefail
+          make -C /tmp/wine-build -j4
+          make -C /tmp/wine-build install
+          /opt/wine-trixie-11.17/bin/wine --version | tee /tmp/WINE-VERSION.txt
+
+      - name: Prove PE32 execution in new WoW64
+        shell: bash
+        run: |
+          set -euxo pipefail
+          cat > /tmp/hello32.c <<'EOF'
+          #include <windows.h>
+          #include <stdio.h>
+          int main(void) {
+            FILE *f = fopen("Z:\\tmp\\WINE-PE32-PASS.txt", "wb");
+            if (!f) return 20;
+            fprintf(f, "wine_pe32_new_wow64=PASS\n");
+            fclose(f);
+            return 0;
+          }
+          EOF
+          i686-w64-mingw32-gcc -Os /tmp/hello32.c -o /tmp/hello32.exe
+          file /tmp/hello32.exe | tee /tmp/HELLO32-FILE.txt
+          export WINEPREFIX=/tmp/wineprefix
+          export WINEARCH=wow64
+          export WINEDEBUG=-all
+          /opt/wine-trixie-11.17/bin/wineboot -u
+          /opt/wine-trixie-11.17/bin/wine /tmp/hello32.exe
+          grep -Fx 'wine_pe32_new_wow64=PASS' /tmp/WINE-PE32-PASS.txt
+          /opt/wine-trixie-11.17/bin/wineserver -k || true
+
+      - name: Package exact Trixie runtime
+        shell: bash
+        run: |
+          set -euxo pipefail
+          tar -C /opt -cJf /tmp/wine-11.17-trixie-new-wow64.tar.xz wine-trixie-11.17
+          sha256sum /tmp/wine-11.17-trixie-new-wow64.tar.xz | tee /tmp/SHA256SUMS
+          cp /tmp/hello32.exe /tmp/
+          {
+            echo 'wine_version=11.17'
+            echo 'build_os=debian-trixie'
+            echo 'configure=--enable-archs=i386,x86_64 --disable-tests'
+            echo 'pe32_ci_execution=PASS'
+          } > /tmp/RUNTIME-LOCK.txt
+
+      - name: Upload Trixie Wine runtime
+        uses: actions/upload-artifact@v4
+        with:
+          name: wine-11.17-trixie-new-wow64
+          path: |
+            /tmp/wine-11.17-trixie-new-wow64.tar.xz
+            /tmp/SHA256SUMS
+            /tmp/RUNTIME-LOCK.txt
+            /tmp/WINE-SOURCE-COMMIT.txt
+            /tmp/WINE-VERSION.txt
+            /tmp/HELLO32-FILE.txt
+            /tmp/hello32.exe
+          if-no-files-found: error
+          retention-days: 1
