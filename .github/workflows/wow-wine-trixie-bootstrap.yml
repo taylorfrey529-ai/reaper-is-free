@@ -24,7 +24,7 @@ jobs:
             libgl-dev libegl-dev libvulkan-dev libdbus-1-dev libudev-dev \
             libgnutls28-dev libjpeg-dev libpng-dev libtiff-dev zlib1g-dev \
             libxml2-dev libxslt1-dev libkrb5-dev libcups2-dev \
-            xvfb xauth file xz-utils
+            xvfb xauth file xz-utils gzip
 
       - name: Fetch exact Wine 11.17 source
         shell: bash
@@ -83,9 +83,8 @@ jobs:
         shell: bash
         run: |
           set -euxo pipefail
-          tar -C /opt -cJf /tmp/wine-11.17-trixie-new-wow64.tar.xz wine-trixie-11.17
-          sha256sum /tmp/wine-11.17-trixie-new-wow64.tar.xz | tee /tmp/SHA256SUMS
-          cp /tmp/hello32.exe /tmp/
+          tar -C /opt -czf /tmp/wine-11.17-trixie-new-wow64.tar.gz wine-trixie-11.17
+          sha256sum /tmp/wine-11.17-trixie-new-wow64.tar.gz | tee /tmp/SHA256SUMS
           {
             echo 'wine_version=11.17'
             echo 'build_os=debian-trixie'
@@ -98,7 +97,7 @@ jobs:
         with:
           name: wine-11.17-trixie-new-wow64
           path: |
-            /tmp/wine-11.17-trixie-new-wow64.tar.xz
+            /tmp/wine-11.17-trixie-new-wow64.tar.gz
             /tmp/SHA256SUMS
             /tmp/RUNTIME-LOCK.txt
             /tmp/WINE-SOURCE-COMMIT.txt
