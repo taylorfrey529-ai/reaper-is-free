@@ -22,6 +22,11 @@ PROJECT = pathlib.Path(
     )
 )
 DISPLAY = os.environ.get("REAPER_DISPLAY", ":88")
+SCREEN_WIDTH = os.environ.get("REAPER_SCREEN_WIDTH", "2560")
+SCREEN_HEIGHT = os.environ.get("REAPER_SCREEN_HEIGHT", "1440")
+SCREEN_DEPTH = os.environ.get("REAPER_SCREEN_DEPTH", "24")
+DEPTH_LAYERS = os.environ.get("REAPER_DESKTOP_DEPTH_LAYERS", "24")
+DEPTH_STEP_PIXELS = os.environ.get("REAPER_DESKTOP_DEPTH_STEP_PIXELS", "1")
 LOG = WS / "logs/reaper-live-session.log"
 PIDFILE = WS / "run/reaper.pid"
 
@@ -80,10 +85,20 @@ for path in (
     require(path)
 reaper_config_guard()
 
-run([str(WS / "start-desktop.sh")])
+boot_env = os.environ.copy()
+boot_env.update(
+    {
+        "SCREEN_WIDTH": SCREEN_WIDTH,
+        "SCREEN_HEIGHT": SCREEN_HEIGHT,
+        "SCREEN_DEPTH": SCREEN_DEPTH,
+        "DESKTOP_DEPTH_LAYERS": DEPTH_LAYERS,
+        "DESKTOP_DEPTH_STEP_PIXELS": DEPTH_STEP_PIXELS,
+    }
+)
+run([str(WS / "start-desktop.sh")], env=boot_env)
 run([str(APOLLO / "bin/start-apollo.sh")])
 
-env = os.environ.copy()
+env = boot_env.copy()
 env.update(
     {
         "DISPLAY": DISPLAY,
@@ -151,6 +166,8 @@ while time.monotonic() < deadline:
 license_state = "evaluation" if seen_activation else "licensed-or-not-detected"
 print(f"checkout={CHECKOUT}")
 print(f"display={DISPLAY}")
+print(f"geometry={SCREEN_WIDTH}x{SCREEN_HEIGHT}x{SCREEN_DEPTH}")
+print(f"desktop_depth_layers={DEPTH_LAYERS} step_pixels={DEPTH_STEP_PIXELS}")
 print("desktop=live")
 print("apollo=configured")
 print(f"project={PROJECT}")

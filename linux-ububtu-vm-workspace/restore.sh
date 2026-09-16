@@ -47,6 +47,20 @@ fi
 
 tar -tzf "$ARCHIVE" >/dev/null
 tar -C "$OUT" -xzf "$ARCHIVE"
+
+OVERLAY="$HERE/overlays"
+if [ -d "$OVERLAY" ]; then
+  while IFS= read -r -d '' rel; do
+    rel=${rel#./}
+    target="$OUT/$rel"
+    mkdir -p "$(dirname "$target")"
+    cp "$OVERLAY/$rel" "$target"
+    case "$rel" in
+      *.sh|*.py) chmod +x "$target" ;;
+    esac
+  done < <(cd "$OVERLAY" && find . -type f -print0 | sort -z)
+  printf 'Applied display/depth overlay from: %s\n' "$OVERLAY"
+fi
 printf 'Restored source/config snapshot to: %s\n' "$OUT"
 printf 'Snapshot transport: %s\n' "$format"
 printf 'Snapshot identity: %s (%s)\n' "$identity" "$actual"

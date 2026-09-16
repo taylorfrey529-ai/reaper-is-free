@@ -9,6 +9,10 @@ required=(
   README.md RECALL.md SNAPSHOT-INTEGRITY.md BOOT-HANDOFF-CURRENT.md restore.sh SHA256SUMS
   BINARY-MANIFEST.md RUNTIME-BUNDLES.md verify-runtime-bundles.sh
   source-snapshot.parts/SHA256SUMS scripts/start-live-session.py
+  overlays/ubuntu-desktop-workspace/desktop_depth.py
+  overlays/ubuntu-desktop-workspace/desktop_shell.py
+  overlays/ubuntu-desktop-workspace/start-desktop.sh
+  overlays/ubuntu-desktop-workspace/verify-desktop.sh
 )
 for rel in "${required[@]}"; do
   [ -e "$HERE/$rel" ] || { echo "MISSING $rel" >&2; exit 1; }
@@ -27,7 +31,11 @@ done
 bash -n "$HERE/restore.sh"
 bash -n "$HERE/verify-runtime-bundles.sh"
 bash -n "$REPO_ROOT/golden-master/verify-golden-master.sh"
-python3 -m py_compile "$HERE/scripts/start-live-session.py"
+python3 -m py_compile "$HERE/scripts/start-live-session.py" \\
+  "$HERE/overlays/ubuntu-desktop-workspace/desktop_depth.py" \\
+  "$HERE/overlays/ubuntu-desktop-workspace/desktop_shell.py"
+bash -n "$HERE/overlays/ubuntu-desktop-workspace/start-desktop.sh"
+bash -n "$HERE/overlays/ubuntu-desktop-workspace/verify-desktop.sh"
 python3 -m json.tool "$REPO_ROOT/golden-master/MANIFEST.json" >/dev/null
 (cd "$HERE/source-snapshot.parts" && sha256sum -c SHA256SUMS)
 
@@ -45,6 +53,17 @@ EXPECTED=$(awk '$2=="source-snapshot.tar.gz"{print $1; exit}' "$HERE/SHA256SUMS"
 ACTUAL=$(sha256sum "$ARCHIVE" | awk '{print $1}')
 [ "$EXPECTED" = "$ACTUAL" ] || { echo "Current source snapshot hash regression" >&2; exit 1; }
 tar -tzf "$ARCHIVE" >/dev/null
+
+for rel in \
+  ubuntu-desktop-workspace/desktop_depth.py \
+  ubuntu-desktop-workspace/desktop_shell.py \
+  ubuntu-desktop-workspace/start-desktop.sh \
+  ubuntu-desktop-workspace/verify-desktop.sh; do
+  [ -e "$TMP/restored/$rel" ] || { echo "Display/depth overlay missing after restore: $rel" >&2; exit 1; }
+done
+grep -Fq -- '2560' "$TMP/restored/ubuntu-desktop-workspace/start-desktop.sh"
+grep -Fq -- 'DESKTOP_DEPTH_LAYERS' "$TMP/restored/ubuntu-desktop-workspace/desktop_shell.py"
+grep -Fq -- 'WALLPAPER_ALPHA = 198' "$TMP/restored/ubuntu-desktop-workspace/desktop_depth.py"
 
 for token in \
   'linux_audio_mode=1' \

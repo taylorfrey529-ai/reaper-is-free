@@ -27,6 +27,10 @@ The archive is deterministic (`tar --sort=name`, fixed mtime/ownership, `gzip -n
 
 Each part has its own SHA-256 in `source-snapshot.parts/SHA256SUMS`. `restore.sh` verifies every part, assembles/decodes the archive, verifies `be32a0…beac`, validates the tar stream, and only then extracts it.
 
+## Effective display/depth overlay
+
+The hash-locked source snapshot remains the byte authority. The current recovery behavior adds a versioned text overlay under `overlays/ubuntu-desktop-workspace/`; `restore.sh` applies it only after the snapshot hash and tar stream pass. This overlay carries the verified X11 `:88` baseline of `2560x1440x24` and the deterministic 24-plane transparent desktop depth builder. It does not re-admit the rejected corrupt payload or rewrite the source snapshot identity.
+
 ## Precedence
 
 1. Prefer the exact full local backup `c67b69…bb31` when available.
