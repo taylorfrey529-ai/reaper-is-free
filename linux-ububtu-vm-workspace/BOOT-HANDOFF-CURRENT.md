@@ -12,7 +12,8 @@ Full backup SHA-256: c67b69e513484e0a5870bd7f55a34a280b3b771b7a5b825cc9ef5bfb932
 Current GitHub source snapshot SHA-256: be32a0d06c9836b8bdbba56d01e98fd8fe0c1adb705bb54b473780f24805beac
 Desktop: X11 / Openbox
 Display: :88
-Geometry: 1440x900 where supported
+Geometry: 2560x1440x24
+Desktop depth: 24 transparent RGBA planes; wallpaper layer 01 alpha 198/255; layers 02-24 use one-pixel steps
 REAPER: 7.79 Linux x86_64
 Project: ASIO-Routing-Project
 Backend: ALSA / linux_audio_mode=1
@@ -33,6 +34,7 @@ cd linux-ububtu-vm-workspace
 bash scripts/verify-regression.sh
 bash restore.sh /mnt/data/linux-ububtu-vm-workspace-restored
 bash verify-runtime-bundles.sh /mnt/data
+# restore.sh applies the current display/depth overlay after snapshot verification
 ```
 
 Use the restored source/config state to populate/reconcile:
@@ -50,6 +52,8 @@ Do not overwrite a newer approved live state blindly. Runtime binaries are exter
 After canonical live roots and runtime binaries are present:
 
 ```bash
+REAPER_SCREEN_WIDTH=2560 REAPER_SCREEN_HEIGHT=1440 REAPER_SCREEN_DEPTH=24 \\
+REAPER_DESKTOP_DEPTH_LAYERS=24 REAPER_DESKTOP_DEPTH_STEP_PIXELS=1 \\
 python3 scripts/start-live-session.py
 ```
 
@@ -62,7 +66,8 @@ Do not claim the workspace is booted until applicable live checks pass:
 ```text
 [ ] regression source snapshot gate passes
 [ ] runtime bundle hashes pass
-[ ] X11 :88 reachable
+[ ] X11 :88 reachable at 2560x1440x24
+[ ] 24-plane transparent desktop depth manifest present
 [ ] Openbox/session live
 [ ] REAPER 7.79 process/window live
 [ ] ASIO-Routing-Project opened

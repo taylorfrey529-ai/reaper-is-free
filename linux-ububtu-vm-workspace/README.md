@@ -7,6 +7,7 @@ GitHub recovery authority for the ChatGPT Linux/Ubuntu-style REAPER 7.79 workspa
 - [`RECALL.md`](RECALL.md) — short fresh-session recovery card.
 - [`BOOT-HANDOFF-CURRENT.md`](BOOT-HANDOFF-CURRENT.md) — current recovery/boot/acceptance sequence.
 - [`SNAPSHOT-INTEGRITY.md`](SNAPSHOT-INTEGRITY.md) — authoritative snapshot provenance, including the rejected corrupt historical GitHub payload.
+- [`OVERLAY-MANIFEST.md`](OVERLAY-MANIFEST.md) — current 2560x1440x24 display/depth overlay applied during restore.
 - [`BOOT-HANDOFF.md`](BOOT-HANDOFF.md) — retained historical detailed handoff; current snapshot transport instructions supersede it.
 - [`RUNTIME-BUNDLES.md`](RUNTIME-BUNDLES.md) — exact external runtime payload identities.
 
@@ -26,6 +27,16 @@ The exact full backup remains the strongest byte authority:
 `c67b69e513484e0a5870bd7f55a34a280b3b771b7a5b825cc9ef5bfb932bb31a`
 
 The former `.b64` GitHub payload was proven corrupt and is not admitted for restore. See `SNAPSHOT-INTEGRITY.md`.
+
+## Current X11 display recall
+
+The effective recovery baseline is X11/Openbox display `:88` at `2560x1440x24`. The restored desktop builds a 24-plane transparent RGBA depth stack: wallpaper is layer 01 at alpha `198/255`, followed by one-pixel transparent planes 02-24. `restore.sh` applies the versioned overlay after validating the hash-locked source snapshot.
+
+```bash
+REAPER_SCREEN_WIDTH=2560 REAPER_SCREEN_HEIGHT=1440 REAPER_SCREEN_DEPTH=24 \\
+REAPER_DESKTOP_DEPTH_LAYERS=24 REAPER_DESKTOP_DEPTH_STEP_PIXELS=1 \\
+python3 scripts/start-live-session.py
+```
 
 ## Runtime bundles
 

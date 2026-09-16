@@ -22,7 +22,8 @@ Required end state:
 
 - X11 virtual desktop
 - Openbox session
-- 1440x900 virtual display where supported
+- 2560x1440x24 virtual display where supported
+- 24-plane transparent RGBA desktop depth stack, one pixel per plane
 - REAPER 7.79 Linux x86_64
 - existing `ASIO-Routing-Project`
 - ALSA backend
@@ -117,7 +118,7 @@ DISPLAY=:88
 Target geometry:
 
 ```text
-1440x900
+2560x1440x24
 ```
 
 Verify before assuming the display exists:
@@ -140,7 +141,7 @@ DISPLAY=:88 xdpyinfo
 DISPLAY=:88 xwininfo -root -tree
 ```
 
-The desktop must be genuinely rendered by X11. Never substitute generated imagery for failed desktop rendering.
+The desktop must be genuinely rendered by X11 at 2560x1440x24. After restore, `restore.sh` applies the versioned depth/display overlay; the shell regenerates its transparent 24-plane assets locally. Never substitute generated imagery for failed desktop rendering.
 
 ## 6. Restore graphics
 
@@ -285,7 +286,7 @@ If the 16-second project drains in a fraction of a second, repair the virtual-in
 
 Use `$screenshot-vm` semantics. Do not use Image Gen.
 
-Capture the live `:88` display, preferably at 1440x900, and validate the PNG before reporting success. For playback proof, capture REAPER while transport is genuinely running.
+Capture the live `:88` display, preferably at 2560x1440x24, and validate the PNG before reporting success. For playback proof, capture REAPER while transport is genuinely running.
 
 Suggested output:
 
@@ -335,7 +336,8 @@ Sample rate: 48000 Hz
 REAPER buffer: 256 samples x 3
 Desktop: X11 / Openbox
 Preferred display: :88
-Preferred geometry: 1440x900
+Preferred geometry: 2560x1440x24
+Desktop depth: 24 transparent RGBA planes, one-pixel steps
 Project: ASIO-Routing-Project
 Tempo: 120 BPM
 Meter: 4/4
