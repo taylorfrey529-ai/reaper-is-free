@@ -6,7 +6,7 @@ SCREEN_HEIGHT=${SCREEN_HEIGHT:-1440}
 DISPLAY=${DISPLAY:-$(cat "$ROOT/run/display" 2>/dev/null || echo ':88')}
 export DISPLAY
 xdpyinfo >/dev/null
-xwininfo -root -tree | grep -q '"Ubuntu Workspace Desktop"'
+xwininfo -root -tree | grep -q '"Astra Workbench Desktop"'
 for f in xvfb openbox desktop-shell; do
   p=$(cat "$ROOT/run/$f.pid")
   kill -0 "$p"

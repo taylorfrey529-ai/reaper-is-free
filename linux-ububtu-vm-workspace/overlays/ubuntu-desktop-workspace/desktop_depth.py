@@ -14,11 +14,11 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 
-BG = (44, 0, 30)
-TOP = 32
-DOCK_W = 74
+BG = (7, 11, 20)
+TOP = 40
+DOCK_W = 96
 WALLPAPER_ALPHA = 198
-STACK_VERSION = 1
+STACK_VERSION = 3
 
 
 def _font(size: int, bold: bool = False):
@@ -86,25 +86,32 @@ def _draw_depth_layer(width: int, height: int, z: int,
     # desktop's physical frame without changing the existing controls.
     draw.rectangle(
         [offset, TOP + offset, width - 1, TOP + offset + 1],
-        fill=(11, 2, 12, shadow_alpha),
+        fill=(2, 7, 13, shadow_alpha),
     )
     draw.line(
         [(DOCK_W + offset, TOP + offset),
          (DOCK_W + offset, height - 1)],
-        fill=(245, 91, 171, edge_alpha),
+        fill=(114, 239, 255, edge_alpha),
         width=1,
     )
 
-    # The icon well receives a stepped translucent extrusion behind it.
-    ix0, iy0 = DOCK_W + 38 + offset, TOP + 38 + offset
-    ix1, iy1 = ix0 + 150, iy0 + 240
-    draw.rounded_rectangle(
-        [ix0, iy0, ix1, iy1],
-        radius=6,
-        fill=(64, 5, 52, shadow_alpha),
-        outline=(225, 68, 151, edge_alpha),
-        width=1,
-    )
+    # The four glass work surfaces receive the stepped translucent extrusion.
+    cards = [
+        (DOCK_W + 86, TOP + 86, 880, 374, (255, 106, 203)),
+        (width - 558, TOP + 86, 458, 374, (114, 239, 255)),
+        (DOCK_W + 86, TOP + 496, 880, 286, (255, 179, 107)),
+        (width - 558, TOP + 496, 458, 286, (255, 106, 203)),
+    ]
+    for x, y, card_width, card_height, color in cards:
+        x0, y0 = x + offset, y + offset
+        x1, y1 = x0 + card_width, y0 + card_height
+        draw.rounded_rectangle(
+            [x0, y0, x1, y1],
+            radius=12,
+            fill=(13, 24, 40, min(34, shadow_alpha)),
+            outline=(*color, edge_alpha),
+            width=1,
+        )
 
     # Every fourth plane is a faint perspective guide. These remain sparse so
     # the wallpaper stays readable while the 24-pixel depth is visible.
@@ -113,7 +120,7 @@ def _draw_depth_layer(width: int, height: int, z: int,
         draw.rounded_rectangle(
             [margin, TOP + 86 + offset, width - margin, height - 88 - offset],
             radius=18,
-            outline=(217, 76, 155, min(26, 6 + z // 2)),
+            outline=(114, 239, 255, min(22, 5 + z // 2)),
             width=1,
         )
     if z in (6, 12, 18, 24):
@@ -121,23 +128,23 @@ def _draw_depth_layer(width: int, height: int, z: int,
         draw.line(
             [(DOCK_W + 118 + offset, TOP + 52 + offset),
              (width - 150 + offset, height - 156 + offset)],
-            fill=(246, 108, 176, guide_alpha),
+            fill=(255, 106, 203, guide_alpha),
             width=1,
         )
         draw.line(
             [(DOCK_W + 118 + offset, height - 156 + offset),
              (width - 150 + offset, TOP + 52 + offset)],
-            fill=(130, 58, 143, guide_alpha),
+            fill=(114, 239, 255, guide_alpha),
             width=1,
         )
 
     if z == 24:
-        label = "DESKTOP DEPTH 24 / 1PX PLANES"
+        label = "ASTRA DEPTH 24 / 1PX PLANES"
         draw.text(
             (width - 340, height - 48),
             label,
             font=_font(14, True),
-            fill=(255, 189, 219, 132),
+            fill=(197, 255, 154, 132),
         )
 
     return layer

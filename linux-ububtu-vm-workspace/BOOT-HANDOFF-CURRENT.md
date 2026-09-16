@@ -89,3 +89,13 @@ The canonical ear path remains:
 `/mnt/data/virtual-apollo/ears/latest.wav`
 
 Use `SNAPSHOT-INTEGRITY.md` for restore provenance and rejected identities. Use `RUNTIME-BUNDLES.md` for external binary identities.
+
+## Custom desktop handoff
+
+The live shell is Astra Workbench. Start the restored workspace normally and expect the shell title `Astra Workbench Desktop`; the Openbox rule and readiness verifier use that same title.
+
+Visual acceptance:
+- dark navy/black studio-glass background with sparse perspective rails
+- cyan/magenta signal edges around the four desktop cards
+- launch rail retains Files, REAPER, Terminal, Web, Vulkan, Settings, and Power
+- telemetry shows `:88`, `2560x1440x24`, 24 planes at 1px, 48 kHz, and Apollo S/PDIF

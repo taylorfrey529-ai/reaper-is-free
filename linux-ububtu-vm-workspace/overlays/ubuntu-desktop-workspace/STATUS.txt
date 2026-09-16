@@ -1,0 +1,17 @@
+Astra Workbench Desktop status: RUNNING
+Display: :88
+Resolution: 2560x1440x24
+Desktop depth: 24 transparent RGBA planes, 1 px increments; wallpaper layer 01 alpha 198/255
+Window manager: Openbox
+Desktop shell: Astra Workbench active
+Desktop theme: dark studio glass / cyan-magenta signal accents
+REAPER: 7.79 native Linux x86_64 INSTALLED and RUNNING
+REAPER launcher: dock + desktop application entry
+REAPER audio: Dummy Audio, 44.1 kHz, 512 samples (headless VM has no /dev/snd hardware)
+Files dock launcher: PASS
+Terminal dock launcher: PASS
+Chromium dock launcher: PASS
+Vulkan dock launcher/rendered window: PASS
+Real X11 screenshot verification: PASS
+Ubuntu 24.04.4 netboot payload: staged
+Native Ubuntu guest install: blocked by netboot-only media plus unavailable QEMU/Ubuntu repositories in the offline container

@@ -70,3 +70,11 @@ See `OVERLAY-MANIFEST.md` for the exact overlay contract.
 - Restored = checksum-admitted backup/snapshot state recovered.
 - Reconstructed = recreated from an admitted authority.
 - Verified live = actually executed and observed in the current runtime.
+
+## Custom desktop surface — Astra Workbench
+
+- Theme: dark studio glass with restrained cyan, magenta, amber, and lime signal accents.
+- Surface: four raised work cards — launch, session telemetry, REAPER production, and workspace modules.
+- Functional identity: REAPER 7.79 / ASIO-Routing-Project / 48 kHz / Apollo S/PDIF remains primary.
+- Restore: the custom shell and depth renderer are copied from the overlay after the hash-verified snapshot is reconstructed.
+- Feature branch: `feature/astra-workbench-custom-desktop-20260916`, based on the display/depth recall branch.

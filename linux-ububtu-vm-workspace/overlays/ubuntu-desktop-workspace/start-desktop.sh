@@ -32,7 +32,7 @@ python3 "$ROOT/desktop_shell.py" >"$ROOT/logs/desktop-shell.log" 2>&1 &
 echo $! > "$ROOT/run/desktop-shell.pid"
 
 for i in $(seq 1 60); do
-  if DISPLAY="$DISPLAY" xwininfo -root -tree 2>/dev/null | grep -q '"Ubuntu Workspace Desktop"'; then
+  if DISPLAY="$DISPLAY" xwininfo -root -tree 2>/dev/null | grep -q '"Astra Workbench Desktop"'; then
     echo "$DISPLAY" > "$ROOT/run/display"
     echo "Ubuntu workspace desktop started on $DISPLAY"
     exit 0
