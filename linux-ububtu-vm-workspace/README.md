@@ -66,3 +66,9 @@ Sample rate: 48 kHz
 Buffer: 256 samples x 3
 Project tempo: 120 BPM
 ```
+
+## Astra Workbench custom desktop
+
+The effective desktop shell is Astra Workbench: a dark navy studio surface with thin cyan/magenta signal edges, four raised work cards, a production-first REAPER desk, and live telemetry for the authenticated `:88` display, 24-plane depth stack, 48 kHz clock, and Apollo S/PDIF route.
+
+The source snapshot remains hash-locked. `restore.sh` applies the text overlay after snapshot verification; the overlay contains the reconstructable shell, wallpaper/depth renderer, Openbox title contract, and matching local handoff files.

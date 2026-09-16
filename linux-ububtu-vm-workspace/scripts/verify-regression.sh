@@ -13,6 +13,8 @@ required=(
   overlays/ubuntu-desktop-workspace/desktop_shell.py
   overlays/ubuntu-desktop-workspace/start-desktop.sh
   overlays/ubuntu-desktop-workspace/verify-desktop.sh
+  overlays/ubuntu-desktop-workspace/config/openbox/rc.xml
+  CUSTOM-DESKTOP.md
 )
 for rel in "${required[@]}"; do
   [ -e "$HERE/$rel" ] || { echo "MISSING $rel" >&2; exit 1; }
@@ -58,12 +60,16 @@ for rel in \
   ubuntu-desktop-workspace/desktop_depth.py \
   ubuntu-desktop-workspace/desktop_shell.py \
   ubuntu-desktop-workspace/start-desktop.sh \
-  ubuntu-desktop-workspace/verify-desktop.sh; do
+  ubuntu-desktop-workspace/verify-desktop.sh \
+  ubuntu-desktop-workspace/config/openbox/rc.xml; do
   [ -e "$TMP/restored/$rel" ] || { echo "Display/depth overlay missing after restore: $rel" >&2; exit 1; }
 done
 grep -Fq -- '2560' "$TMP/restored/ubuntu-desktop-workspace/start-desktop.sh"
 grep -Fq -- 'DESKTOP_DEPTH_LAYERS' "$TMP/restored/ubuntu-desktop-workspace/desktop_shell.py"
 grep -Fq -- 'WALLPAPER_ALPHA = 198' "$TMP/restored/ubuntu-desktop-workspace/desktop_depth.py"
+grep -Fq -- 'Astra Workbench Desktop' "$TMP/restored/ubuntu-desktop-workspace/desktop_shell.py"
+grep -Fq -- 'STACK_VERSION = 3' "$TMP/restored/ubuntu-desktop-workspace/desktop_depth.py"
+grep -Fq -- 'Astra Workbench Desktop' "$TMP/restored/ubuntu-desktop-workspace/config/openbox/rc.xml"
 
 for token in \
   'linux_audio_mode=1' \

@@ -1,0 +1,33 @@
+# Display Upgrade Handoff
+
+Date: 2026-09-16
+Canonical display number: :88
+Upgraded geometry: 2560x1440x24
+
+Updated source state:
+
+- start-desktop.sh defaults to 2560x1440x24.
+- desktop_shell.py derives its canvas and wallpaper from WORKSPACE_WIDTH,
+  WORKSPACE_HEIGHT, and WORKSPACE_DEPTH, defaulting to 2560x1440x24.
+- desktop_shell.py now presents the Astra Workbench custom desktop: dark studio
+  glass panels, restrained cyan/magenta accents, session telemetry, a REAPER
+  production desk, and preserved local launchers.
+- desktop_depth.py advances the deterministic stack to version 2 so the custom
+  wallpaper and four glass work surfaces are rebuilt instead of reusing the
+  earlier Ubuntu-style composite.
+- verify-desktop.sh validates the configured screen dimensions instead of
+  hard-coding the former 1440x900 geometry.
+- REAPER reaper.ini window settings are 2560x1421.
+- README.md and STATUS.txt record the upgraded display geometry.
+
+Live validation:
+
+- xdpyinfo: PASS, 2560x1440 pixels.
+- Openbox and desktop shell: PASS.
+- verify-desktop.sh: PASS, non-uniform rendered screenshot.
+- Loopback listener: PASS for the current sandbox runtime.
+
+Runtime note: the current sandbox cannot create X11 AF_UNIX sockets, so the
+live :88 session uses authenticated loopback TCP at 127.0.0.1:88 with the
+existing local compatibility wrapper. The source backup excludes transient
+runtime PIDs, logs, and authority files.

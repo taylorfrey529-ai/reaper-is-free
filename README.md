@@ -84,3 +84,10 @@ GitHub Actions runs the repository regression gate on both `main` and `linux-ubu
 ## Binary distribution boundary
 
 The binary assets are not ordinary Git blobs. Their exact recovery copies live in the private Golden Master storage tier and remain subject to their respective licenses and distribution terms. REAPER remains subject to Cockos' own license and distribution terms.
+
+## Astra Workbench custom desktop
+
+The display-recall branch now has a stacked feature branch for the custom desktop surface:
+`feature/astra-workbench-custom-desktop-20260916`.
+
+It preserves the authenticated X11 `:88` contract at `2560x1440x24` and the 24-plane transparent RGBA depth stack, while presenting a dark studio-glass Astra Workbench shell with restrained cyan/magenta signal accents. The feature branch is reviewable independently on top of the display/depth recall PR.
