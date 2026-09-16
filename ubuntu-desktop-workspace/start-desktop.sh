@@ -11,6 +11,7 @@ export WORKSPACE_HEIGHT="$SCREEN_HEIGHT"
 export WORKSPACE_DEPTH="$SCREEN_DEPTH"
 export HOME="$ROOT/home"
 export XDG_CONFIG_HOME="$ROOT/config"
+export XDG_DATA_HOME="$ROOT/share"
 export XAUTHORITY="${XAUTHORITY:-$ROOT/run/xauthority}"
 mkdir -p "$ROOT/run" "$ROOT/logs" "$HOME" "$(dirname "$XAUTHORITY")"
 

@@ -69,3 +69,21 @@ ASIO-Routing-Project routing contract intact even though the container exposes
 no physical `/dev/snd` device. REAPER uses the persisted Astra native theme
 and SWELL palette from `config/REAPER`, so the track control, arrange, mixer,
 transport, and native dialogs share the workbench's navy/cyan/magenta system.
+
+### Floating DAW bay
+
+REAPER is intentionally composed as a floating instrument surface inside the
+desktop depth scene rather than maximized over it. The persisted client geometry
+is `2200×1240` at `(170,78)`; the Openbox Astra frame leaves the 24-plane bay
+rails, dock, and wallpaper visible around the DAW. `desktop_depth.py` draws the
+DAW bay as another stepped transparent surface and labels it at depth plane 24.
+
+The theme installer also builds same-size Astra control art for REAPER's 100%,
+150%, and 200% density buckets: 25-frame cyan/magenta knob stacks, glass
+fader grips, pan rails, transport knobs, and miniature meter grips. The source
+generator is `scripts/install-astra-reaper-theme.py`; the visual control atlas
+is `assets/astra-control-atlas.png`.
+
+With the session running, verify the composition and asset buckets with:
+
+`/mnt/data/ubuntu-desktop-workspace/scripts/verify-astra-daw-bay.sh`

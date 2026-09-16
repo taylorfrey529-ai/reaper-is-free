@@ -1,0 +1,74 @@
+!! Astra Workbench / floating REAPER instrument bay
+
+menu.title.bg: flat solid border
+menu.title.bg.color: #111a29
+menu.title.bg.border.color: #26364f
+menu.title.text.color: #72efff
+menu.items.bg: flat solid
+menu.items.bg.color: #0d121e
+menu.items.text.color: #f2f7ff
+menu.items.disabled.text.color: #61738e
+menu.items.active.bg: flat solid
+menu.items.active.bg.color: #142238
+menu.items.active.text.color: #72efff
+
+*.justify: left
+
+window.active.client.color: #070b14
+window.active.title.bg: flat solid border
+window.active.title.bg.color: #0d121e
+window.active.title.bg.border.color: #72efff
+window.active.handle.bg: flat solid border
+window.active.handle.bg.color: #0d121e
+window.active.handle.bg.border.color: #26364f
+window.active.grip.bg: parentrelative
+window.active.label.bg: parentrelative
+window.active.label.text.color: #f2f7ff
+window.active.label.text.justify: left
+window.active.button.*.bg: parentrelative
+window.active.button.*.image.color: #72efff
+window.active.button.pressed.bg: flat solid
+window.active.button.pressed.bg.color: #ff6acb
+window.active.button.pressed.image.color: #070b14
+window.active.button.hover.bg: flat solid
+window.active.button.hover.bg.color: #142238
+window.active.button.hover.image.color: #ff6acb
+window.active.button.disabled.bg: flat solid
+window.active.button.disabled.bg.color: #0d121e
+window.active.button.disabled.image.color: #61738e
+
+window.inactive.client.color: #070b14
+window.inactive.title.bg: flat solid border
+window.inactive.title.bg.color: #09101a
+window.inactive.title.bg.border.color: #26364f
+window.inactive.handle.bg: flat solid border
+window.inactive.handle.bg.color: #09101a
+window.inactive.handle.bg.border.color: #26364f
+window.inactive.grip.bg: parentrelative
+window.inactive.label.bg: parentrelative
+window.inactive.label.text.color: #91a5bf
+window.inactive.button.*.bg: parentrelative
+window.inactive.button.*.image.color: #61738e
+window.inactive.button.pressed.bg: flat solid
+window.inactive.button.pressed.bg.color: #142238
+window.inactive.button.pressed.image.color: #72efff
+window.inactive.button.hover.bg: flat solid
+window.inactive.button.hover.bg.color: #111a29
+window.inactive.button.hover.image.color: #72efff
+window.inactive.button.disabled.bg: flat solid
+window.inactive.button.disabled.bg.color: #09101a
+window.inactive.button.disabled.image.color: #61738e
+
+border.Width: 2
+padding.width: 2
+window.title.height: 28
+window.handle.width: 4
+window.client.padding.width: 0
+window.client.padding.height: 0
+menu.overlap: 2
+border.color: #26364f
+
+window.active.label.text.font: DejaVu Sans Bold 10
+window.inactive.label.text.font: DejaVu Sans 10
+menu.title.text.font: DejaVu Sans Bold 10
+menu.items.font: DejaVu Sans 10
