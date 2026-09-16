@@ -5,13 +5,14 @@ DISPLAY_NUM=${DISPLAY_NUM:-88}
 SCREEN_WIDTH=${SCREEN_WIDTH:-2560}
 SCREEN_HEIGHT=${SCREEN_HEIGHT:-1440}
 SCREEN_DEPTH=${SCREEN_DEPTH:-24}
-export DISPLAY=:$DISPLAY_NUM
+export DISPLAY="${DISPLAY:-127.0.0.1:$DISPLAY_NUM}"
 export WORKSPACE_WIDTH="$SCREEN_WIDTH"
 export WORKSPACE_HEIGHT="$SCREEN_HEIGHT"
 export WORKSPACE_DEPTH="$SCREEN_DEPTH"
 export HOME="$ROOT/home"
 export XDG_CONFIG_HOME="$ROOT/config"
-mkdir -p "$ROOT/run" "$ROOT/logs" "$HOME"
+export XAUTHORITY="${XAUTHORITY:-$ROOT/run/xauthority}"
+mkdir -p "$ROOT/run" "$ROOT/logs" "$HOME" "$(dirname "$XAUTHORITY")"
 
 # Reuse a healthy session if one is already running.
 if [ -f "$ROOT/run/xvfb.pid" ] && kill -0 "$(cat "$ROOT/run/xvfb.pid")" 2>/dev/null && xdpyinfo -display "$DISPLAY" >/dev/null 2>&1; then
@@ -20,7 +21,21 @@ if [ -f "$ROOT/run/xvfb.pid" ] && kill -0 "$(cat "$ROOT/run/xvfb.pid")" 2>/dev/n
 fi
 
 rm -f /tmp/.X${DISPLAY_NUM}-lock /tmp/.X11-unix/X${DISPLAY_NUM} 2>/dev/null || true
-Xvfb "$DISPLAY" -screen 0 "${SCREEN_WIDTH}x${SCREEN_HEIGHT}x${SCREEN_DEPTH}" -nolisten tcp -ac >"$ROOT/logs/xvfb.log" 2>&1 &
+XVFB_AUTH_ARGS=()
+if command -v xauth >/dev/null 2>&1; then
+  umask 077
+  touch "$XAUTHORITY"
+  COOKIE="$(mcookie 2>/dev/null || openssl rand -hex 16)"
+  xauth -f "$XAUTHORITY" add "localhost/unix:${DISPLAY_NUM}" . "$COOKIE"
+  xauth -f "$XAUTHORITY" add "localhost:${DISPLAY_NUM}" . "$COOKIE"
+  xauth -f "$XAUTHORITY" add "127.0.0.1:${DISPLAY_NUM}" . "$COOKIE"
+fi
+if [ -s "$XAUTHORITY" ]; then
+  XVFB_AUTH_ARGS=(-auth "$XAUTHORITY")
+else
+  XVFB_AUTH_ARGS=(-ac)
+fi
+Xvfb ":$DISPLAY_NUM" -screen 0 "${SCREEN_WIDTH}x${SCREEN_HEIGHT}x${SCREEN_DEPTH}" -nolisten local -listen tcp "${XVFB_AUTH_ARGS[@]}" >"$ROOT/logs/xvfb.log" 2>&1 &
 echo $! > "$ROOT/run/xvfb.pid"
 for i in $(seq 1 50); do xdpyinfo -display "$DISPLAY" >/dev/null 2>&1 && break; sleep 0.1; done
 xdpyinfo -display "$DISPLAY" >/dev/null

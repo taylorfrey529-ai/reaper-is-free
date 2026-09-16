@@ -63,4 +63,9 @@ Launch it from the REAPER dock button or run:
 
 `/mnt/data/ubuntu-desktop-workspace/bin/launch-reaper.sh`
 
-The VM exposes no `/dev/snd` hardware, so REAPER is configured for Dummy Audio at 44.1 kHz / 512 samples. This avoids JACK/ALSA device errors while keeping the DAW fully usable for project editing, routing, FX setup, and offline rendering in the workspace. Switch to ALSA/JACK/PulseAudio when real audio hardware or a server is attached.
+The Astra launch path keeps REAPER on the local Virtual Apollo ALSA boundary:
+`apollo_spdif`, 48 kHz, stereo, and a 256×3 buffer. This keeps the existing
+ASIO-Routing-Project routing contract intact even though the container exposes
+no physical `/dev/snd` device. REAPER uses the persisted Astra native theme
+and SWELL palette from `config/REAPER`, so the track control, arrange, mixer,
+transport, and native dialogs share the workbench's navy/cyan/magenta system.
