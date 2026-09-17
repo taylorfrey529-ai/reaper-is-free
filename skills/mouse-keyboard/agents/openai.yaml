@@ -1,0 +1,11 @@
+interface:
+  display_name: Mouse & Keyboard
+  short_description: Operate live desktops with human-style mouse and keyboard input
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - atlas
+  allow_implicit_invocation: true
