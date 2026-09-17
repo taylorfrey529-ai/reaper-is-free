@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Mouse and keyboard">
+  <rect x="10" y="76" width="108" height="34" rx="8" fill="#20242b"/>
+  <g fill="#d9dde5">
+    <rect x="18" y="84" width="12" height="8" rx="2"/><rect x="34" y="84" width="12" height="8" rx="2"/><rect x="50" y="84" width="12" height="8" rx="2"/><rect x="66" y="84" width="12" height="8" rx="2"/><rect x="82" y="84" width="12" height="8" rx="2"/><rect x="98" y="84" width="12" height="8" rx="2"/>
+    <rect x="26" y="96" width="16" height="7" rx="2"/><rect x="46" y="96" width="36" height="7" rx="2"/><rect x="86" y="96" width="16" height="7" rx="2"/>
+  </g>
+  <path d="M64 12c-16 0-26 12-26 28v15c0 15 10 26 26 26s26-11 26-26V40C90 24 80 12 64 12Z" fill="#2d333d" stroke="#d9dde5" stroke-width="4"/>
+  <path d="M64 15v22" stroke="#d9dde5" stroke-width="4"/>
+  <rect x="59" y="22" width="10" height="15" rx="5" fill="#d9dde5"/>
+</svg>
