@@ -1,0 +1,39 @@
+name: Package PyGuitarPro Parser
+
+on:
+  push:
+    branches:
+      - "tool/pyguitarpro-gp5-parser"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout parser source
+        uses: actions/checkout@v4
+        with:
+          repository: Perlence/PyGuitarPro
+          path: pyguitarpro
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Package parser
+        shell: bash
+        run: |
+          set -euxo pipefail
+          tar -C pyguitarpro -czf pyguitarpro-parser.tar.gz src/guitarpro
+          sha256sum pyguitarpro-parser.tar.gz > pyguitarpro-parser.tar.gz.sha256
+
+      - name: Upload parser artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pyguitarpro-parser
+          path: |
+            pyguitarpro-parser.tar.gz
+            pyguitarpro-parser.tar.gz.sha256
+          if-no-files-found: error
+          compression-level: 0
