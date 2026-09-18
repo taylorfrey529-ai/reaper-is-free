@@ -1,0 +1,64 @@
+name: Build AVLDrums LV2
+
+on:
+  push:
+    branches:
+      - "build/avldrums-lv2-20260917"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-linux-x86_64:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout pinned AVLDrums source
+        uses: actions/checkout@v4
+        with:
+          repository: x42/avldrums.lv2
+          ref: 9389f16f139410d9a55f9006976bd54cbd8b7806
+          path: avldrums
+          submodules: recursive
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Install build dependencies
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential pkg-config liblv2-dev libglib2.0-dev libcairo2-dev libpango1.0-dev libglu1-mesa-dev libgl1-mesa-dev
+
+      - name: Build
+        shell: bash
+        run: |
+          set -euxo pipefail
+          cd avldrums
+          git rev-parse HEAD | tee SOURCE_HEAD.txt
+          git submodule status | tee SUBMODULE_STATUS.txt
+          make -j2
+
+      - name: Stage LV2 bundle
+        shell: bash
+        run: |
+          set -euxo pipefail
+          cd avldrums
+          rm -rf ../stage
+          make install DESTDIR="$GITHUB_WORKSPACE/stage" PREFIX=/usr
+          find "$GITHUB_WORKSPACE/stage/usr/lib/lv2/avldrums.lv2" -maxdepth 1 -type f -printf '%f %s bytes\n' | sort | tee BUILD_CONTENTS.txt
+          file "$GITHUB_WORKSPACE/stage/usr/lib/lv2/avldrums.lv2/"*.so | tee BUILD_FILE_INFO.txt
+          sha256sum "$GITHUB_WORKSPACE/stage/usr/lib/lv2/avldrums.lv2/"* | tee BUILD_SHA256.txt
+
+      - name: Pack result
+        shell: bash
+        run: |
+          cp avldrums/SOURCE_HEAD.txt avldrums/SUBMODULE_STATUS.txt avldrums/BUILD_CONTENTS.txt avldrums/BUILD_FILE_INFO.txt avldrums/BUILD_SHA256.txt stage/
+          tar -C stage -czf avldrums-lv2-linux-x86_64.tar.gz .
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: avldrums-lv2-linux-x86_64
+          path: avldrums-lv2-linux-x86_64.tar.gz
+          if-no-files-found: error
+          compression-level: 0
