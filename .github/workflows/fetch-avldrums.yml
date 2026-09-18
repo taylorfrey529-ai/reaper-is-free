@@ -1,0 +1,27 @@
+name: Fetch AVLDrums Linux
+on:
+  push:
+    branches:
+      - temp/avldrums-fetch-20260918
+  workflow_dispatch:
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download official x42 AVLDrums Linux build
+        run: |
+          set -euxo pipefail
+          curl -L --fail --retry 5 --retry-delay 2             -o x42-avldrums-v0.7.6-x86_64.tar.gz             https://x42-plugins.com/x42/linux/x42-avldrums-v0.7.6-x86_64.tar.gz
+          sha256sum x42-avldrums-v0.7.6-x86_64.tar.gz > SHA256SUMS.txt
+          tar -tzf x42-avldrums-v0.7.6-x86_64.tar.gz | head -200 > archive-listing.txt
+      - name: Upload AVL artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: avldrums-linux-x86_64-v0.7.6
+          path: |
+            x42-avldrums-v0.7.6-x86_64.tar.gz
+            SHA256SUMS.txt
+            archive-listing.txt
+          if-no-files-found: error
+          retention-days: 1
