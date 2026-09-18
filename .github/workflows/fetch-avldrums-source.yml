@@ -1,0 +1,41 @@
+name: Fetch AVLDrums Source
+
+on:
+  push:
+    branches:
+      - "build/avldrums-lv2-20260917"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout AVLDrums with pinned submodule
+        uses: actions/checkout@v4
+        with:
+          repository: x42/avldrums.lv2
+          path: avldrums
+          submodules: recursive
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Record source revisions
+        shell: bash
+        run: |
+          git -C avldrums rev-parse HEAD | tee avldrums/SOURCE_HEAD.txt
+          git -C avldrums submodule status | tee avldrums/SUBMODULE_STATUS.txt
+
+      - name: Pack complete source tree
+        shell: bash
+        run: tar -czf avldrums-source.tar.gz avldrums
+
+      - name: Upload source bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: avldrums-source
+          path: avldrums-source.tar.gz
+          if-no-files-found: error
+          compression-level: 0
