@@ -1,0 +1,24 @@
+Virtual Drums Skill Build Report
+Date: 2026-09-19
+Package: /mnt/data/virtual-drums-skill-dist/skill.zip
+
+Included:
+- SKILL.md control plane for REAPER/MTPDK virtual drums
+- corrected MTPDK note map and full CC 0-127 map
+- REAPER note names
+- production rules for OH/Room LR_corr ~= +0.10
+- all-pass phase-alignment convention
+- 128-bar performance and seed-529 humanization conventions
+- Virtual Apollo render/capture validation rules
+- Google Drive evidence handoff rules
+- map validator
+- MIDI performance validator
+- stereo-correlation analyzer
+
+Self-test results:
+- Skill validator: PASS
+- MTPDK core mapping: Kick 36, SideStick 37, Snare 38: PASS
+- CC map: 128/128 entries, channel 16, CC n -> parameter n: PASS
+- Corrected full performance: 1900 note-ons, Kick 540, SideStick 16, Snare 245, unmapped 0: PASS
+- OH correlation reference: 0.099986, target 0.10 +/- 0.02: PASS
+- Package size: approximately 16 KB
