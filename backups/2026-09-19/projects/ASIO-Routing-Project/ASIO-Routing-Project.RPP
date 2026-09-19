@@ -1,0 +1,1000 @@
+<REAPER_PROJECT 0.1 "7.79/linux-x86_64" 1789784240 0
+  <NOTES 0 2
+  >
+  RIPPLE 0 0
+  GROUPOVERRIDE 0 0 0 0
+  AUTOXFADE 129
+  ENVATTACH 3
+  POOLEDENVATTACH 0
+  TCPUIFLAGS 0
+  MIXERUIFLAGS 11 48 0
+  ENVFADESZ10 40
+  PEAKGAIN 1
+  FEEDBACK 0
+  PANLAW 1
+  PROJOFFS 0 0 0
+  MAXPROJLEN 0 0
+  GRID 3199 8 1 8 1 0 0 0
+  TIMEMODE 1 5 -1 30 0 0 -1 0
+  VIDEO_CONFIG 0 0 65792
+  PANMODE 3
+  PANLAWFLAGS 3
+  CURSOR 0
+  ZOOM 4.25390625 0 0
+  VZOOMEX 6 0
+  USE_REC_CFG 0
+  RECMODE 1
+  SMPTESYNC 0 30 100 40 1000 300 0 0 1 0 0
+  LOOP 0
+  LOOPGRAN 0 4
+  RECORD_PATH "Media" ""
+  <RECORD_CFG
+    ZXZhdxgAAQ==
+  >
+  <APPLYFX_CFG
+  >
+  RENDER_FILE ""
+  RENDER_PATTERN ""
+  RENDER_FMT 0 2 0
+  RENDER_1X 0
+  RENDER_RANGE 1 0 0 0 1000
+  RENDER_RESAMPLE 3 0 1
+  RENDER_ADDTOPROJ 0
+  RENDER_STEMS 0
+  RENDER_DITHER 0
+  RENDER_TRIM 0.000001 0.000001 0 0
+  TIMELOCKMODE 1
+  TEMPOENVLOCKMODE 1
+  ITEMMIX 1
+  DEFPITCHMODE 589824 0
+  TAKELANE 1
+  SAMPLERATE 48000 0 0
+  <RENDER_CFG
+    ZXZhdxgAAQ==
+  >
+  LOCK 1
+  <METRONOME 6 2
+    VOL 0.25 0.125
+    BEATLEN 4
+    FREQ 1760 880 1
+    SAMPLES "" "" "" ""
+    SPLIGNORE 0 0
+    SPLDEF 2 660 "" 0 ""
+    SPLDEF 3 440 "" 0 ""
+    PATTERN 0 169
+    PATTERNSTR ABBB
+    MULT 1
+  >
+  GLOBAL_AUTO -1
+  TEMPO 120 4 4 0
+  PLAYRATE 1 0 0.25 4
+  SELECTION 0 0
+  SELECTION2 0 0
+  MASTERAUTOMODE 0
+  MASTERTRACKHEIGHT 0 0
+  MASTERPEAKCOL 16576
+  MASTERMUTESOLO 0
+  MASTERTRACKVIEW 0 0.6667 0.5 0.5 0 0 0 0 0 0 0 0 0 0 1
+  MASTERHWOUT 0 0 1 0 0 0 0 -1
+  MASTER_NCH 2 2
+  MASTER_VOLUME 1 0 -1 -1 1
+  MASTER_PANMODE 3
+  MASTER_PANLAWFLAGS 3
+  MASTER_FX 1
+  MASTER_TRACKID {E8179EEF-49B0-7E2A-CC42-2F9134F3F8F5}
+  MASTER_SEL 0
+  <MASTERPLAYSPEEDENV
+    EGUID {68947F1A-CC33-41A5-F5EE-CACE02107331}
+    ACT 0 -1
+    VIS 0 1 1
+    LANEHEIGHT 0 0
+    ARM 0
+    DEFSHAPE 0 -1 -1
+  >
+  <TEMPOENVEX
+    EGUID {B4F36921-54DE-CAE1-B80F-9EA9D46603B1}
+    ACT 0 -1
+    VIS 1 0 1
+    LANEHEIGHT 0 0
+    ARM 0
+    DEFSHAPE 1 -1 -1
+  >
+  RULERHEIGHT 86 86
+  RULERLANE 1 4 "" 0 -1 0
+  RULERLANE 2 8 "" 0 -1 0
+  MARKER 1 0 "DRUM: Intro" 0 0 1 B {24A98845-2071-A304-492D-D02ACAC2AF25} 0 2
+  MARKER 2 16 "DRUM: Verse 1" 0 0 1 B {03FE2A49-BF29-FB02-B34B-A44666BA5DBA} 0 2
+  MARKER 3 48 "DRUM: Pre-Chorus 1" 0 0 1 B {3D78C71A-8DAC-B5C8-78CC-0D10CDF0B2D6} 0 2
+  MARKER 4 64 "DRUM: Chorus 1" 0 0 1 B {C21D5AF7-080E-E093-1E85-318E338CC1D7} 0 2
+  MARKER 5 96 "DRUM: Verse 2" 0 0 1 B {8591AD13-C1E5-9DA2-31B3-C44074EBDABC} 0 2
+  MARKER 6 128 "DRUM: Pre-Chorus 2" 0 0 1 B {19D5A92F-03CA-627C-646F-6D398F0632C1} 0 2
+  MARKER 7 144 "DRUM: Chorus 2" 0 0 1 B {A01E3CB0-CF81-7567-5152-660FBF69822F} 0 2
+  MARKER 8 176 "DRUM: Bridge" 0 0 1 B {53192CD1-0B30-E0F7-E0A8-C11F9FFAC48D} 0 2
+  MARKER 9 208 "DRUM: Final Chorus" 0 0 1 B {F9A13EE6-0F6B-D46B-2E5D-84A2BB559868} 0 2
+  MARKER 10 240 "DRUM: Outro" 0 0 1 B {746A8E2D-FFED-C012-DBAB-4EA49D0F5387} 0 2
+  <PROJBAY
+  >
+  <TRACK {7A82E90A-2E5E-AD34-D732-B84DF2E6C303}
+    NAME "DRUMS BUS"
+    PEAKCOL 16576
+    BEAT -1
+    AUTOMODE 0
+    PANLAWFLAGS 3
+    VOLPAN 0.70794578438414 0 -1 -1 1
+    MUTESOLO 0 0 0
+    IPHASE 0
+    PLAYOFFS 0 1
+    ISBUS 0 0
+    BUSCOMP 0 0 0 0 0
+    SHOWINMIX 1 0.6667 0.5 1 0.5 0 0 0 0
+    FIXEDLANES 9 0 0 0 0
+    LANEREC -1 -1 -1 0
+    SEL 0
+    REC 0 0 1 0 0 0 0 0
+    VU 64
+    TRACKHEIGHT 0 0 0 0 0 0 0
+    INQ 0 0 0 0.5 100 0 0 100
+    NCHAN 2
+    FX 1
+    TRACKID {7A82E90A-2E5E-AD34-D732-B84DF2E6C303}
+    PERF 0
+    AUXRECV 2 0 1 0 0 0 0 0 0 -1:U 0 -1 ''
+    AUXRECV 3 0 1 0 0 0 0 0 0 -1:U 0 -1 ''
+    AUXRECV 4 0 1 0 0 0 0 0 0 -1:U 0 -1 ''
+    AUXRECV 5 0 1 0 0 0 0 0 0 -1:U 0 -1 ''
+    AUXRECV 6 0 1 0 0 0 0 0 0 -1:U 0 -1 ''
+    AUXRECV 7 0 1 0 0 0 0 0 0 -1:U 0 -1 ''
+    AUXRECV 8 0 1 0 0 0 0 0 0 -1:U 0 -1 ''
+    AUXRECV 9 0 1 0 0 0 0 0 0 -1:U 0 -1 ''
+    AUXRECV 10 0 1 0 0 0 0 0 0 -1:U 0 -1 ''
+    AUXRECV 11 0 1 0 0 0 0 0 0 -1:U 0 -1 ''
+    AUXRECV 12 0 1 0 0 0 0 0 0 -1:U 0 -1 ''
+    AUXRECV 13 0 1 0 0 0 0 0 0 -1:U 0 -1 ''
+    AUXRECV 20 0 1 0 0 0 0 0 0 -1:U 0 -1 ''
+    MIDIOUT -1 -1
+    MAINSEND 0 0
+  >
+  <TRACK {A76233F3-108C-6C21-3605-F0B0FD2684EB}
+    NAME "MTPDK SOURCE"
+    PEAKCOL 16576
+    BEAT -1
+    AUTOMODE 0
+    PANLAWFLAGS 3
+    VOLPAN 1 0 -1 -1 1
+    MUTESOLO 0 0 0
+    IPHASE 0
+    PLAYOFFS 0 1
+    ISBUS 0 0
+    BUSCOMP 0 0 0 0 0
+    SHOWINMIX 1 0.6667 0.5 1 0.5 0 0 0 0
+    FIXEDLANES 9 0 0 0 0
+    LANEREC -1 -1 -1 0
+    SEL 1
+    REC 1 5088 1 0 0 0 0 0
+    VU 64
+    TRACKHEIGHT 0 0 0 0 0 0 0
+    INQ 0 0 0 0.5 100 0 0 100
+    NCHAN 16
+    FX 1
+    TRACKID {A76233F3-108C-6C21-3605-F0B0FD2684EB}
+    PERF 0
+    MIDIOUT -1 -1
+    <MIDINOTENAMES
+      -1 34 "Kick [Alt1]" 0 34
+      -1 36 "Kick [Alt2]" 0 36
+      -1 37 "Kick [Main]" 0 37
+      -1 38 "SideStick [Main]" 0 38
+      -1 39 "Snare [Main]" 0 39
+      -1 40 "Snare [Alt1]" 0 40
+      -1 41 "Snare [Alt2]" 0 41
+      -1 42 "Tom Low [Main]" 0 42
+      -1 43 "Hi-Hat closed [Main]" 0 43
+      -1 44 "Tom Low [Alt1]" 0 44
+      -1 45 "Hi-Hat half/open [Main]" 0 45
+      -1 46 "Tom Mid [Main]" 0 46
+      -1 47 "Hi-Hat open [Main]" 0 47
+      -1 48 "Tom Mid [Alt1]" 0 48
+      -1 49 "Tom Hi [Main]" 0 49
+      -1 50 "Crash L [Main]" 0 50
+      -1 51 "Tom Hi [Alt1]" 0 51
+      -1 52 "Ride [Main]" 0 52
+      -1 53 "China [Main]" 0 53
+      -1 54 "Bell [Main]" 0 54
+      -1 56 "Splash [Main]" 0 56
+      -1 58 "Crash R [Main]" 0 58
+      -1 59 "Crash R choked [Main]" 0 59
+      -1 61 "Hi-Hat open [Alt1]" 0 61
+      -1 62 "Hi-Hat half/open [Alt1]" 0 62
+      -1 63 "Hi-Hat closed [Alt1]" 0 63
+      -1 64 "Hi-Hat closed [Alt2]" 0 64
+      -1 66 "HH Pedal chick [Main]" 0 66
+    >
+    MAINSEND 0 0
+    <FXCHAIN
+      WNDRECT 0 0 1440 900
+      SHOW 0
+      LASTSEL 0
+      DOCKED 0
+      BYPASS 0 0 0
+      <VST "VST3i: MT-PowerDrumKit (MANDA AUDIO) (16 out)" MT-PowerDrumKit.vst3 0 "" 672034263{E79A02246D7767B26A4FFB0690BFCFC8} ""
+        120OKO5e7f4AAAAAEAAAAAEAAAAAAAAAAgAAAAAAAAAEAAAAAAAAAAgAAAAAAAAAEAAAAAAAAAAgAAAAAAAAAEAAAAAAAAAAgAAAAAAAAAAAAQAAAAAAAAACAAAAAAAA
+        AAQAAAAAAAAACAAAAAAAAAAQAAAAAAAAACAAAAAAAAAAQAAAAAAAAACAAAAAAAAAtAIAAAEAAAD//wAA
+        pAIAAAEAAAACAAAApAIAALgeRT+JQUA/mpk5P5TAJj8AACA/DD0+P5HvQj9XlkA/2H4yP9h+Mj+NJTA/jSUwP40lMD8AAAA/AAAAPwAAAD891K4+nFOxPm8Sgz4X2Q4/
+        HVpEP2RXIj/hlSg/jNqVPk7ULj9O1C4/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAgD8AAIA/AACAPwAAAAAAAAAAAAAAPAAAADwAACA9
+        AAAgPQAAgDwAAMA8AAAAPQAAQD0AAEA9AABgPQAAYD0AAGA9mdNJPwAAAAAAAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAgD8AAIA/AACAPwAAAAAAAAAAAAAAAAAAAAAAAAAAEQCUPhEAnD4AAJg+
+        EQCsPhEAtD4RALw+AAAEPxEAxD4AALg+AACoPgAA0D4AANg+AADIPgAA6D4RAOw+EQDUPgAA4D4AAIg+AACgPgAAAAARAPw+AAD4PhEA9D4AAAAAEQDMPgAAwD4AALA+
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAkD4RAKQ+AAAAAAAAAD8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAD8AAIA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgD8AAAA9AAAAAAAAgD8AAIA/CtcjPAAAfj8AACg/AAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAIA/AAAAAAAAAAA=
+        AAAAAAAA
+      >
+      PRESETNAME "Current Mapping"
+      FLOATPOS 0 0 1440 900
+      FXID {9FEAEF68-BFC8-C212-7C05-5CDC62C739E2}
+      <PROGRAMENV 0:0 0 "vol1 / MT-PowerDrumKit"
+        PARAMBASE 0.77
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 0
+      >
+      <PROGRAMENV 1:1 0 "vol2 / MT-PowerDrumKit"
+        PARAMBASE 0.751
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 1
+      >
+      <PROGRAMENV 2:2 0 "vol3 / MT-PowerDrumKit"
+        PARAMBASE 0.725
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 2
+      >
+      <PROGRAMENV 3:3 0 "vol4 / MT-PowerDrumKit"
+        PARAMBASE 0.651376
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 3
+      >
+      <PROGRAMENV 4:4 0 "vol5 / MT-PowerDrumKit"
+        PARAMBASE 0.625
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 4
+      >
+      <PROGRAMENV 5:5 0 "vol6 / MT-PowerDrumKit"
+        PARAMBASE 0.743119
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 5
+      >
+      <PROGRAMENV 6:6 0 "vol7 / MT-PowerDrumKit"
+        PARAMBASE 0.761468
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 6
+      >
+      <PROGRAMENV 7:7 0 "vol8 / MT-PowerDrumKit"
+        PARAMBASE 0.752294
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 7
+      >
+      <PROGRAMENV 8:8 0 "vol9 / MT-PowerDrumKit"
+        PARAMBASE 0.697248
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 8
+      >
+      <PROGRAMENV 9:9 0 "vol10 / MT-PowerDrumKit"
+        PARAMBASE 0.697248
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 9
+      >
+      <PROGRAMENV 10:10 0 "vol11 / MT-PowerDrumKit"
+        PARAMBASE 0.688073
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 10
+      >
+      <PROGRAMENV 11:11 0 "vol12 / MT-PowerDrumKit"
+        PARAMBASE 0.688073
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 11
+      >
+      <PROGRAMENV 12:12 0 "vol13 / MT-PowerDrumKit"
+        PARAMBASE 0.688073
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 12
+      >
+      <PROGRAMENV 13:13 0 "pan1 / MT-PowerDrumKit"
+        PARAMBASE 0.5
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 13
+      >
+      <PROGRAMENV 14:14 0 "pan2 / MT-PowerDrumKit"
+        PARAMBASE 0.5
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 14
+      >
+      <PROGRAMENV 15:15 0 "pan3 / MT-PowerDrumKit"
+        PARAMBASE 0.5
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 15
+      >
+      <PROGRAMENV 16:16 0 "pan4 / MT-PowerDrumKit"
+        PARAMBASE 0.341463
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 16
+      >
+      <PROGRAMENV 17:17 0 "pan5 / MT-PowerDrumKit"
+        PARAMBASE 0.346341
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 17
+      >
+      <PROGRAMENV 18:18 0 "pan6 / MT-PowerDrumKit"
+        PARAMBASE 0.256
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 18
+      >
+      <PROGRAMENV 19:19 0 "pan7 / MT-PowerDrumKit"
+        PARAMBASE 0.558
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 19
+      >
+      <PROGRAMENV 20:20 0 "pan8 / MT-PowerDrumKit"
+        PARAMBASE 0.767
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 20
+      >
+      <PROGRAMENV 21:21 0 "pan9 / MT-PowerDrumKit"
+        PARAMBASE 0.634146
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 21
+      >
+      <PROGRAMENV 22:22 0 "pan10 / MT-PowerDrumKit"
+        PARAMBASE 0.658537
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 22
+      >
+      <PROGRAMENV 23:23 0 "pan11 / MT-PowerDrumKit"
+        PARAMBASE 0.292683
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 23
+      >
+      <PROGRAMENV 24:24 0 "pan12 / MT-PowerDrumKit"
+        PARAMBASE 0.682927
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 24
+      >
+      <PROGRAMENV 25:25 0 "pan13 / MT-PowerDrumKit"
+        PARAMBASE 0.682927
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 25
+      >
+      <PROGRAMENV 26:26 0 "on1 / MT-PowerDrumKit"
+        PARAMBASE 1
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 26
+      >
+      <PROGRAMENV 27:27 0 "on2 / MT-PowerDrumKit"
+        PARAMBASE 1
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 27
+      >
+      <PROGRAMENV 28:28 0 "on3 / MT-PowerDrumKit"
+        PARAMBASE 1
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 28
+      >
+      <PROGRAMENV 29:29 0 "on4 / MT-PowerDrumKit"
+        PARAMBASE 1
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 29
+      >
+      <PROGRAMENV 30:30 0 "on5 / MT-PowerDrumKit"
+        PARAMBASE 1
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 30
+      >
+      <PROGRAMENV 31:31 0 "on6 / MT-PowerDrumKit"
+        PARAMBASE 1
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 31
+      >
+      <PROGRAMENV 32:32 0 "on7 / MT-PowerDrumKit"
+        PARAMBASE 1
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 32
+      >
+      <PROGRAMENV 33:33 0 "on8 / MT-PowerDrumKit"
+        PARAMBASE 1
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 33
+      >
+      <PROGRAMENV 34:34 0 "on9 / MT-PowerDrumKit"
+        PARAMBASE 1
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 34
+      >
+      <PROGRAMENV 35:35 0 "on10 / MT-PowerDrumKit"
+        PARAMBASE 1
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 35
+      >
+      <PROGRAMENV 36:36 0 "on11 / MT-PowerDrumKit"
+        PARAMBASE 1
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 36
+      >
+      <PROGRAMENV 37:37 0 "on12 / MT-PowerDrumKit"
+        PARAMBASE 1
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 37
+      >
+      <PROGRAMENV 38:38 0 "on13 / MT-PowerDrumKit"
+        PARAMBASE 1
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 38
+      >
+      <PROGRAMENV 39:39 0 "inv / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 39
+      >
+      <PROGRAMENV 40:40 0 "chan1 / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 40
+      >
+      <PROGRAMENV 41:41 0 "chan2 / MT-PowerDrumKit"
+        PARAMBASE 0.007813
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 41
+      >
+      <PROGRAMENV 42:42 0 "chan3 / MT-PowerDrumKit"
+        PARAMBASE 0.007813
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 42
+      >
+      <PROGRAMENV 43:43 0 "chan4 / MT-PowerDrumKit"
+        PARAMBASE 0.039063
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 43
+      >
+      <PROGRAMENV 44:44 0 "chan5 / MT-PowerDrumKit"
+        PARAMBASE 0.039063
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 44
+      >
+      <PROGRAMENV 45:45 0 "chan6 / MT-PowerDrumKit"
+        PARAMBASE 0.015625
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 45
+      >
+      <PROGRAMENV 46:46 0 "chan7 / MT-PowerDrumKit"
+        PARAMBASE 0.023438
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 46
+      >
+      <PROGRAMENV 47:47 0 "chan8 / MT-PowerDrumKit"
+        PARAMBASE 0.03125
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 47
+      >
+      <PROGRAMENV 48:48 0 "chan9 / MT-PowerDrumKit"
+        PARAMBASE 0.046875
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 48
+      >
+      <PROGRAMENV 49:49 0 "chan10 / MT-PowerDrumKit"
+        PARAMBASE 0.046875
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 49
+      >
+      <PROGRAMENV 50:50 0 "chan11 / MT-PowerDrumKit"
+        PARAMBASE 0.054688
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 50
+      >
+      <PROGRAMENV 51:51 0 "chan12 / MT-PowerDrumKit"
+        PARAMBASE 0.054688
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 51
+      >
+      <PROGRAMENV 52:52 0 "chan13 / MT-PowerDrumKit"
+        PARAMBASE 0.054688
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 52
+      >
+      <PROGRAMENV 53:53 0 "global volume / MT-PowerDrumKit"
+        PARAMBASE 0.788385
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 53
+      >
+      <PROGRAMENV 54:54 0 "midichan / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 54
+      >
+      <PROGRAMENV 55:55 0 "page / MT-PowerDrumKit"
+        PARAMBASE 1
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 55
+      >
+      <PROGRAMENV 56:56 0 "Compr1 / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 56
+      >
+      <PROGRAMENV 57:57 0 "Compr2 / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 57
+      >
+      <PROGRAMENV 58:58 0 "Compr3 / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 58
+      >
+      <PROGRAMENV 59:59 0 "Compr4 / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 59
+      >
+      <PROGRAMENV 60:60 0 "Compr5 / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 60
+      >
+      <PROGRAMENV 61:61 0 "Compr6 / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 61
+      >
+      <PROGRAMENV 62:62 0 "Compr7 / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 62
+      >
+      <PROGRAMENV 63:63 0 "Compr8 / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 63
+      >
+      <PROGRAMENV 64:64 0 "Compr9 / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 64
+      >
+      <PROGRAMENV 65:65 0 "Compr10 / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 65
+      >
+      <PROGRAMENV 66:66 0 "Compr11 / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 66
+      >
+      <PROGRAMENV 67:67 0 "Compr12 / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 67
+      >
+      <PROGRAMENV 68:68 0 "Compr13 / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 68
+      >
+      <PROGRAMENV 69:69 0 "ComprMR / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 69
+      >
+      <PROGRAMENV 70:70 0 "glob.On / MT-PowerDrumKit"
+        PARAMBASE 1
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 70
+      >
+      <PROGRAMENV 71:71 0 "Lnk / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 71
+      >
+      <PROGRAMENV 72:72 0 "Lnk / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 72
+      >
+      <PROGRAMENV 73:73 0 "Lnk / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 73
+      >
+      <PROGRAMENV 74:74 0 "Lnk / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 74
+      >
+      <PROGRAMENV 75:75 0 "Lnk / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 75
+      >
+      <PROGRAMENV 76:76 0 "ComprOn1 / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 76
+      >
+      <PROGRAMENV 77:77 0 "ComprOn2 / MT-PowerDrumKit"
+        PARAMBASE 1
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 77
+      >
+      <PROGRAMENV 78:78 0 "ComprOn3 / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 78
+      >
+      <PROGRAMENV 79:79 0 "ComprOn4 / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 79
+      >
+      <PROGRAMENV 80:80 0 "ComprOn5 / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 80
+      >
+      <PROGRAMENV 81:81 0 "ComprOn6 / MT-PowerDrumKit"
+        PARAMBASE 1
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 81
+      >
+      <PROGRAMENV 82:82 0 "ComprOn7 / MT-PowerDrumKit"
+        PARAMBASE 1
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 82
+      >
+      <PROGRAMENV 83:83 0 "ComprOn8 / MT-PowerDrumKit"
+        PARAMBASE 1
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 83
+      >
+      <PROGRAMENV 84:84 0 "ComprOn9 / MT-PowerDrumKit"
+        PARAMBASE 0
+        LFO 0
+        LFOWT 1 1
+        AUDIOCTL 0
+        AUDIOCTLWT 1 1
+        PLINK 1 -100 -1 0 ""
+        MIDIPLINK 0 15 176 84
+      >
+      <PROGRAMENV 85:85 0 "ComprOn10 / MT-PowerDrumKit"
