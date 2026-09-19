@@ -1,0 +1,10 @@
+Google Drive evidence locations:
+/Google Drive/REAPER Evidence/2026-09-18 MTPDK MIDI Groove
+/Google Drive/REAPER Evidence/2026-09-18 Overhead Alignment
+/Google Drive/REAPER Evidence/2026-09-18 All-Pass Alignment
+/Google Drive/REAPER Evidence/2026-09-18 Stereo Corr 0p1
+/Google Drive/REAPER Evidence/2026-09-18 OH Corr Monitor
+/Google Drive/REAPER Evidence/2026-09-18 MTPDK MIDI Map Full Performance
+/Google Drive/REAPER Evidence/2026-09-18 MTPDK Humanized Production Pass
+/Google Drive/REAPER Evidence/2026-09-18 MTPDK Kick SideStick Fix
+/Google Drive/Skills/Virtual Drums/2026-09-19
