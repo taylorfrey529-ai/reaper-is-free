@@ -1,0 +1,32 @@
+name: Fetch MTPDK2 Linux
+
+on:
+  push:
+    branches:
+      - linux-ububtu-vm-workspace
+    paths:
+      - .github/workflows/fetch-mtpdk2-linux.yml
+
+permissions:
+  contents: read
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch official native Linux VST3
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p out
+          curl -fL --retry 4             'https://cdn1.resources.manda-audio.com/DOWNLOADS/products/mtpdk2_free/2.1.5/MTPDK-2.1.5.1-VST3-64bit-Linux-FULL.zip'             -o out/MTPDK-2.1.5.1-VST3-64bit-Linux-FULL.zip
+          sha256sum out/MTPDK-2.1.5.1-VST3-64bit-Linux-FULL.zip > out/SHA256SUMS.txt
+          unzip -l out/MTPDK-2.1.5.1-VST3-64bit-Linux-FULL.zip > out/ARCHIVE-CONTENTS.txt
+
+      - name: Upload MTPDK2
+        uses: actions/upload-artifact@v4
+        with:
+          name: mtpdk2-2.1.5.1-linux-vst3
+          path: out/
+          compression-level: 0
+          retention-days: 1
