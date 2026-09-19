@@ -1,0 +1,59 @@
+MTPDK Humanized Full-Length Production Pass
+Date: 2026-09-18
+Project: ASIO-Routing-Project.RPP
+Tempo: 120 BPM
+Meter: 4/4
+Length: 128 bars / 256 seconds
+
+Humanization
+- Deterministic seed: 529
+- Drum notes: 1900
+- CC automation events preserved: 19
+- Mean absolute timing movement: 1.9704 ms
+- Maximum absolute timing movement: 4.9723 ms
+- Mean absolute velocity movement: 3.5363
+- Maximum absolute velocity movement: 9
+- Kick notes: 540
+- Snare/side-stick notes: 261
+- Hi-hat notes: 532
+- Tom notes: 82
+- Cymbal/ride notes: 485
+
+Velocity profile after humanization
+- Overall min/max: 42 / 127
+- Overall mean: 93.056
+- Overall standard deviation: 17.750
+
+Section density / mean velocity
+- Intro: 87 notes, 76.75
+- Verse 1: 232 notes, 83.11
+- Pre-Chorus 1: 129 notes, 88.77
+- Chorus 1: 255 notes, 99.54
+- Verse 2: 239 notes, 84.97
+- Pre-Chorus 2: 135 notes, 92.84
+- Chorus 2: 269 notes, 101.67
+- Bridge: 187 notes, 86.88
+- Final Chorus: 274 notes, 105.54
+- Outro: 93 notes, 93.12
+
+Continuity preserved
+- MIDI CC surface remains channel 16.
+- Drum note performance remains channel 1.
+- All 19 CC events retain exact tick positions and values.
+- MTPDK eight-output routing remains unchanged.
+- OH/Room ambience correlation target remains LR_corr ~= +0.10.
+- Close-shell phase alignment remains all-pass based; no waveform nudging restored.
+
+Render note
+- Full-speed offline render is rejected because MTPDK's free-session gate rendered silence.
+- Accepted master is captured in real time through the live MTPDK instance and Virtual Apollo boundary.
+
+Accepted real-time master
+- File: MTPDK_Full_Length_Humanized_128bar_120bpm_48k24.wav
+- Duration: 256.000 seconds
+- Format: 48 kHz / stereo / 24-bit PCM WAV
+- Peak: L -2.0881 dBFS / R -1.9642 dBFS
+- RMS: L -26.4981 dBFS / R -26.0705 dBFS
+- Full-program L/R correlation: 0.760389
+- Captured from live MTPDK -> REAPER routing -> Virtual Apollo playback boundary.
+- The LR_corr ~= +0.10 target remains specific to OH/Room ambience tracks, not this full drum master.
