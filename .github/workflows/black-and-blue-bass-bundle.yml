@@ -1,0 +1,55 @@
+name: Black And Blue Bass Bundle
+
+on:
+  push:
+    branches:
+      - linux-ububtu-vm-workspace
+    paths:
+      - .github/workflows/black-and-blue-bass-bundle.yml
+
+permissions:
+  contents: read
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Black And Blue Basses
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p bundle
+          git clone --depth=1 https://github.com/sfzinstruments/karoryfer.black-and-blue-basses.git bundle/Black-And-Blue-Basses
+          rm -rf bundle/Black-And-Blue-Basses/.git
+
+      - name: Fetch sfizz Debian package
+        shell: bash
+        run: |
+          set -euxo pipefail
+          curl -fL --retry 4             'https://downloadcontentcdn.opensuse.org/repositories/home:/sfztools:/sfizz:/develop/Debian_Testing/amd64/sfizz_1742242193.99499a8-0_amd64.deb'             -o bundle/sfizz_1742242193.99499a8-0_amd64.deb
+
+      - name: Fetch sfizz compatibility patch
+        shell: bash
+        run: |
+          set -euxo pipefail
+          curl -fL --retry 4             'https://discourse.zynthian.org/uploads/short-url/blgmWyWzEjh07vesEuRigdsDx2w.zip'             -o bundle/Karoryfer-Black-And-Blue-Basses-sfizz-compat.zip
+
+      - name: Record provenance and checksums
+        shell: bash
+        run: |
+          set -euxo pipefail
+          {
+            echo 'Black And Blue Basses upstream: https://github.com/sfzinstruments/karoryfer.black-and-blue-basses'
+            echo 'sfizz package: home:sfztools:sfizz:develop Debian_Testing amd64'
+            echo 'sfizz compatibility patch: Zynthian Discourse post #69, 2026-02-22'
+            echo
+            find bundle -type f -print0 | sort -z | xargs -0 sha256sum
+          } > bundle/SHA256SUMS.txt
+
+      - name: Upload installation bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: black-and-blue-basses-linux-reaper
+          path: bundle/
+          compression-level: 0
+          retention-days: 1
