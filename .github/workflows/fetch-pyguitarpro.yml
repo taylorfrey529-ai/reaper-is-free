@@ -1,0 +1,29 @@
+name: Fetch PyGuitarPro
+
+on:
+  push:
+    branches:
+      - linux-ububtu-vm-workspace
+    paths:
+      - .github/workflows/fetch-pyguitarpro.yml
+
+permissions:
+  contents: read
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download PyGuitarPro wheel
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p out
+          python3 -m pip download --no-deps PyGuitarPro -d out
+          sha256sum out/* > out/SHA256SUMS.txt
+      - name: Upload parser
+        uses: actions/upload-artifact@v4
+        with:
+          name: pyguitarpro-wheel
+          path: out/
+          retention-days: 1
