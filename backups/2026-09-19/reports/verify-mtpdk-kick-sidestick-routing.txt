@@ -1,0 +1,6 @@
+source_fx_enabled=true
+note36_kick_kick_peak_db=-8.1640
+note36_kick_snare_peak_db=-155.5258
+note37_sidestick_kick_peak_db=-97.1485
+note37_sidestick_snare_peak_db=-11.4139
+ok=true
