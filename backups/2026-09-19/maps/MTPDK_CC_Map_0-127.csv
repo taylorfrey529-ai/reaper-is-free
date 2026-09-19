@@ -1,0 +1,129 @@
+cc,midi_channel,parameter_index,parameter_name,group,initial_formatted
+0,16,0,vol1,mixer volume,1.3dB
+1,16,1,vol2,mixer volume,0.8dB
+2,16,2,vol3,mixer volume,0.0dB
+3,16,3,vol4,mixer volume,-0.9dB
+4,16,4,vol5,mixer volume,-1.3dB
+5,16,5,vol6,mixer volume,0.6dB
+6,16,6,vol7,mixer volume,1.1dB
+7,16,7,vol8,mixer volume,0.8dB
+8,16,8,vol9,mixer volume,-0.3dB
+9,16,9,vol10,mixer volume,-0.3dB
+10,16,10,vol11,mixer volume,-0.5dB
+11,16,11,vol12,mixer volume,-0.5dB
+12,16,12,vol13,mixer volume,-0.5dB
+13,16,13,pan1,mixer pan,C
+14,16,14,pan2,mixer pan,C
+15,16,15,pan3,mixer pan,C
+16,16,16,pan4,mixer pan,L31
+17,16,17,pan5,mixer pan,L30
+18,16,18,pan6,mixer pan,L48
+19,16,19,pan7,mixer pan,R11
+20,16,20,pan8,mixer pan,R53
+21,16,21,pan9,mixer pan,R26
+22,16,22,pan10,mixer pan,R31
+23,16,23,pan11,mixer pan,L41
+24,16,24,pan12,mixer pan,R36
+25,16,25,pan13,mixer pan,R36
+26,16,26,on1,channel enable,on
+27,16,27,on2,channel enable,on
+28,16,28,on3,channel enable,on
+29,16,29,on4,channel enable,on
+30,16,30,on5,channel enable,on
+31,16,31,on6,channel enable,on
+32,16,32,on7,channel enable,on
+33,16,33,on8,channel enable,on
+34,16,34,on9,channel enable,on
+35,16,35,on10,channel enable,on
+36,16,36,on11,channel enable,on
+37,16,37,on12,channel enable,on
+38,16,38,on13,channel enable,on
+39,16,39,inv,polarity/invert,off
+40,16,40,chan1,output bus selection,1
+41,16,41,chan2,output bus selection,2
+42,16,42,chan3,output bus selection,2
+43,16,43,chan4,output bus selection,6
+44,16,44,chan5,output bus selection,6
+45,16,45,chan6,output bus selection,3
+46,16,46,chan7,output bus selection,4
+47,16,47,chan8,output bus selection,5
+48,16,48,chan9,output bus selection,7
+49,16,49,chan10,output bus selection,7
+50,16,50,chan11,output bus selection,8
+51,16,51,chan12,output bus selection,8
+52,16,52,chan13,output bus selection,8
+53,16,53,global volume,global volume,1.8dB
+54,16,54,midichan,plugin MIDI channel,-dB
+55,16,55,page,page/state,0.0dB
+56,16,56,Compr1,compressor amount,0%
+57,16,57,Compr2,compressor amount,0%
+58,16,58,Compr3,compressor amount,0%
+59,16,59,Compr4,compressor amount,0%
+60,16,60,Compr5,compressor amount,0%
+61,16,61,Compr6,compressor amount,0%
+62,16,62,Compr7,compressor amount,0%
+63,16,63,Compr8,compressor amount,0%
+64,16,64,Compr9,compressor amount,0%
+65,16,65,Compr10,compressor amount,0%
+66,16,66,Compr11,compressor amount,0%
+67,16,67,Compr12,compressor amount,0%
+68,16,68,Compr13,compressor amount,0%
+69,16,69,ComprMR,compressor master,-dB
+70,16,70,glob.On,global enable,on
+71,16,71,Lnk,link toggles,off
+72,16,72,Lnk,link toggles,off
+73,16,73,Lnk,link toggles,off
+74,16,74,Lnk,link toggles,off
+75,16,75,Lnk,link toggles,off
+76,16,76,ComprOn1,compressor enable,off
+77,16,77,ComprOn2,compressor enable,on
+78,16,78,ComprOn3,compressor enable,off
+79,16,79,ComprOn4,compressor enable,off
+80,16,80,ComprOn5,compressor enable,off
+81,16,81,ComprOn6,compressor enable,on
+82,16,82,ComprOn7,compressor enable,on
+83,16,83,ComprOn8,compressor enable,on
+84,16,84,ComprOn9,compressor enable,off
+85,16,85,ComprOn10,compressor enable,off
+86,16,86,ComprOn11,compressor enable,off
+87,16,87,ComprOn12,compressor enable,off
+88,16,88,ComprOn13,compressor enable,off
+89,16,89,Map1_1,Main note-map slots,off
+90,16,90,Map1_2,Main note-map slots,off
+91,16,91,Map1_3,Main note-map slots,off
+92,16,92,Map1_4,Main note-map slots,off
+93,16,93,Map1_5,Main note-map slots,off
+94,16,94,Map1_6,Main note-map slots,off
+95,16,95,Map1_7,Main note-map slots,on
+96,16,96,Map1_8,Main note-map slots,off
+97,16,97,Map1_9,Main note-map slots,off
+98,16,98,Map1_10,Main note-map slots,off
+99,16,99,Map1_11,Main note-map slots,off
+100,16,100,Map1_12,Main note-map slots,off
+101,16,101,Map1_13,Main note-map slots,off
+102,16,102,Map1_14,Main note-map slots,off
+103,16,103,Map1_15,Main note-map slots,off
+104,16,104,Map1_16,Main note-map slots,off
+105,16,105,Map1_17,Main note-map slots,off
+106,16,106,Map2_1,Alt1 note-map slots,off
+107,16,107,Map2_2,Alt1 note-map slots,off
+108,16,108,Map2_3,Alt1 note-map slots,off
+109,16,109,Map2_4,Alt1 note-map slots,off
+110,16,110,Map2_5,Alt1 note-map slots,off
+111,16,111,Map2_6,Alt1 note-map slots,off
+112,16,112,Map2_7,Alt1 note-map slots,off
+113,16,113,Map2_8,Alt1 note-map slots,off
+114,16,114,Map2_9,Alt1 note-map slots,off
+115,16,115,Map2_10,Alt1 note-map slots,off
+116,16,116,Map2_11,Alt1 note-map slots,off
+117,16,117,Map2_12,Alt1 note-map slots,off
+118,16,118,Map2_13,Alt1 note-map slots,off
+119,16,119,Map2_14,Alt1 note-map slots,off
+120,16,120,Map2_15,Alt1 note-map slots,off
+121,16,121,Map2_16,Alt1 note-map slots,off
+122,16,122,Map2_17,Alt1 note-map slots,off
+123,16,123,Map3_1,Alt2 note-map slots,off
+124,16,124,Map3_2,Alt2 note-map slots,off
+125,16,125,Map3_3,Alt2 note-map slots,off
+126,16,126,Map3_4,Alt2 note-map slots,on
+127,16,127,Map3_5,Alt2 note-map slots,off
