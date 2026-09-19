@@ -1,0 +1,34 @@
+name: Fetch Compatible sfizz
+
+on:
+  push:
+    branches:
+      - linux-ububtu-vm-workspace
+    paths:
+      - .github/workflows/fetch-compatible-sfizz.yml
+
+permissions:
+  contents: read
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download stable Debian 12 sfizz
+        shell: bash
+        run: |
+          set -euxo pipefail
+          curl -fL --retry 4             'https://ftp5.gwdg.de/pub/opensuse/repositories/home:/sfztools:/sfizz/Debian_12/amd64/sfizz_1.2.3-0_amd64.deb'             -o sfizz_1.2.3-0_amd64.deb
+          sha256sum sfizz_1.2.3-0_amd64.deb > SHA256SUMS.txt
+          dpkg-deb -I sfizz_1.2.3-0_amd64.deb | sed -n '1,80p' > PACKAGE-INFO.txt
+
+      - name: Upload sfizz package
+        uses: actions/upload-artifact@v4
+        with:
+          name: sfizz-1.2.3-debian12-amd64
+          path: |
+            sfizz_1.2.3-0_amd64.deb
+            SHA256SUMS.txt
+            PACKAGE-INFO.txt
+          compression-level: 0
+          retention-days: 1
