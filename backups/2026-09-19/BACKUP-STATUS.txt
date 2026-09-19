@@ -1,0 +1,42 @@
+REAPER / Virtual Drums GitHub backup verification
+Date: 2026-09-19
+
+Repository: taylorfrey529-ai/reaper-is-free
+Backup branch: backup/2026-09-19-virtual-drums
+Base branch: linux-ububtu-vm-workspace
+Base head: bb972fbd0f9101827cc2f68dbfe008bc1ab84579
+
+Verified GitHub backup root:
+backups/2026-09-19/
+
+Corrected REAPER project:
+backups/2026-09-19/projects/ASIO-Routing-Project/ASIO-Routing-Project.RPP
+Git blob SHA: 93d5285ffb5349f90d6c675bc83e66df81cd90f1
+Local-source Git blob SHA: 93d5285ffb5349f90d6c675bc83e66df81cd90f1
+Result: exact byte identity verified.
+
+Project SHA-256 recorded in SHA256SUMS.txt:
+36066c5427fb1d1ebe7e7e78f75d9327c01ff9876240fe763697036ef0e9bff2
+
+Virtual Drums source verified present:
+- SKILL.md
+- agents/openai.yaml
+- references/mtpdk-midi-map.json
+- references/mtpdk-cc-map.csv
+- references/mtpdk-note-map.csv
+- references/production-rules.md
+- references/reaper-note-names.txt
+- scripts/analyze_stereo_corr.py
+- scripts/validate_midi_performance.py
+- scripts/validate_mtpdk_map.py
+
+Continuity checks:
+- MTPDK Kick 36 / SideStick 37 / Snare 38
+- note channel 1 / CC channel 16
+- 128 MIDI CC mappings
+- OVERHEADS = KIT
+- OH/Room stereo target LR_corr ~= +0.10
+- Virtual Apollo 48 kHz stereo
+
+Large binaries:
+Large WAV/MP4/toolchain/archive payloads are not stored in ordinary Git because this connector has no Git LFS binary-upload path. SHA256SUMS.txt records their hashes and DRIVE-EVIDENCE.txt indexes the existing Google Drive copies.
