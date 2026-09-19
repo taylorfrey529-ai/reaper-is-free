@@ -1,0 +1,65 @@
+MTPDK NOTE MAP FIX - 2026-09-18
+
+ROOT CAUSE
+MTPDK's Map parameters reserve zero as "off". A nonzero stored mapping value N encodes MIDI note N-1.
+The previous map generator used N directly, placing every articulation one semitone too high.
+Examples from the plugin parameter dump:
+- Kick Map1_1 = 37/128 -> MIDI note 36 (Kick), not 37.
+- SideStick Map1_3 = 38/128 -> MIDI note 37 (SideStick), not 38.
+- Snare Map1_2 = 39/128 -> MIDI note 38 (Snare), not 39.
+
+CORRECTION
+- Shifted every channel-1 drum note in the 128-bar performance down exactly one semitone.
+- Notes changed: 1900 / 1900.
+- MIDI CC events changed: 0 / 19. All 19 CC events retained their timing and values.
+- Existing 128 CC-to-parameter links were left unchanged. Current project readback contains 128 MIDIPLINK entries spanning CC 0 through CC 127 on MIDI channel 16.
+- Humanized timing and velocity values were left unchanged.
+
+CORRECTED PRIMARY NOTES
+Kick 36
+SideStick 37
+Snare 38
+Tom Low 41
+Hi-Hat Closed 42
+Hi-Hat Half/Open 44
+Tom Mid 45
+Hi-Hat Open 46
+Tom Hi 48
+Crash L 49
+Ride 51
+China 52
+Bell 53
+Splash 55
+Crash R 57
+Crash R Choked 58
+
+ISOLATED AUDIO ROUTING PROOF
+MIDI 36:
+- MTPDK Kick return peak: -8.1640 dB
+- MTPDK Snare return peak: -155.5258 dB
+MIDI 37:
+- MTPDK Kick return peak: -97.1485 dB
+- MTPDK Snare/SideStick return peak: -11.4139 dB
+This proves MIDI 36 now triggers the Kick return and MIDI 37 triggers the side-stick/snare return.
+
+CORRECTED FULL-LENGTH MASTER
+Duration: 256.000 seconds
+Format: 48 kHz / 24-bit / stereo PCM
+Peak L/R: -0.9869 / -1.5173 dBFS
+RMS L/R: -25.1593 / -25.2535 dBFS
+Full-program L/R correlation: 0.877049
+Note: this full-program correlation is not the OH/Room LR_corr target; OH/Room ambience remains governed by the separate +0.10 rule.
+
+FILES
+Project: /mnt/data/ubuntu-desktop-workspace/projects/ASIO-Routing-Project/ASIO-Routing-Project.RPP
+Project pre-fix backup: /mnt/data/ubuntu-desktop-workspace/projects/ASIO-Routing-Project/ASIO-Routing-Project.RPP.before-note-map-fix-20260918
+Corrected master: /mnt/data/reaper-evidence/MTPDK_Full_Length_Humanized_128bar_120bpm_48k24.wav
+Corrected humanized MIDI: /mnt/data/reaper-evidence/MTPDK_Full_Length_Humanized_128bar_120bpm.mid
+Corrected note map: /mnt/data/reaper-evidence/MTPDK_Note_Map.csv
+Corrected JSON map: /mnt/data/reaper-evidence/MTPDK_MIDI_Map.json
+Corrected REAPER note names: /mnt/data/reaper-evidence/MTPDK_REAPER_Note_Names.txt
+
+SHA256
+Project: 36066c5427fb1d1ebe7e7e78f75d9327c01ff9876240fe763697036ef0e9bff2
+Master: 1fa02282cfdafb3b58f4068a7d7de400707a4a8379cb2dccc8c7abec3839a0e0
+Humanized MIDI: c720a533064438657ff681012a75b5bf99e10366f4fdaa7924100c54c6c451f5
