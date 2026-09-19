@@ -1,0 +1,1000 @@
+{
+  "plugin": "MT-PowerDrumKit (MANDA AUDIO) VST3i",
+  "note_channel": 1,
+  "cc_channel": 16,
+  "cc_assignment_rule": "CC n -> MTPDK exposed parameter index n, for n=0..127",
+  "cc_links_verified": 128,
+  "notes": [
+    {
+      "instrument": "Kick",
+      "main": 36,
+      "alt1": 33,
+      "alt2": 35
+    },
+    {
+      "instrument": "Snare",
+      "main": 38,
+      "alt1": 39,
+      "alt2": 40
+    },
+    {
+      "instrument": "SideStick",
+      "main": 37,
+      "alt1": null,
+      "alt2": null
+    },
+    {
+      "instrument": "Hi-Hat closed",
+      "main": 42,
+      "alt1": 62,
+      "alt2": 63
+    },
+    {
+      "instrument": "Hi-Hat half/open",
+      "main": 44,
+      "alt1": 61,
+      "alt2": null
+    },
+    {
+      "instrument": "Hi-Hat open",
+      "main": 46,
+      "alt1": 60,
+      "alt2": null
+    },
+    {
+      "instrument": "HH - Pedal chick",
+      "main": 65,
+      "alt1": null,
+      "alt2": null
+    },
+    {
+      "instrument": "Tom Hi",
+      "main": 48,
+      "alt1": 50,
+      "alt2": null
+    },
+    {
+      "instrument": "Tom Mid",
+      "main": 45,
+      "alt1": 47,
+      "alt2": null
+    },
+    {
+      "instrument": "Tom Low",
+      "main": 41,
+      "alt1": 43,
+      "alt2": null
+    },
+    {
+      "instrument": "Ride",
+      "main": 51,
+      "alt1": null,
+      "alt2": null
+    },
+    {
+      "instrument": "Bell",
+      "main": 53,
+      "alt1": null,
+      "alt2": null
+    },
+    {
+      "instrument": "Crash L",
+      "main": 49,
+      "alt1": null,
+      "alt2": null
+    },
+    {
+      "instrument": "Crash R",
+      "main": 57,
+      "alt1": null,
+      "alt2": null
+    },
+    {
+      "instrument": "Crash R choked",
+      "main": 58,
+      "alt1": null,
+      "alt2": null
+    },
+    {
+      "instrument": "China",
+      "main": 52,
+      "alt1": null,
+      "alt2": null
+    },
+    {
+      "instrument": "Splash",
+      "main": 55,
+      "alt1": null,
+      "alt2": null
+    }
+  ],
+  "cc_map": [
+    {
+      "cc": 0,
+      "midi_channel": 16,
+      "parameter_index": 0,
+      "parameter_name": "vol1",
+      "group": "mixer volume",
+      "initial_formatted": "1.3dB"
+    },
+    {
+      "cc": 1,
+      "midi_channel": 16,
+      "parameter_index": 1,
+      "parameter_name": "vol2",
+      "group": "mixer volume",
+      "initial_formatted": "0.8dB"
+    },
+    {
+      "cc": 2,
+      "midi_channel": 16,
+      "parameter_index": 2,
+      "parameter_name": "vol3",
+      "group": "mixer volume",
+      "initial_formatted": "0.0dB"
+    },
+    {
+      "cc": 3,
+      "midi_channel": 16,
+      "parameter_index": 3,
+      "parameter_name": "vol4",
+      "group": "mixer volume",
+      "initial_formatted": "-0.9dB"
+    },
+    {
+      "cc": 4,
+      "midi_channel": 16,
+      "parameter_index": 4,
+      "parameter_name": "vol5",
+      "group": "mixer volume",
+      "initial_formatted": "-1.3dB"
+    },
+    {
+      "cc": 5,
+      "midi_channel": 16,
+      "parameter_index": 5,
+      "parameter_name": "vol6",
+      "group": "mixer volume",
+      "initial_formatted": "0.6dB"
+    },
+    {
+      "cc": 6,
+      "midi_channel": 16,
+      "parameter_index": 6,
+      "parameter_name": "vol7",
+      "group": "mixer volume",
+      "initial_formatted": "1.1dB"
+    },
+    {
+      "cc": 7,
+      "midi_channel": 16,
+      "parameter_index": 7,
+      "parameter_name": "vol8",
+      "group": "mixer volume",
+      "initial_formatted": "0.8dB"
+    },
+    {
+      "cc": 8,
+      "midi_channel": 16,
+      "parameter_index": 8,
+      "parameter_name": "vol9",
+      "group": "mixer volume",
+      "initial_formatted": "-0.3dB"
+    },
+    {
+      "cc": 9,
+      "midi_channel": 16,
+      "parameter_index": 9,
+      "parameter_name": "vol10",
+      "group": "mixer volume",
+      "initial_formatted": "-0.3dB"
+    },
+    {
+      "cc": 10,
+      "midi_channel": 16,
+      "parameter_index": 10,
+      "parameter_name": "vol11",
+      "group": "mixer volume",
+      "initial_formatted": "-0.5dB"
+    },
+    {
+      "cc": 11,
+      "midi_channel": 16,
+      "parameter_index": 11,
+      "parameter_name": "vol12",
+      "group": "mixer volume",
+      "initial_formatted": "-0.5dB"
+    },
+    {
+      "cc": 12,
+      "midi_channel": 16,
+      "parameter_index": 12,
+      "parameter_name": "vol13",
+      "group": "mixer volume",
+      "initial_formatted": "-0.5dB"
+    },
+    {
+      "cc": 13,
+      "midi_channel": 16,
+      "parameter_index": 13,
+      "parameter_name": "pan1",
+      "group": "mixer pan",
+      "initial_formatted": "C"
+    },
+    {
+      "cc": 14,
+      "midi_channel": 16,
+      "parameter_index": 14,
+      "parameter_name": "pan2",
+      "group": "mixer pan",
+      "initial_formatted": "C"
+    },
+    {
+      "cc": 15,
+      "midi_channel": 16,
+      "parameter_index": 15,
+      "parameter_name": "pan3",
+      "group": "mixer pan",
+      "initial_formatted": "C"
+    },
+    {
+      "cc": 16,
+      "midi_channel": 16,
+      "parameter_index": 16,
+      "parameter_name": "pan4",
+      "group": "mixer pan",
+      "initial_formatted": "L31"
+    },
+    {
+      "cc": 17,
+      "midi_channel": 16,
+      "parameter_index": 17,
+      "parameter_name": "pan5",
+      "group": "mixer pan",
+      "initial_formatted": "L30"
+    },
+    {
+      "cc": 18,
+      "midi_channel": 16,
+      "parameter_index": 18,
+      "parameter_name": "pan6",
+      "group": "mixer pan",
+      "initial_formatted": "L48"
+    },
+    {
+      "cc": 19,
+      "midi_channel": 16,
+      "parameter_index": 19,
+      "parameter_name": "pan7",
+      "group": "mixer pan",
+      "initial_formatted": "R11"
+    },
+    {
+      "cc": 20,
+      "midi_channel": 16,
+      "parameter_index": 20,
+      "parameter_name": "pan8",
+      "group": "mixer pan",
+      "initial_formatted": "R53"
+    },
+    {
+      "cc": 21,
+      "midi_channel": 16,
+      "parameter_index": 21,
+      "parameter_name": "pan9",
+      "group": "mixer pan",
+      "initial_formatted": "R26"
+    },
+    {
+      "cc": 22,
+      "midi_channel": 16,
+      "parameter_index": 22,
+      "parameter_name": "pan10",
+      "group": "mixer pan",
+      "initial_formatted": "R31"
+    },
+    {
+      "cc": 23,
+      "midi_channel": 16,
+      "parameter_index": 23,
+      "parameter_name": "pan11",
+      "group": "mixer pan",
+      "initial_formatted": "L41"
+    },
+    {
+      "cc": 24,
+      "midi_channel": 16,
+      "parameter_index": 24,
+      "parameter_name": "pan12",
+      "group": "mixer pan",
+      "initial_formatted": "R36"
+    },
+    {
+      "cc": 25,
+      "midi_channel": 16,
+      "parameter_index": 25,
+      "parameter_name": "pan13",
+      "group": "mixer pan",
+      "initial_formatted": "R36"
+    },
+    {
+      "cc": 26,
+      "midi_channel": 16,
+      "parameter_index": 26,
+      "parameter_name": "on1",
+      "group": "channel enable",
+      "initial_formatted": "on"
+    },
+    {
+      "cc": 27,
+      "midi_channel": 16,
+      "parameter_index": 27,
+      "parameter_name": "on2",
+      "group": "channel enable",
+      "initial_formatted": "on"
+    },
+    {
+      "cc": 28,
+      "midi_channel": 16,
+      "parameter_index": 28,
+      "parameter_name": "on3",
+      "group": "channel enable",
+      "initial_formatted": "on"
+    },
+    {
+      "cc": 29,
+      "midi_channel": 16,
+      "parameter_index": 29,
+      "parameter_name": "on4",
+      "group": "channel enable",
+      "initial_formatted": "on"
+    },
+    {
+      "cc": 30,
+      "midi_channel": 16,
+      "parameter_index": 30,
+      "parameter_name": "on5",
+      "group": "channel enable",
+      "initial_formatted": "on"
+    },
+    {
+      "cc": 31,
+      "midi_channel": 16,
+      "parameter_index": 31,
+      "parameter_name": "on6",
+      "group": "channel enable",
+      "initial_formatted": "on"
+    },
+    {
+      "cc": 32,
+      "midi_channel": 16,
+      "parameter_index": 32,
+      "parameter_name": "on7",
+      "group": "channel enable",
+      "initial_formatted": "on"
+    },
+    {
+      "cc": 33,
+      "midi_channel": 16,
+      "parameter_index": 33,
+      "parameter_name": "on8",
+      "group": "channel enable",
+      "initial_formatted": "on"
+    },
+    {
+      "cc": 34,
+      "midi_channel": 16,
+      "parameter_index": 34,
+      "parameter_name": "on9",
+      "group": "channel enable",
+      "initial_formatted": "on"
+    },
+    {
+      "cc": 35,
+      "midi_channel": 16,
+      "parameter_index": 35,
+      "parameter_name": "on10",
+      "group": "channel enable",
+      "initial_formatted": "on"
+    },
+    {
+      "cc": 36,
+      "midi_channel": 16,
+      "parameter_index": 36,
+      "parameter_name": "on11",
+      "group": "channel enable",
+      "initial_formatted": "on"
+    },
+    {
+      "cc": 37,
+      "midi_channel": 16,
+      "parameter_index": 37,
+      "parameter_name": "on12",
+      "group": "channel enable",
+      "initial_formatted": "on"
+    },
+    {
+      "cc": 38,
+      "midi_channel": 16,
+      "parameter_index": 38,
+      "parameter_name": "on13",
+      "group": "channel enable",
+      "initial_formatted": "on"
+    },
+    {
+      "cc": 39,
+      "midi_channel": 16,
+      "parameter_index": 39,
+      "parameter_name": "inv",
+      "group": "polarity/invert",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 40,
+      "midi_channel": 16,
+      "parameter_index": 40,
+      "parameter_name": "chan1",
+      "group": "output bus selection",
+      "initial_formatted": "1"
+    },
+    {
+      "cc": 41,
+      "midi_channel": 16,
+      "parameter_index": 41,
+      "parameter_name": "chan2",
+      "group": "output bus selection",
+      "initial_formatted": "2"
+    },
+    {
+      "cc": 42,
+      "midi_channel": 16,
+      "parameter_index": 42,
+      "parameter_name": "chan3",
+      "group": "output bus selection",
+      "initial_formatted": "2"
+    },
+    {
+      "cc": 43,
+      "midi_channel": 16,
+      "parameter_index": 43,
+      "parameter_name": "chan4",
+      "group": "output bus selection",
+      "initial_formatted": "6"
+    },
+    {
+      "cc": 44,
+      "midi_channel": 16,
+      "parameter_index": 44,
+      "parameter_name": "chan5",
+      "group": "output bus selection",
+      "initial_formatted": "6"
+    },
+    {
+      "cc": 45,
+      "midi_channel": 16,
+      "parameter_index": 45,
+      "parameter_name": "chan6",
+      "group": "output bus selection",
+      "initial_formatted": "3"
+    },
+    {
+      "cc": 46,
+      "midi_channel": 16,
+      "parameter_index": 46,
+      "parameter_name": "chan7",
+      "group": "output bus selection",
+      "initial_formatted": "4"
+    },
+    {
+      "cc": 47,
+      "midi_channel": 16,
+      "parameter_index": 47,
+      "parameter_name": "chan8",
+      "group": "output bus selection",
+      "initial_formatted": "5"
+    },
+    {
+      "cc": 48,
+      "midi_channel": 16,
+      "parameter_index": 48,
+      "parameter_name": "chan9",
+      "group": "output bus selection",
+      "initial_formatted": "7"
+    },
+    {
+      "cc": 49,
+      "midi_channel": 16,
+      "parameter_index": 49,
+      "parameter_name": "chan10",
+      "group": "output bus selection",
+      "initial_formatted": "7"
+    },
+    {
+      "cc": 50,
+      "midi_channel": 16,
+      "parameter_index": 50,
+      "parameter_name": "chan11",
+      "group": "output bus selection",
+      "initial_formatted": "8"
+    },
+    {
+      "cc": 51,
+      "midi_channel": 16,
+      "parameter_index": 51,
+      "parameter_name": "chan12",
+      "group": "output bus selection",
+      "initial_formatted": "8"
+    },
+    {
+      "cc": 52,
+      "midi_channel": 16,
+      "parameter_index": 52,
+      "parameter_name": "chan13",
+      "group": "output bus selection",
+      "initial_formatted": "8"
+    },
+    {
+      "cc": 53,
+      "midi_channel": 16,
+      "parameter_index": 53,
+      "parameter_name": "global volume",
+      "group": "global volume",
+      "initial_formatted": "1.8dB"
+    },
+    {
+      "cc": 54,
+      "midi_channel": 16,
+      "parameter_index": 54,
+      "parameter_name": "midichan",
+      "group": "plugin MIDI channel",
+      "initial_formatted": "-\u007fdB"
+    },
+    {
+      "cc": 55,
+      "midi_channel": 16,
+      "parameter_index": 55,
+      "parameter_name": "page",
+      "group": "page/state",
+      "initial_formatted": "0.0dB"
+    },
+    {
+      "cc": 56,
+      "midi_channel": 16,
+      "parameter_index": 56,
+      "parameter_name": "Compr1",
+      "group": "compressor amount",
+      "initial_formatted": "0%"
+    },
+    {
+      "cc": 57,
+      "midi_channel": 16,
+      "parameter_index": 57,
+      "parameter_name": "Compr2",
+      "group": "compressor amount",
+      "initial_formatted": "0%"
+    },
+    {
+      "cc": 58,
+      "midi_channel": 16,
+      "parameter_index": 58,
+      "parameter_name": "Compr3",
+      "group": "compressor amount",
+      "initial_formatted": "0%"
+    },
+    {
+      "cc": 59,
+      "midi_channel": 16,
+      "parameter_index": 59,
+      "parameter_name": "Compr4",
+      "group": "compressor amount",
+      "initial_formatted": "0%"
+    },
+    {
+      "cc": 60,
+      "midi_channel": 16,
+      "parameter_index": 60,
+      "parameter_name": "Compr5",
+      "group": "compressor amount",
+      "initial_formatted": "0%"
+    },
+    {
+      "cc": 61,
+      "midi_channel": 16,
+      "parameter_index": 61,
+      "parameter_name": "Compr6",
+      "group": "compressor amount",
+      "initial_formatted": "0%"
+    },
+    {
+      "cc": 62,
+      "midi_channel": 16,
+      "parameter_index": 62,
+      "parameter_name": "Compr7",
+      "group": "compressor amount",
+      "initial_formatted": "0%"
+    },
+    {
+      "cc": 63,
+      "midi_channel": 16,
+      "parameter_index": 63,
+      "parameter_name": "Compr8",
+      "group": "compressor amount",
+      "initial_formatted": "0%"
+    },
+    {
+      "cc": 64,
+      "midi_channel": 16,
+      "parameter_index": 64,
+      "parameter_name": "Compr9",
+      "group": "compressor amount",
+      "initial_formatted": "0%"
+    },
+    {
+      "cc": 65,
+      "midi_channel": 16,
+      "parameter_index": 65,
+      "parameter_name": "Compr10",
+      "group": "compressor amount",
+      "initial_formatted": "0%"
+    },
+    {
+      "cc": 66,
+      "midi_channel": 16,
+      "parameter_index": 66,
+      "parameter_name": "Compr11",
+      "group": "compressor amount",
+      "initial_formatted": "0%"
+    },
+    {
+      "cc": 67,
+      "midi_channel": 16,
+      "parameter_index": 67,
+      "parameter_name": "Compr12",
+      "group": "compressor amount",
+      "initial_formatted": "0%"
+    },
+    {
+      "cc": 68,
+      "midi_channel": 16,
+      "parameter_index": 68,
+      "parameter_name": "Compr13",
+      "group": "compressor amount",
+      "initial_formatted": "0%"
+    },
+    {
+      "cc": 69,
+      "midi_channel": 16,
+      "parameter_index": 69,
+      "parameter_name": "ComprMR",
+      "group": "compressor master",
+      "initial_formatted": "-\u007fdB"
+    },
+    {
+      "cc": 70,
+      "midi_channel": 16,
+      "parameter_index": 70,
+      "parameter_name": "glob.On",
+      "group": "global enable",
+      "initial_formatted": "on"
+    },
+    {
+      "cc": 71,
+      "midi_channel": 16,
+      "parameter_index": 71,
+      "parameter_name": "Lnk",
+      "group": "link toggles",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 72,
+      "midi_channel": 16,
+      "parameter_index": 72,
+      "parameter_name": "Lnk",
+      "group": "link toggles",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 73,
+      "midi_channel": 16,
+      "parameter_index": 73,
+      "parameter_name": "Lnk",
+      "group": "link toggles",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 74,
+      "midi_channel": 16,
+      "parameter_index": 74,
+      "parameter_name": "Lnk",
+      "group": "link toggles",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 75,
+      "midi_channel": 16,
+      "parameter_index": 75,
+      "parameter_name": "Lnk",
+      "group": "link toggles",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 76,
+      "midi_channel": 16,
+      "parameter_index": 76,
+      "parameter_name": "ComprOn1",
+      "group": "compressor enable",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 77,
+      "midi_channel": 16,
+      "parameter_index": 77,
+      "parameter_name": "ComprOn2",
+      "group": "compressor enable",
+      "initial_formatted": "on"
+    },
+    {
+      "cc": 78,
+      "midi_channel": 16,
+      "parameter_index": 78,
+      "parameter_name": "ComprOn3",
+      "group": "compressor enable",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 79,
+      "midi_channel": 16,
+      "parameter_index": 79,
+      "parameter_name": "ComprOn4",
+      "group": "compressor enable",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 80,
+      "midi_channel": 16,
+      "parameter_index": 80,
+      "parameter_name": "ComprOn5",
+      "group": "compressor enable",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 81,
+      "midi_channel": 16,
+      "parameter_index": 81,
+      "parameter_name": "ComprOn6",
+      "group": "compressor enable",
+      "initial_formatted": "on"
+    },
+    {
+      "cc": 82,
+      "midi_channel": 16,
+      "parameter_index": 82,
+      "parameter_name": "ComprOn7",
+      "group": "compressor enable",
+      "initial_formatted": "on"
+    },
+    {
+      "cc": 83,
+      "midi_channel": 16,
+      "parameter_index": 83,
+      "parameter_name": "ComprOn8",
+      "group": "compressor enable",
+      "initial_formatted": "on"
+    },
+    {
+      "cc": 84,
+      "midi_channel": 16,
+      "parameter_index": 84,
+      "parameter_name": "ComprOn9",
+      "group": "compressor enable",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 85,
+      "midi_channel": 16,
+      "parameter_index": 85,
+      "parameter_name": "ComprOn10",
+      "group": "compressor enable",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 86,
+      "midi_channel": 16,
+      "parameter_index": 86,
+      "parameter_name": "ComprOn11",
+      "group": "compressor enable",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 87,
+      "midi_channel": 16,
+      "parameter_index": 87,
+      "parameter_name": "ComprOn12",
+      "group": "compressor enable",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 88,
+      "midi_channel": 16,
+      "parameter_index": 88,
+      "parameter_name": "ComprOn13",
+      "group": "compressor enable",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 89,
+      "midi_channel": 16,
+      "parameter_index": 89,
+      "parameter_name": "Map1_1",
+      "group": "Main note-map slots",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 90,
+      "midi_channel": 16,
+      "parameter_index": 90,
+      "parameter_name": "Map1_2",
+      "group": "Main note-map slots",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 91,
+      "midi_channel": 16,
+      "parameter_index": 91,
+      "parameter_name": "Map1_3",
+      "group": "Main note-map slots",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 92,
+      "midi_channel": 16,
+      "parameter_index": 92,
+      "parameter_name": "Map1_4",
+      "group": "Main note-map slots",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 93,
+      "midi_channel": 16,
+      "parameter_index": 93,
+      "parameter_name": "Map1_5",
+      "group": "Main note-map slots",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 94,
+      "midi_channel": 16,
+      "parameter_index": 94,
+      "parameter_name": "Map1_6",
+      "group": "Main note-map slots",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 95,
+      "midi_channel": 16,
+      "parameter_index": 95,
+      "parameter_name": "Map1_7",
+      "group": "Main note-map slots",
+      "initial_formatted": "on"
+    },
+    {
+      "cc": 96,
+      "midi_channel": 16,
+      "parameter_index": 96,
+      "parameter_name": "Map1_8",
+      "group": "Main note-map slots",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 97,
+      "midi_channel": 16,
+      "parameter_index": 97,
+      "parameter_name": "Map1_9",
+      "group": "Main note-map slots",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 98,
+      "midi_channel": 16,
+      "parameter_index": 98,
+      "parameter_name": "Map1_10",
+      "group": "Main note-map slots",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 99,
+      "midi_channel": 16,
+      "parameter_index": 99,
+      "parameter_name": "Map1_11",
+      "group": "Main note-map slots",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 100,
+      "midi_channel": 16,
+      "parameter_index": 100,
+      "parameter_name": "Map1_12",
+      "group": "Main note-map slots",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 101,
+      "midi_channel": 16,
+      "parameter_index": 101,
+      "parameter_name": "Map1_13",
+      "group": "Main note-map slots",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 102,
+      "midi_channel": 16,
+      "parameter_index": 102,
+      "parameter_name": "Map1_14",
+      "group": "Main note-map slots",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 103,
+      "midi_channel": 16,
+      "parameter_index": 103,
+      "parameter_name": "Map1_15",
+      "group": "Main note-map slots",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 104,
+      "midi_channel": 16,
+      "parameter_index": 104,
+      "parameter_name": "Map1_16",
+      "group": "Main note-map slots",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 105,
+      "midi_channel": 16,
+      "parameter_index": 105,
+      "parameter_name": "Map1_17",
+      "group": "Main note-map slots",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 106,
+      "midi_channel": 16,
+      "parameter_index": 106,
+      "parameter_name": "Map2_1",
+      "group": "Alt1 note-map slots",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 107,
+      "midi_channel": 16,
+      "parameter_index": 107,
+      "parameter_name": "Map2_2",
+      "group": "Alt1 note-map slots",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 108,
+      "midi_channel": 16,
+      "parameter_index": 108,
+      "parameter_name": "Map2_3",
+      "group": "Alt1 note-map slots",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 109,
+      "midi_channel": 16,
+      "parameter_index": 109,
+      "parameter_name": "Map2_4",
+      "group": "Alt1 note-map slots",
+      "initial_formatted": "off"
+    },
+    {
+      "cc": 110,
+      "midi_channel": 16,
+      "parameter_index": 110,
+      "parameter_name": "Map2_5",
+      "group": "Alt1 note-map slots",
+      "initial_formatted": "off"
+    },
+    {
