@@ -46,10 +46,49 @@ jobs:
             find bundle -type f -print0 | sort -z | xargs -0 sha256sum
           } > bundle/SHA256SUMS.txt
 
-      - name: Upload installation bundle
+      - name: Pack and split for connector transfer
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p chunks
+          tar -cf chunks/black-and-blue-basses-linux-reaper.tar bundle
+          sha256sum chunks/black-and-blue-basses-linux-reaper.tar > chunks/TAR-SHA256SUM.txt
+          split -b 400M chunks/black-and-blue-basses-linux-reaper.tar chunks/black-and-blue-basses-linux-reaper.tar.part-
+          rm chunks/black-and-blue-basses-linux-reaper.tar
+          ls -lh chunks
+          test -f chunks/black-and-blue-basses-linux-reaper.tar.part-aa
+          test -f chunks/black-and-blue-basses-linux-reaper.tar.part-ab
+          test -f chunks/black-and-blue-basses-linux-reaper.tar.part-ac
+          test ! -f chunks/black-and-blue-basses-linux-reaper.tar.part-ad
+
+      - name: Upload chunk aa
         uses: actions/upload-artifact@v4
         with:
-          name: black-and-blue-basses-linux-reaper
-          path: bundle/
+          name: black-and-blue-basses-chunk-aa
+          path: chunks/black-and-blue-basses-linux-reaper.tar.part-aa
+          compression-level: 0
+          retention-days: 1
+
+      - name: Upload chunk ab
+        uses: actions/upload-artifact@v4
+        with:
+          name: black-and-blue-basses-chunk-ab
+          path: chunks/black-and-blue-basses-linux-reaper.tar.part-ab
+          compression-level: 0
+          retention-days: 1
+
+      - name: Upload chunk ac
+        uses: actions/upload-artifact@v4
+        with:
+          name: black-and-blue-basses-chunk-ac
+          path: chunks/black-and-blue-basses-linux-reaper.tar.part-ac
+          compression-level: 0
+          retention-days: 1
+
+      - name: Upload transfer checksum
+        uses: actions/upload-artifact@v4
+        with:
+          name: black-and-blue-basses-transfer-checksum
+          path: chunks/TAR-SHA256SUM.txt
           compression-level: 0
           retention-days: 1
