@@ -31,7 +31,7 @@ jobs:
           sudo apt-get install -y unar
           mkdir -p /tmp/metal-extracted
           unar -f -o /tmp/metal-extracted /tmp/Metal-GTX.rar
-          find /tmp/metal-extracted -type f -iname '*.sfz' | head -20
+          find /tmp/metal-extracted -type f -iname '*.sfz' | head -20 || true
           test -n "$(find /tmp/metal-extracted -type f -iname '*.sfz' -print -quit)"
           tar --sort=name --mtime='UTC 1970-01-01' --owner=0 --group=0 --numeric-owner -C /tmp/metal-extracted -cf /tmp/Metal-GTX-extracted.tar .
           sha256sum /tmp/Metal-GTX-extracted.tar > /tmp/Metal-GTX-extracted.tar.sha256
