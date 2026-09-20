@@ -1,0 +1,40 @@
+name: Astra GM2 Black Blue Deterministic
+on:
+  push:
+    branches:
+      - tmp/astra-gm2-nam-build-20260920
+jobs:
+  bass:
+    runs-on: ubuntu-24.04
+    steps:
+      - shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y git-lfs
+          git lfs install
+          mkdir -p /tmp/gm2/bass
+          git clone https://github.com/sfzinstruments/karoryfer.black-and-blue-basses.git /tmp/gm2/bass/Black-And-Blue-Basses
+          git -C /tmp/gm2/bass/Black-And-Blue-Basses checkout 6e7d674cdb41be7a54dbccb15472401ad01099b9
+          git -C /tmp/gm2/bass/Black-And-Blue-Basses lfs pull
+          rm -rf /tmp/gm2/bass/Black-And-Blue-Basses/.git
+          tar --sort=name --mtime='UTC 1970-01-01' --owner=0 --group=0 --numeric-owner -C /tmp/gm2/bass -cf /tmp/gm2/black-and-blue-basses.tar Black-And-Blue-Basses
+          sha256sum /tmp/gm2/black-and-blue-basses.tar > /tmp/gm2/black-and-blue-basses.tar.sha256
+          mkdir -p /tmp/gm2/chunks
+          split -b 180M -d -a 2 /tmp/gm2/black-and-blue-basses.tar /tmp/gm2/chunks/black-and-blue-basses.part-
+      - uses: actions/upload-artifact@v4
+        with: {name: bb-det-checksum, path: /tmp/gm2/black-and-blue-basses.tar.sha256, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: bb-det-00, path: /tmp/gm2/chunks/black-and-blue-basses.part-00, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: bb-det-01, path: /tmp/gm2/chunks/black-and-blue-basses.part-01, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: bb-det-02, path: /tmp/gm2/chunks/black-and-blue-basses.part-02, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: bb-det-03, path: /tmp/gm2/chunks/black-and-blue-basses.part-03, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: bb-det-04, path: /tmp/gm2/chunks/black-and-blue-basses.part-04, compression-level: 0, retention_days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: bb-det-05, path: /tmp/gm2/chunks/black-and-blue-basses.part-05, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: bb-det-06, path: /tmp/gm2/chunks/black-and-blue-basses.part-06, compression-level: 0, retention-days: 1}
