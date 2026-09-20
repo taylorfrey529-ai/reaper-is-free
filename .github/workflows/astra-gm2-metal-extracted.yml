@@ -15,8 +15,8 @@ jobs:
           python3 -m pip install --quiet gdown
           mkdir -p /tmp/gm2/metal-extracted
           gdown '1FurY3_x_tog_56irX1VDNyRCUt5JD7bO' -O /tmp/gm2/Metal-GTX.rar
-          7zz x -y -o/tmp/gm2/metal-extracted /tmp/gm2/Metal-GTX.rar
-          tar -C /tmp/gm2/metal-extracted -cf /tmp/gm2/Metal-GTX-extracted.tar .
+          7z x -y -o/tmp/gm2/metal-extracted /tmp/gm2/Metal-GTX.rar
+          tar --sort=name --mtime='UTC 1970-01-01' --owner=0 --group=0 --numeric-owner -C /tmp/gm2/metal-extracted -cf /tmp/gm2/Metal-GTX-extracted.tar .
           sha256sum /tmp/gm2/Metal-GTX-extracted.tar > /tmp/gm2/Metal-GTX-extracted.tar.sha256
           mkdir -p /tmp/gm2/chunks
           split -b 180M -d -a 2 /tmp/gm2/Metal-GTX-extracted.tar /tmp/gm2/chunks/Metal-GTX-extracted.part-
