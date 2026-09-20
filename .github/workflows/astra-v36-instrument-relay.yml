@@ -1,0 +1,80 @@
+name: Astra v3.6 Instrument Relay
+on:
+  push:
+    branches:
+      - tmp/astra-v36-inclusive-20260920
+    paths:
+      - .github/workflows/astra-v36-instrument-relay.yml
+
+permissions:
+  contents: read
+
+jobs:
+  sfz-stack:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Black And Blue Basses and sfizz
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p delivery/bab chunks
+          git clone --depth=1 https://github.com/sfzinstruments/karoryfer.black-and-blue-basses.git delivery/bab/Black-And-Blue-Basses
+          rm -rf delivery/bab/Black-And-Blue-Basses/.git
+          curl -fL --retry 4 'https://ftp5.gwdg.de/pub/opensuse/repositories/home:/sfztools:/sfizz/Debian_12/amd64/sfizz_1.2.3-0_amd64.deb' -o delivery/bab/sfizz_1.2.3-0_amd64.deb
+          curl -fL --retry 4 'https://discourse.zynthian.org/uploads/short-url/blgmWyWzEjh07vesEuRigdsDx2w.zip' -o delivery/bab/Karoryfer-Black-And-Blue-Basses-sfizz-compat.zip
+          find delivery/bab -type f -print0 | sort -z | xargs -0 sha256sum > delivery/bab/SHA256SUMS.txt
+          tar -cf chunks/black-and-blue-basses-linux-reaper.tar delivery/bab
+          sha256sum chunks/black-and-blue-basses-linux-reaper.tar > chunks/BAB-TAR-SHA256.txt
+          split -b 400M chunks/black-and-blue-basses-linux-reaper.tar chunks/bab.part-
+          rm chunks/black-and-blue-basses-linux-reaper.tar
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bab-aa
+          path: chunks/bab.part-aa
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bab-ab
+          path: chunks/bab.part-ab
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bab-ac
+          path: chunks/bab.part-ac
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bab-checksum
+          path: chunks/BAB-TAR-SHA256.txt
+          retention-days: 1
+
+  guitar-stack:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch native Linux sforzando and METAL-GTX
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p delivery/guitar chunks
+          curl -fL --retry 5 'https://sforzando.s3.us-east-1.amazonaws.com/LINUX_plogue-sforzando_1.982_x86_64.zip' -o delivery/guitar/LINUX_plogue-sforzando_1.982_x86_64.zip
+          python3 -m pip install --user gdown
+          ~/.local/bin/gdown 'https://drive.google.com/uc?id=1FurY3_x_tog_56irX1VDNyRCUt5JD7bO' -O delivery/guitar/METAL-GTX.download
+          file delivery/guitar/METAL-GTX.download > delivery/guitar/METAL-GTX.file.txt
+          sha256sum delivery/guitar/* > delivery/guitar/SHA256SUMS.txt
+          tar -cf chunks/metal-gtx-sforzando.tar delivery/guitar
+          sha256sum chunks/metal-gtx-sforzando.tar > chunks/GUITAR-TAR-SHA256.txt
+          split -b 350M chunks/metal-gtx-sforzando.tar chunks/guitar.part-
+          rm chunks/metal-gtx-sforzando.tar
+          ls -lh chunks
+      - name: Upload guitar chunks
+        uses: actions/upload-artifact@v4
+        with:
+          name: guitar-chunks
+          path: |
+            chunks/guitar.part-*
+            chunks/GUITAR-TAR-SHA256.txt
+          compression-level: 0
+          retention-days: 1
