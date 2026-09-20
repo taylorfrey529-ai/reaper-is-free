@@ -31,17 +31,20 @@ jobs:
           sha256sum /tmp/gm2/black-and-blue-basses.tar > /tmp/gm2/black-and-blue-basses.tar.sha256
           mkdir -p /tmp/gm2/bass-chunks
           split -b 180M -d -a 2 /tmp/gm2/black-and-blue-basses.tar /tmp/gm2/bass-chunks/black-and-blue-basses.part-
+          ls -lh /tmp/gm2/bass-chunks/
       - name: Fetch Metal GTX
         shell: bash
         run: |
           set -euo pipefail
           python3 -m pip install --quiet gdown
           mkdir -p /tmp/gm2/metal
-          gdown --id 1FurY3_x_tog_56irX1VDNyRCUt5JD7bO -O /tmp/gm2/metal/Metal-GTX-download
+          gdown '1FurY3_x_tog_56irX1VDNyRCUt5JD7bO' -O /tmp/gm2/metal/Metal-GTX-download
           file /tmp/gm2/metal/Metal-GTX-download
+          test "$(stat -c %s /tmp/gm2/metal/Metal-GTX-download)" -gt 1000000000
           sha256sum /tmp/gm2/metal/Metal-GTX-download > /tmp/gm2/metal/Metal-GTX-download.sha256
           mkdir -p /tmp/gm2/metal-chunks
           split -b 180M -d -a 2 /tmp/gm2/metal/Metal-GTX-download /tmp/gm2/metal-chunks/Metal-GTX.part-
+          ls -lh /tmp/gm2/metal-chunks/
       - name: Upload sforzando
         uses: actions/upload-artifact@v4
         with:
@@ -49,31 +52,59 @@ jobs:
           path: /tmp/gm2/sforzando/
           compression-level: 0
           retention-days: 1
-      - name: Upload Black Blue metadata
+      - name: Upload Black Blue checksum
         uses: actions/upload-artifact@v4
         with:
           name: black-blue-checksum
           path: /tmp/gm2/black-and-blue-basses.tar.sha256
           compression-level: 0
           retention-days: 1
-      - name: Upload Black Blue chunks
+      - name: Upload Black Blue 00
         uses: actions/upload-artifact@v4
-        with:
-          name: black-blue-chunks
-          path: /tmp/gm2/bass-chunks/
-          compression-level: 0
-          retention-days: 1
-      - name: Upload Metal metadata
+        with: {name: black-blue-00, path: /tmp/gm2/bass-chunks/black-and-blue-basses.part-00, compression-level: 0, retention-days: 1}
+      - name: Upload Black Blue 01
+        uses: actions/upload-artifact@v4
+        with: {name: black-blue-01, path: /tmp/gm2/bass-chunks/black-and-blue-basses.part-01, compression-level: 0, retention-days: 1}
+      - name: Upload Black Blue 02
+        uses: actions/upload-artifact@v4
+        with: {name: black-blue-02, path: /tmp/gm2/bass-chunks/black-and-blue-basses.part-02, compression-level: 0, retention-days: 1}
+      - name: Upload Black Blue 03
+        uses: actions/upload-artifact@v4
+        with: {name: black-blue-03, path: /tmp/gm2/bass-chunks/black-and-blue-basses.part-03, compression-level: 0, retention-days: 1}
+      - name: Upload Black Blue 04
+        uses: actions/upload-artifact@v4
+        with: {name: black-blue-04, path: /tmp/gm2/bass-chunks/black-and-blue-basses.part-04, compression-level: 0, retention-days: 1}
+      - name: Upload Black Blue 05
+        uses: actions/upload-artifact@v4
+        with: {name: black-blue-05, path: /tmp/gm2/bass-chunks/black-and-blue-basses.part-05, compression-level: 0, retention-days: 1}
+      - name: Upload Metal checksum
         uses: actions/upload-artifact@v4
         with:
           name: metal-gtx-checksum
           path: /tmp/gm2/metal/Metal-GTX-download.sha256
           compression-level: 0
           retention-days: 1
-      - name: Upload Metal chunks
+      - name: Upload Metal 00
         uses: actions/upload-artifact@v4
-        with:
-          name: metal-gtx-chunks
-          path: /tmp/gm2/metal-chunks/
-          compression-level: 0
-          retention-days: 1
+        with: {name: metal-gtx-00, path: /tmp/gm2/metal-chunks/Metal-GTX.part-00, compression-level: 0, retention-days: 1}
+      - name: Upload Metal 01
+        uses: actions/upload-artifact@v4
+        with: {name: metal-gtx-01, path: /tmp/gm2/metal-chunks/Metal-GTX.part-01, compression-level: 0, retention-days: 1}
+      - name: Upload Metal 02
+        uses: actions/upload-artifact@v4
+        with: {name: metal-gtx-02, path: /tmp/gm2/metal-chunks/Metal-GTX.part-02, compression-level: 0, retention-days: 1}
+      - name: Upload Metal 03
+        uses: actions/upload-artifact@v4
+        with: {name: metal-gtx-03, path: /tmp/gm2/metal-chunks/Metal-GTX.part-03, compression-level: 0, retention-days: 1}
+      - name: Upload Metal 04
+        uses: actions/upload-artifact@v4
+        with: {name: metal-gtx-04, path: /tmp/gm2/metal-chunks/Metal-GTX.part-04, compression-level: 0, retention-days: 1}
+      - name: Upload Metal 05
+        uses: actions/upload-artifact@v4
+        with: {name: metal-gtx-05, path: /tmp/gm2/metal-chunks/Metal-GTX.part-05, compression-level: 0, retention-days: 1}
+      - name: Upload Metal 06
+        uses: actions/upload-artifact@v4
+        with: {name: metal-gtx-06, path: /tmp/gm2/metal-chunks/Metal-GTX.part-06, compression-level: 0, retention-days: 1}
+      - name: Upload Metal 07
+        uses: actions/upload-artifact@v4
+        with: {name: metal-gtx-07, path: /tmp/gm2/metal-chunks/Metal-GTX.part-07, compression-level: 0, retention-days: 1}
