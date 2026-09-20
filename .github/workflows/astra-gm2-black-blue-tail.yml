@@ -1,0 +1,36 @@
+name: Astra GM2 Black Blue Tail
+on:
+  push:
+    branches:
+      - tmp/astra-gm2-nam-build-20260920
+jobs:
+  tail:
+    runs-on: ubuntu-24.04
+    steps:
+      - shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y git-lfs
+          git lfs install
+          git clone https://github.com/sfzinstruments/karoryfer.black-and-blue-basses.git /tmp/bass
+          git -C /tmp/bass checkout 6e7d674cdb41be7a54dbccb15472401ad01099b9
+          git -C /tmp/bass lfs pull
+          rm -rf /tmp/bass/.git
+          tar -C /tmp -cf /tmp/black-and-blue-basses.tar bass
+          mkdir -p /tmp/chunks
+          split -b 180M -d -a 2 /tmp/black-and-blue-basses.tar /tmp/chunks/part-
+          test -f /tmp/chunks/part-06
+          sha256sum /tmp/black-and-blue-basses.tar > /tmp/chunks/tar.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: black-blue-tail-06
+          path: /tmp/chunks/part-06
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: black-blue-tail-checksum
+          path: /tmp/chunks/tar.sha256
+          compression-level: 0
+          retention-days: 1
