@@ -1,0 +1,71 @@
+name: Astra v3.6 Black and Blue Recovery
+on:
+  push:
+    branches:
+      - tmp/astra-v36-bab-fetch-20260920
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Black And Blue Basses
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p bundle runtime chunks
+          git clone --depth=1 https://github.com/sfzinstruments/karoryfer.black-and-blue-basses.git bundle/Black-And-Blue-Basses
+          rm -rf bundle/Black-And-Blue-Basses/.git
+      - name: Fetch sfizz runtime and compatibility patch
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fL --retry 4 'https://ftp5.gwdg.de/pub/opensuse/repositories/home:/sfztools:/sfizz/Debian_12/amd64/sfizz_1.2.3-0_amd64.deb' -o runtime/sfizz_1.2.3-0_amd64.deb
+          curl -fL --retry 4 'https://ftp.debian.org/debian/pool/main/x/xcb-util-cursor/libxcb-cursor0_0.1.5-1_amd64.deb' -o runtime/libxcb-cursor0_0.1.5-1_amd64.deb
+          echo 'e0c77e6e96843581ff2668dc9a10f676be0e78209ef198e98646184858efe164  runtime/libxcb-cursor0_0.1.5-1_amd64.deb' | sha256sum -c -
+          curl -fL --retry 4 'https://discourse.zynthian.org/uploads/short-url/blgmWyWzEjh07vesEuRigdsDx2w.zip' -o runtime/Karoryfer-Black-And-Blue-Basses-sfizz-compat.zip
+          sha256sum runtime/* > runtime/SHA256SUMS.txt
+      - name: Pack and split library
+        shell: bash
+        run: |
+          set -euo pipefail
+          tar -cf chunks/black-and-blue-basses.tar bundle
+          sha256sum chunks/black-and-blue-basses.tar > chunks/TAR-SHA256SUM.txt
+          split -b 400M chunks/black-and-blue-basses.tar chunks/black-and-blue-basses.tar.part-
+          rm chunks/black-and-blue-basses.tar
+          test -f chunks/black-and-blue-basses.tar.part-aa
+          test -f chunks/black-and-blue-basses.tar.part-ab
+          test -f chunks/black-and-blue-basses.tar.part-ac
+      - name: Upload aa
+        uses: actions/upload-artifact@v4
+        with:
+          name: bab-aa
+          path: chunks/black-and-blue-basses.tar.part-aa
+          compression-level: 0
+          retention-days: 1
+      - name: Upload ab
+        uses: actions/upload-artifact@v4
+        with:
+          name: bab-ab
+          path: chunks/black-and-blue-basses.tar.part-ab
+          compression-level: 0
+          retention-days: 1
+      - name: Upload ac
+        uses: actions/upload-artifact@v4
+        with:
+          name: bab-ac
+          path: chunks/black-and-blue-basses.tar.part-ac
+          compression-level: 0
+          retention-days: 1
+      - name: Upload runtime
+        uses: actions/upload-artifact@v4
+        with:
+          name: bab-runtime
+          path: runtime
+          compression-level: 0
+          retention-days: 1
+      - name: Upload checksum
+        uses: actions/upload-artifact@v4
+        with:
+          name: bab-checksum
+          path: chunks/TAR-SHA256SUM.txt
+          compression-level: 0
+          retention-days: 1
