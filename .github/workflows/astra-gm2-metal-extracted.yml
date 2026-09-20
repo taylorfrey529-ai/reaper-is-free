@@ -1,0 +1,41 @@
+name: Astra GM2 Metal GTX Extracted
+on:
+  push:
+    branches:
+      - tmp/astra-gm2-nam-build-20260920
+jobs:
+  metal:
+    runs-on: ubuntu-24.04
+    steps:
+      - shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y 7zip
+          python3 -m pip install --quiet gdown
+          mkdir -p /tmp/gm2/metal-extracted
+          gdown '1FurY3_x_tog_56irX1VDNyRCUt5JD7bO' -O /tmp/gm2/Metal-GTX.rar
+          7zz x -y -o/tmp/gm2/metal-extracted /tmp/gm2/Metal-GTX.rar
+          tar -C /tmp/gm2/metal-extracted -cf /tmp/gm2/Metal-GTX-extracted.tar .
+          sha256sum /tmp/gm2/Metal-GTX-extracted.tar > /tmp/gm2/Metal-GTX-extracted.tar.sha256
+          mkdir -p /tmp/gm2/chunks
+          split -b 180M -d -a 2 /tmp/gm2/Metal-GTX-extracted.tar /tmp/gm2/chunks/Metal-GTX-extracted.part-
+          ls -lh /tmp/gm2/chunks
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-extracted-checksum, path: /tmp/gm2/Metal-GTX-extracted.tar.sha256, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-extracted-00, path: /tmp/gm2/chunks/Metal-GTX-extracted.part-00, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-extracted-01, path: /tmp/gm2/chunks/Metal-GTX-extracted.part-01, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-extracted-02, path: /tmp/gm2/chunks/Metal-GTX-extracted.part-02, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-extracted-03, path: /tmp/gm2/chunks/Metal-GTX-extracted.part-03, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-extracted-04, path: /tmp/gm2/chunks/Metal-GTX-extracted.part-04, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-extracted-05, path: /tmp/gm2/chunks/Metal-GTX-extracted.part-05, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-extracted-06, path: /tmp/gm2/chunks/Metal-GTX-extracted.part-06, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-extracted-07, path: /tmp/gm2/chunks/Metal-GTX-extracted.part-07, compression-level: 0, retention-days: 1}
