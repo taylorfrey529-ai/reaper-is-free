@@ -1,0 +1,24 @@
+name: Astra GP5 Parser Package
+on:
+  push:
+    branches:
+      - tmp/astra-gm2-nam-build-20260920
+jobs:
+  pack:
+    runs-on: ubuntu-24.04
+    steps:
+      - shell: bash
+        run: |
+          set -euo pipefail
+          git clone https://github.com/Perlence/PyGuitarPro.git /tmp/PyGuitarPro
+          git -C /tmp/PyGuitarPro checkout master
+          rm -rf /tmp/PyGuitarPro/.git
+          tar -C /tmp -czf /tmp/PyGuitarPro.tar.gz PyGuitarPro
+          sha256sum /tmp/PyGuitarPro.tar.gz >/tmp/PyGuitarPro.tar.gz.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pyguitarpro-source
+          path: |
+            /tmp/PyGuitarPro.tar.gz
+            /tmp/PyGuitarPro.tar.gz.sha256
+          retention-days: 1
