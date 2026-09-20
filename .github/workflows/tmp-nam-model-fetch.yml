@@ -1,0 +1,21 @@
+name: NAM model fetch
+on:
+  push:
+    branches:
+      - tmp/nam-model-fetch-20260920
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download selected NAM capture
+        run: |
+          set -euo pipefail
+          curl -L --fail --retry 3             'https://raw.githubusercontent.com/pelennor2170/NAM_models/main/Helga%20B%206505%2B%20Red%20ch%20-%20MXR%20Drive.nam'             -o Helga_B_6505_Red_MXR_Drive.nam
+          test -s Helga_B_6505_Red_MXR_Drive.nam
+          sha256sum Helga_B_6505_Red_MXR_Drive.nam
+      - name: Upload model
+        uses: actions/upload-artifact@v4
+        with:
+          name: Helga_B_6505_Red_MXR_Drive
+          path: Helga_B_6505_Red_MXR_Drive.nam
+          if-no-files-found: error
