@@ -1,0 +1,79 @@
+name: Astra GM2 SFZ Assets
+on:
+  push:
+    branches:
+      - tmp/astra-gm2-nam-build-20260920
+
+jobs:
+  assets:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Fetch native Linux sforzando
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/gm2/sforzando
+          curl -fL --retry 5 'https://sforzando.s3.us-east-1.amazonaws.com/LINUX_plogue-sforzando_1.982_x86_64.zip' -o /tmp/gm2/sforzando/LINUX_plogue-sforzando_1.982_x86_64.zip
+          sha256sum /tmp/gm2/sforzando/LINUX_plogue-sforzando_1.982_x86_64.zip > /tmp/gm2/sforzando/SHA256SUMS.txt
+      - name: Fetch Black And Blue Basses
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y git-lfs
+          git lfs install
+          mkdir -p /tmp/gm2/bass
+          git clone https://github.com/sfzinstruments/karoryfer.black-and-blue-basses.git /tmp/gm2/bass/Black-And-Blue-Basses
+          git -C /tmp/gm2/bass/Black-And-Blue-Basses checkout 6e7d674cdb41be7a54dbccb15472401ad01099b9
+          git -C /tmp/gm2/bass/Black-And-Blue-Basses lfs pull
+          rm -rf /tmp/gm2/bass/Black-And-Blue-Basses/.git
+          tar -C /tmp/gm2/bass -cf /tmp/gm2/black-and-blue-basses.tar Black-And-Blue-Basses
+          sha256sum /tmp/gm2/black-and-blue-basses.tar > /tmp/gm2/black-and-blue-basses.tar.sha256
+          mkdir -p /tmp/gm2/bass-chunks
+          split -b 180M -d -a 2 /tmp/gm2/black-and-blue-basses.tar /tmp/gm2/bass-chunks/black-and-blue-basses.part-
+      - name: Fetch Metal GTX
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --quiet gdown
+          mkdir -p /tmp/gm2/metal
+          gdown --id 1FurY3_x_tog_56irX1VDNyRCUt5JD7bO -O /tmp/gm2/metal/Metal-GTX-download
+          file /tmp/gm2/metal/Metal-GTX-download
+          sha256sum /tmp/gm2/metal/Metal-GTX-download > /tmp/gm2/metal/Metal-GTX-download.sha256
+          mkdir -p /tmp/gm2/metal-chunks
+          split -b 180M -d -a 2 /tmp/gm2/metal/Metal-GTX-download /tmp/gm2/metal-chunks/Metal-GTX.part-
+      - name: Upload sforzando
+        uses: actions/upload-artifact@v4
+        with:
+          name: sforzando-linux-x86_64
+          path: /tmp/gm2/sforzando/
+          compression-level: 0
+          retention-days: 1
+      - name: Upload Black Blue metadata
+        uses: actions/upload-artifact@v4
+        with:
+          name: black-blue-checksum
+          path: /tmp/gm2/black-and-blue-basses.tar.sha256
+          compression-level: 0
+          retention-days: 1
+      - name: Upload Black Blue chunks
+        uses: actions/upload-artifact@v4
+        with:
+          name: black-blue-chunks
+          path: /tmp/gm2/bass-chunks/
+          compression-level: 0
+          retention-days: 1
+      - name: Upload Metal metadata
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-checksum
+          path: /tmp/gm2/metal/Metal-GTX-download.sha256
+          compression-level: 0
+          retention-days: 1
+      - name: Upload Metal chunks
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-chunks
+          path: /tmp/gm2/metal-chunks/
+          compression-level: 0
+          retention-days: 1
