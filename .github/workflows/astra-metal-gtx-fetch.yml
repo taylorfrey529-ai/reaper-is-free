@@ -1,0 +1,81 @@
+name: Astra Metal GTX Fetch
+on:
+  push:
+    branches:
+      - tmp/astra-metal-gtx-20260920
+
+permissions:
+  contents: read
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Metal GTX public library
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install --disable-pip-version-check --no-input gdown
+          gdown --fuzzy 'https://drive.google.com/file/d/1FurY3_x_tog_56irX1VDNyRCUt5JD7bO/view' -O /tmp/Metal_GTX.zip
+          file /tmp/Metal_GTX.zip
+          test -s /tmp/Metal_GTX.zip
+          sha256sum /tmp/Metal_GTX.zip > /tmp/Metal_GTX.zip.sha256
+          mkdir -p /tmp/chunks
+          split -b 200M /tmp/Metal_GTX.zip /tmp/chunks/Metal_GTX.zip.part-
+          cp /tmp/Metal_GTX.zip.sha256 /tmp/chunks/
+          ls -lh /tmp/chunks
+      - name: Upload chunk aa
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-aa
+          path: /tmp/chunks/Metal_GTX.zip.part-aa
+          compression-level: 0
+          retention-days: 1
+      - name: Upload chunk ab
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-ab
+          path: /tmp/chunks/Metal_GTX.zip.part-ab
+          compression-level: 0
+          retention-days: 1
+      - name: Upload chunk ac
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-ac
+          path: /tmp/chunks/Metal_GTX.zip.part-ac
+          compression-level: 0
+          retention-days: 1
+      - name: Upload chunk ad
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-ad
+          path: /tmp/chunks/Metal_GTX.zip.part-ad
+          compression-level: 0
+          retention-days: 1
+      - name: Upload chunk ae
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-ae
+          path: /tmp/chunks/Metal_GTX.zip.part-ae
+          compression-level: 0
+          retention-days: 1
+      - name: Upload chunk af
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-af
+          path: /tmp/chunks/Metal_GTX.zip.part-af
+          compression-level: 0
+          retention-days: 1
+      - name: Upload chunk ag
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-ag
+          path: /tmp/chunks/Metal_GTX.zip.part-ag
+          compression-level: 0
+          retention-days: 1
+      - name: Upload checksum
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-checksum
+          path: /tmp/chunks/Metal_GTX.zip.sha256
+          retention-days: 1
