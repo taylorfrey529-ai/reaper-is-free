@@ -1,0 +1,54 @@
+name: Astra v3.6 METAL-GTX Extract Relay
+on:
+  push:
+    branches:
+      - tmp/astra-v36-inclusive-20260920
+    paths:
+      - .github/workflows/astra-v36-metal-gtx-extract.yml
+permissions:
+  contents: read
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch and extract METAL-GTX
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p source delivery/metal-gtx chunks
+          python3 -m pip install --user gdown
+          ~/.local/bin/gdown 'https://drive.google.com/uc?id=1FurY3_x_tog_56irX1VDNyRCUt5JD7bO' -O source/METAL-GTX.rar
+          if ! command -v 7z >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y p7zip-full
+          fi
+          7z x -y source/METAL-GTX.rar -odelivery/metal-gtx
+          find delivery/metal-gtx -type f -printf '%P\t%s\n' | sort > chunks/METAL-GTX-INVENTORY.txt
+          find delivery/metal-gtx -type f -iname '*.sfz' -print | sort > chunks/METAL-GTX-SFZ.txt
+          sha256sum source/METAL-GTX.rar > chunks/METAL-GTX-SOURCE-SHA256.txt
+          tar -cf chunks/METAL-GTX-extracted.tar delivery/metal-gtx
+          sha256sum chunks/METAL-GTX-extracted.tar > chunks/METAL-GTX-TAR-SHA256.txt
+          split -b 350M chunks/METAL-GTX-extracted.tar chunks/metal.part-
+          rm chunks/METAL-GTX-extracted.tar
+          ls -lh chunks
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-aa, path: chunks/metal.part-aa, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-ab, path: chunks/metal.part-ab, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-ac, path: chunks/metal.part-ac, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-ad, path: chunks/metal.part-ad, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-ae, path: chunks/metal.part-ae, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-af, path: chunks/metal.part-af, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: metal-manifest
+          path: |
+            chunks/METAL-GTX-INVENTORY.txt
+            chunks/METAL-GTX-SFZ.txt
+            chunks/METAL-GTX-SOURCE-SHA256.txt
+            chunks/METAL-GTX-TAR-SHA256.txt
+          retention-days: 1
