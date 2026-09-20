@@ -1,0 +1,58 @@
+name: Astra GM2 Metal From Verified Artifacts
+on:
+  push:
+    branches:
+      - tmp/astra-gm2-nam-build-20260920
+permissions:
+  actions: read
+  contents: read
+jobs:
+  metal:
+    runs-on: ubuntu-24.04
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Reassemble already verified raw Metal GTX artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/rawparts
+          for n in 00 01 02 03 04 05 06 07; do
+            gh run download 35525976073 -R taylorfrey529-ai/reaper-is-free -n "metal-gtx-$n" -D /tmp/rawparts
+          done
+          find /tmp/rawparts -type f -name 'Metal-GTX.part-*' -print | sort
+          cat /tmp/rawparts/Metal-GTX.part-* > /tmp/Metal-GTX.rar
+          echo 'c5756f95fcc30ac680f6034bb2e54c636e67fd0b53b1d40babada7257e782e73  /tmp/Metal-GTX.rar' | sha256sum -c -
+      - name: Extract Metal GTX
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y unar
+          mkdir -p /tmp/metal-extracted
+          unar -f -o /tmp/metal-extracted /tmp/Metal-GTX.rar
+          find /tmp/metal-extracted -type f -iname '*.sfz' | head -20
+          test -n "$(find /tmp/metal-extracted -type f -iname '*.sfz' -print -quit)"
+          tar --sort=name --mtime='UTC 1970-01-01' --owner=0 --group=0 --numeric-owner -C /tmp/metal-extracted -cf /tmp/Metal-GTX-extracted.tar .
+          sha256sum /tmp/Metal-GTX-extracted.tar > /tmp/Metal-GTX-extracted.tar.sha256
+          mkdir -p /tmp/chunks
+          split -b 180M -d -a 2 /tmp/Metal-GTX-extracted.tar /tmp/chunks/Metal-GTX-extracted.part-
+          ls -lh /tmp/chunks
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-ok-checksum, path: /tmp/Metal-GTX-extracted.tar.sha256, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-ok-00, path: /tmp/chunks/Metal-GTX-extracted.part-00, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-ok-01, path: /tmp/chunks/Metal-GTX-extracted.part-01, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-ok-02, path: /tmp/chunks/Metal-GTX-extracted.part-02, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-ok-03, path: /tmp/chunks/Metal-GTX-extracted.part-03, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-ok-04, path: /tmp/chunks/Metal-GTX-extracted.part-04, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-ok-05, path: /tmp/chunks/Metal-GTX-extracted.part-05, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-ok-06, path: /tmp/chunks/Metal-GTX-extracted.part-06, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: metal-ok-07, path: /tmp/chunks/Metal-GTX-extracted.part-07, compression-level: 0, retention-days: 1}
