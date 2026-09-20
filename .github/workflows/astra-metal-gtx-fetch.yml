@@ -16,7 +16,7 @@ jobs:
         run: |
           set -euo pipefail
           python3 -m pip install --disable-pip-version-check --no-input gdown
-          gdown --fuzzy 'https://drive.google.com/file/d/1FurY3_x_tog_56irX1VDNyRCUt5JD7bO/view' -O /tmp/Metal_GTX.zip
+          gdown 'https://drive.google.com/uc?id=1FurY3_x_tog_56irX1VDNyRCUt5JD7bO&export=download' -O /tmp/Metal_GTX.zip
           file /tmp/Metal_GTX.zip
           test -s /tmp/Metal_GTX.zip
           sha256sum /tmp/Metal_GTX.zip > /tmp/Metal_GTX.zip.sha256
@@ -24,6 +24,8 @@ jobs:
           split -b 200M /tmp/Metal_GTX.zip /tmp/chunks/Metal_GTX.zip.part-
           cp /tmp/Metal_GTX.zip.sha256 /tmp/chunks/
           ls -lh /tmp/chunks
+          test -f /tmp/chunks/Metal_GTX.zip.part-aa
+          test -f /tmp/chunks/Metal_GTX.zip.part-ag
       - name: Upload chunk aa
         uses: actions/upload-artifact@v4
         with:
