@@ -1,0 +1,64 @@
+name: Astra GM2 NAM Linux Build
+on:
+  push:
+    branches:
+      - tmp/astra-gm2-nam-build-20260920
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout requested NAM sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/astra-nam/sources
+          git clone https://github.com/sdatkinson/neural-amp-modeler.git /tmp/astra-nam/sources/neural-amp-modeler
+          git -C /tmp/astra-nam/sources/neural-amp-modeler checkout 0072676419459f5d39e36f5b9fd4172f28d62cbf
+          git clone https://github.com/sdatkinson/NeuralAmpModelerCore.git /tmp/astra-nam/sources/NeuralAmpModelerCore
+          git -C /tmp/astra-nam/sources/NeuralAmpModelerCore checkout 0b3d3c97b0859a3a8c92a8628c4dd89a25eb5842
+          git clone --recurse-submodules https://github.com/sdatkinson/NeuralAmpModelerPlugin.git /tmp/astra-nam/sources/NeuralAmpModelerPlugin
+          git -C /tmp/astra-nam/sources/NeuralAmpModelerPlugin checkout 16be869746b8915885c7a35bafdcc0061faeb50e
+          git -C /tmp/astra-nam/sources/NeuralAmpModelerPlugin submodule update --init --recursive
+          git clone --recurse-submodules https://github.com/mikeoliphant/neural-amp-modeler-lv2.git /tmp/astra-nam/neural-amp-modeler-lv2
+          git -C /tmp/astra-nam/neural-amp-modeler-lv2 checkout 96924205f9cbfbbf0e63f7fe7f4b6d2f1b60c402
+          git -C /tmp/astra-nam/neural-amp-modeler-lv2 submodule update --init --recursive
+      - name: Build Linux LV2 host plugin
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake pkg-config libsndfile1-dev libsamplerate0-dev libfftw3-dev
+          cd /tmp/astra-nam/neural-amp-modeler-lv2
+          mkdir -p build
+          cd build
+          cmake .. -DCMAKE_BUILD_TYPE=Release -DUSE_NATIVE_ARCH=OFF
+          cmake --build . -j2
+          test -f neural_amp_modeler.lv2/neural_amp_modeler.so
+      - name: Package sources and Linux plugin
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/astra-nam/package/source-snapshots /tmp/astra-nam/package/lv2
+          for r in neural-amp-modeler NeuralAmpModelerCore NeuralAmpModelerPlugin; do
+            rm -rf "/tmp/astra-nam/sources/$r/.git"
+            cp -a "/tmp/astra-nam/sources/$r" "/tmp/astra-nam/package/source-snapshots/$r"
+          done
+          cp -a /tmp/astra-nam/neural-amp-modeler-lv2/build/neural_amp_modeler.lv2 /tmp/astra-nam/package/lv2/
+          cat > /tmp/astra-nam/package/PINNED-REVISIONS.txt <<'EOF'
+          sdatkinson/neural-amp-modeler 0072676419459f5d39e36f5b9fd4172f28d62cbf
+          sdatkinson/NeuralAmpModelerCore 0b3d3c97b0859a3a8c92a8628c4dd89a25eb5842
+          sdatkinson/NeuralAmpModelerPlugin 16be869746b8915885c7a35bafdcc0061faeb50e
+          mikeoliphant/neural-amp-modeler-lv2 96924205f9cbfbbf0e63f7fe7f4b6d2f1b60c402
+          EOF
+          find /tmp/astra-nam/package -type f -print0 | sort -z | xargs -0 sha256sum > /tmp/astra-nam/package/SHA256SUMS.txt
+          tar -C /tmp/astra-nam -czf /tmp/astra-nam-gm2-linux.tar.gz package
+          sha256sum /tmp/astra-nam-gm2-linux.tar.gz > /tmp/astra-nam-gm2-linux.tar.gz.sha256
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: astra-nam-gm2-linux
+          path: |
+            /tmp/astra-nam-gm2-linux.tar.gz
+            /tmp/astra-nam-gm2-linux.tar.gz.sha256
+          retention-days: 1
