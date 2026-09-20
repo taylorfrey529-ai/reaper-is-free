@@ -1,0 +1,31 @@
+name: Astra MTPDK Verified Fetch
+on:
+  push:
+    branches:
+      - tmp/astra-mtpdk-fetch-20260920
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download official MTPDK Linux 2.1.5.1
+        shell: bash
+        run: |
+          set -euo pipefail
+          url='https://cdn2.resources.manda-audio.com/DOWNLOADS/products/mtpdk2_free/2.1.5/MTPDK-2.1.5.1-VST3-64bit-Linux-FULL.zip'
+          curl -fL --retry 5 --retry-delay 2 "$url" -o /tmp/MTPDK.zip
+          mkdir -p /tmp/mtpdk
+          unzip -q /tmp/MTPDK.zip -d /tmp/mtpdk
+          so=$(find /tmp/mtpdk -type f -name 'MT-PowerDrumKit.so' -print -quit)
+          test -n "$so"
+          echo 'eccf93e5ac16e8948258d4948b1911c3cb9c5cee4243dd5bbde703050744eaa2  '"$so" | sha256sum -c -
+          sha256sum /tmp/MTPDK.zip > /tmp/MTPDK.zip.sha256
+      - name: Upload verified vendor package
+        uses: actions/upload-artifact@v4
+        with:
+          name: MTPDK-2.1.5.1-Linux-verified
+          path: |
+            /tmp/MTPDK.zip
+            /tmp/MTPDK.zip.sha256
+          if-no-files-found: error
+          retention-days: 1
