@@ -1,0 +1,37 @@
+name: Astra v3.6 Guitar Split Relay
+on:
+  push:
+    branches:
+      - tmp/astra-v36-inclusive-20260920
+    paths:
+      - .github/workflows/astra-v36-guitar-split.yml
+permissions:
+  contents: read
+jobs:
+  guitar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch official Linux sforzando and METAL-GTX
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p delivery/guitar chunks
+          curl -fL --retry 5 'https://sforzando.s3.us-east-1.amazonaws.com/LINUX_plogue-sforzando_1.982_x86_64.zip' -o delivery/guitar/LINUX_plogue-sforzando_1.982_x86_64.zip
+          python3 -m pip install --user gdown
+          ~/.local/bin/gdown 'https://drive.google.com/uc?id=1FurY3_x_tog_56irX1VDNyRCUt5JD7bO' -O delivery/guitar/METAL-GTX.download
+          file delivery/guitar/METAL-GTX.download > delivery/guitar/METAL-GTX.file.txt
+          sha256sum delivery/guitar/* > delivery/guitar/SHA256SUMS.txt
+          tar -cf chunks/metal-gtx-sforzando.tar delivery/guitar
+          sha256sum chunks/metal-gtx-sforzando.tar > chunks/GUITAR-TAR-SHA256.txt
+          split -b 350M chunks/metal-gtx-sforzando.tar chunks/guitar.part-
+          rm chunks/metal-gtx-sforzando.tar
+      - uses: actions/upload-artifact@v4
+        with: {name: guitar-aa, path: chunks/guitar.part-aa, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: guitar-ab, path: chunks/guitar.part-ab, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: guitar-ac, path: chunks/guitar.part-ac, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: guitar-ad, path: chunks/guitar.part-ad, compression-level: 0, retention-days: 1}
+      - uses: actions/upload-artifact@v4
+        with: {name: guitar-checksum, path: chunks/GUITAR-TAR-SHA256.txt, retention-days: 1}
