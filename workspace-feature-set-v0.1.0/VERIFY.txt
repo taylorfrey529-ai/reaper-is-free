@@ -1,0 +1,40 @@
+[PASS] version 0.1.0
+[PASS] REAPER Scripts/Sunwell link
+[PASS] REAPER Effects/Sunwell link
+[PASS] REAPER ProjectTemplates/Sunwell link
+[PASS] Metal GTX sentinel
+[PASS] Dark Black sentinel
+[PASS] Baby Blue sentinel
+[PASS] ARIA keys sentinel
+[PASS] feature manifest
+[PASS] Low End Mono JSFX
+[PASS] AutoPan Sync JSFX
+[PASS] deliverables packager
+[PASS] Quick Toolbar action
+[PASS] New Project Bootstrap action
+[PASS] Master 24-bit render profile
+[PASS] Premaster 32-float render profile
+[PASS] Stem 24-bit render profile
+[PASS] Toolbar/render documentation
+[PASS] AVLDrums LV2 retained
+[PASS] NAM LV2 retained
+[PASS] Black & Blue sample floor
+[PASS] Metal GTX sample floor
+[PASS] sforzando cache entry
+[PASS] NAM binary dependencies
+[PASS] AVL binary dependencies
+[PASS] ReaScript inventory
+[PASS] JSFX inventory
+[PASS] no network installer in ReaScripts
+[PASS] WAV24 render payload
+[PASS] WAV32F render payload
+[PASS] Sunwell action registration count
+[PASS] Sunwell action registration unique
+[INFO] luac unavailable; live REAPER probe is authoritative for Lua loadability
+[PASS] installer shell syntax
+[PASS] verifier shell syntax
+[PASS] launcher shell syntax
+[PASS] packager shell syntax
+[PASS] source lock SHA256
+SUMMARY pass=37 fail=0
+utc=2026-09-21T17:09:31Z

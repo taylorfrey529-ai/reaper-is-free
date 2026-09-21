@@ -1,0 +1,7 @@
+80008e442e913939d7b58464bd29397bef95b7eb0c0e6a18c7b7f034e7976666  workspace-feature-set-v0.1.0-source-freeze.tar.xz
+95ba6e353cdd19e208c625e1aa6e4f1517545a69084fdb3be2555d1f23909f02  source-freeze.tar.xz.part.000
+6ec7cddbe11a776b067b25404a87969281dbbdff189ca9169cd898872d2602f8  source-freeze.tar.xz.part.001
+3fbc93d9166e3a179cf5d0003825a69db84b73e6ff65fc87b9f11ce22f33a198  source-freeze.tar.xz.part.002
+afd08694bac8350efc29fa584dcae07b67f87b135e7173c479b7a67f6d95a4c5  source-freeze.tar.xz.part.003
+fb9e3156317ae68b0f5fccd2e8b1ffa90f0b0a4b10dfaf8734ee06db8c57ccbc  source-freeze.tar.xz.part.004
+02010d41ef395c91a050f254644bcbbc0c8cee1360eef7548df3598626cc7571  source-freeze.tar.xz.part.005
