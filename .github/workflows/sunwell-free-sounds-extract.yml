@@ -1,0 +1,151 @@
+name: Sunwell Free Sounds Extract
+
+on:
+  push:
+    branches:
+      - sunwell-transfer-20260921
+    paths:
+      - .github/workflows/sunwell-free-sounds-extract.yml
+
+permissions:
+  contents: read
+
+jobs:
+  extract:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Install extractor
+        run: |
+          set -euxo pipefail
+          sudo apt-get update
+          sudo apt-get install -y innoextract
+
+      - name: Fetch and extract official free sounds
+        run: |
+          set -euxo pipefail
+          curl -fL --retry 5 'https://s3.amazonaws.com/sforzando/FreeSounds/WIN_ARIA_Engine_Free_Sounds_Vol1.exe' -o WIN_ARIA_Engine_Free_Sounds_Vol1.exe
+          sha256sum WIN_ARIA_Engine_Free_Sounds_Vol1.exe > installer-SHA256.txt
+          mkdir -p payload/ARIA-Engine-Free-Sounds-Vol1
+          innoextract -d payload/ARIA-Engine-Free-Sounds-Vol1 WIN_ARIA_Engine_Free_Sounds_Vol1.exe
+          find payload/ARIA-Engine-Free-Sounds-Vol1 -type f -printf '%P\n' | sort > payload/ARIA-Engine-Free-Sounds-Vol1/FILELIST.txt
+
+      - name: Prepare transfer
+        run: |
+          set -euxo pipefail
+          mkdir -p transfer
+          python3 - <<'PY'
+          import hashlib, json, tarfile
+          from pathlib import Path
+          MIB=1024*1024; CHUNK=70*MIB; HARD=256*MIB
+          src=Path('payload/ARIA-Engine-Free-Sounds-Vol1')
+          out=Path('transfer'); logical=out/'ARIA-Engine-Free-Sounds-Vol1.tar.gz'
+          def sha(p):
+              h=hashlib.sha256()
+              with open(p,'rb') as f:
+                  for b in iter(lambda:f.read(8*MIB),b''): h.update(b)
+              return h.hexdigest()
+          with tarfile.open(logical,'w:gz') as tf: tf.add(src,arcname=src.name,recursive=True)
+          size=logical.stat().st_size; digest=sha(logical); parts=[]
+          with open(logical,'rb') as f:
+              i=0
+              while True:
+                  data=f.read(CHUNK)
+                  if not data: break
+                  name=f'{logical.name}.part.{i:03d}'
+                  p=out/name; p.write_bytes(data)
+                  parts.append({'index':i,'name':name,'size':len(data),'sha256':sha(p)}); i+=1
+          logical.unlink()
+          if len(parts)>10: raise SystemExit(f'too many parts: {len(parts)}')
+          manifest={'schema_version':1,'source_kind':'directory','source_name':src.name,'logical_name':'ARIA-Engine-Free-Sounds-Vol1.tar.gz','logical_size':size,'logical_sha256':digest,'chunk_size_bytes':CHUNK,'hard_transport_limit_bytes':HARD,'parts':parts}
+          (out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+          print(size,digest,len(parts))
+          PY
+
+      - name: Upload manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: free-sounds-manifest
+          path: transfer/manifest.json
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 000
+        uses: actions/upload-artifact@v4
+        with:
+          name: free-sounds-part-000
+          path: transfer/*.part.000
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 001
+        uses: actions/upload-artifact@v4
+        with:
+          name: free-sounds-part-001
+          path: transfer/*.part.001
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 002
+        uses: actions/upload-artifact@v4
+        with:
+          name: free-sounds-part-002
+          path: transfer/*.part.002
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 003
+        uses: actions/upload-artifact@v4
+        with:
+          name: free-sounds-part-003
+          path: transfer/*.part.003
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 004
+        uses: actions/upload-artifact@v4
+        with:
+          name: free-sounds-part-004
+          path: transfer/*.part.004
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 005
+        uses: actions/upload-artifact@v4
+        with:
+          name: free-sounds-part-005
+          path: transfer/*.part.005
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 006
+        uses: actions/upload-artifact@v4
+        with:
+          name: free-sounds-part-006
+          path: transfer/*.part.006
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 007
+        uses: actions/upload-artifact@v4
+        with:
+          name: free-sounds-part-007
+          path: transfer/*.part.007
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 008
+        uses: actions/upload-artifact@v4
+        with:
+          name: free-sounds-part-008
+          path: transfer/*.part.008
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 009
+        uses: actions/upload-artifact@v4
+        with:
+          name: free-sounds-part-009
+          path: transfer/*.part.009
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
