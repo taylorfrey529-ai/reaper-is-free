@@ -1,0 +1,84 @@
+name: Restore Metal GTX Split
+on:
+  push:
+    branches:
+      - tmp/restore-gm2-instruments-20260920
+permissions:
+  contents: read
+
+jobs:
+  metal-gtx:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch exact Metal GTX archive
+        shell: bash
+        run: |
+          set -euxo pipefail
+          python3 -m pip install --disable-pip-version-check --quiet gdown
+          mkdir -p out
+          gdown 'https://drive.google.com/uc?id=1FurY3_x_tog_56irX1VDNyRCUt5JD7bO' -O out/Metal-GTX.zip
+          test -s out/Metal-GTX.zip
+          file out/Metal-GTX.zip
+          unzip -tq out/Metal-GTX.zip
+          sha256sum out/Metal-GTX.zip | tee out/Metal-GTX.zip.sha256
+          stat -c '%s' out/Metal-GTX.zip | tee out/Metal-GTX.zip.size
+          split -b 190M -d -a 2 out/Metal-GTX.zip out/Metal-GTX.part-
+          sha256sum out/Metal-GTX.part-* > out/Metal-GTX.parts.sha256
+      - name: Upload manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-manifest
+          path: |
+            out/Metal-GTX.zip.sha256
+            out/Metal-GTX.zip.size
+            out/Metal-GTX.parts.sha256
+          retention-days: 1
+      - name: Upload part 00
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-part-00
+          path: out/Metal-GTX.part-00
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 01
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-part-01
+          path: out/Metal-GTX.part-01
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 02
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-part-02
+          path: out/Metal-GTX.part-02
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 03
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-part-03
+          path: out/Metal-GTX.part-03
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 04
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-part-04
+          path: out/Metal-GTX.part-04
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 05
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-part-05
+          path: out/Metal-GTX.part-05
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 06
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-part-06
+          path: out/Metal-GTX.part-06
+          compression-level: 0
+          retention-days: 1
