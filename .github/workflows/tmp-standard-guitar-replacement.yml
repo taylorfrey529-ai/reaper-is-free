@@ -18,6 +18,7 @@ jobs:
           cd Black-And-Green-Guitars
           git rev-parse HEAD | tee ../SOURCE-COMMIT.txt
           cd ..
+          rm -rf Black-And-Green-Guitars/.git
           test -f 'Black-And-Green-Guitars/Programs/01-green_keyswitch.sfz'
           test -f 'Black-And-Green-Guitars/Programs/02-black_keyswitch.sfz'
           find Black-And-Green-Guitars/Samples -type f | wc -l | tee SAMPLE-COUNT.txt
@@ -25,10 +26,11 @@ jobs:
           sha256sum black-and-green-guitars.tar | tee black-and-green-guitars.tar.sha256
           split -b 180M -d -a 2 black-and-green-guitars.tar black-and-green.part-
           sha256sum black-and-green.part-* > PARTS-SHA256SUMS.txt
+          test "$(find . -maxdepth 1 -name 'black-and-green.part-*' | wc -l)" -le 3
       - name: Upload manifest
         uses: actions/upload-artifact@v4
         with:
-          name: black-green-manifest
+          name: black-green-manifest-v2
           path: |
             SOURCE-COMMIT.txt
             SAMPLE-COUNT.txt
@@ -38,21 +40,22 @@ jobs:
       - name: Upload part 00
         uses: actions/upload-artifact@v4
         with:
-          name: black-green-part-00
+          name: black-green-v2-part-00
           path: black-and-green.part-00
           compression-level: 0
           retention-days: 1
       - name: Upload part 01
         uses: actions/upload-artifact@v4
         with:
-          name: black-green-part-01
+          name: black-green-v2-part-01
           path: black-and-green.part-01
           compression-level: 0
           retention-days: 1
       - name: Upload part 02
         uses: actions/upload-artifact@v4
         with:
-          name: black-green-part-02
+          name: black-green-v2-part-02
           path: black-and-green.part-02
           compression-level: 0
+          if-no-files-found: ignore
           retention-days: 1
