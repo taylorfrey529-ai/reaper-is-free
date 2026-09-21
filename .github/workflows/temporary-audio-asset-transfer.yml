@@ -1,0 +1,242 @@
+name: Temporary audio asset transfer bridge
+
+on:
+  push:
+    branches:
+      - asset-transfer-sforzando-metal-gtx-20260921
+
+permissions:
+  contents: read
+
+jobs:
+  transfer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Fetch official assets and split for connector transfer
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p transfer
+          cd transfer
+
+          curl -fL --retry 5 --retry-delay 2 \
+            -o LINUX_plogue-sforzando_1.982_x86_64.zip \
+            "https://sforzando.s3.us-east-1.amazonaws.com/LINUX_plogue-sforzando_1.982_x86_64.zip"
+
+          python3 -m pip install --disable-pip-version-check -q gdown
+          gdown --fuzzy \
+            "https://drive.google.com/file/d/1FurY3_x_tog_56irX1VDNyRCUt5JD7bO/view" \
+            -O UI_METAL-GTX.rar
+
+          sha256sum LINUX_plogue-sforzando_1.982_x86_64.zip UI_METAL-GTX.rar | tee SHA256SUMS
+          split -b 70M -d -a 3 UI_METAL-GTX.rar metal-gtx.part.
+          ls -lh LINUX_plogue-sforzando_1.982_x86_64.zip UI_METAL-GTX.rar metal-gtx.part.* | tee FILES.txt
+
+      - name: Upload sforzando
+        uses: actions/upload-artifact@v4
+        with:
+          name: sforzando-linux-1.982
+          path: transfer/LINUX_plogue-sforzando_1.982_x86_64.zip
+          compression-level: 0
+
+      - name: Upload manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: asset-manifest
+          path: |
+            transfer/SHA256SUMS
+            transfer/FILES.txt
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 000
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-000
+          path: transfer/metal-gtx.part.000
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 001
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-001
+          path: transfer/metal-gtx.part.001
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 002
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-002
+          path: transfer/metal-gtx.part.002
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 003
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-003
+          path: transfer/metal-gtx.part.003
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 004
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-004
+          path: transfer/metal-gtx.part.004
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 005
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-005
+          path: transfer/metal-gtx.part.005
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 006
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-006
+          path: transfer/metal-gtx.part.006
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 007
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-007
+          path: transfer/metal-gtx.part.007
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 008
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-008
+          path: transfer/metal-gtx.part.008
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 009
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-009
+          path: transfer/metal-gtx.part.009
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 010
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-010
+          path: transfer/metal-gtx.part.010
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 011
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-011
+          path: transfer/metal-gtx.part.011
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 012
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-012
+          path: transfer/metal-gtx.part.012
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 013
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-013
+          path: transfer/metal-gtx.part.013
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 014
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-014
+          path: transfer/metal-gtx.part.014
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 015
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-015
+          path: transfer/metal-gtx.part.015
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 016
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-016
+          path: transfer/metal-gtx.part.016
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 017
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-017
+          path: transfer/metal-gtx.part.017
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 018
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-018
+          path: transfer/metal-gtx.part.018
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 019
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-019
+          path: transfer/metal-gtx.part.019
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 020
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-020
+          path: transfer/metal-gtx.part.020
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 021
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-021
+          path: transfer/metal-gtx.part.021
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 022
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-022
+          path: transfer/metal-gtx.part.022
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload Metal GTX chunk 023
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-023
+          path: transfer/metal-gtx.part.023
+          if-no-files-found: ignore
+          compression-level: 0
