@@ -1,4 +1,4 @@
-name: Restore GM2 Instrument Runtimes
+name: Restore GM2 Exact AVL
 on:
   push:
     branches:
@@ -7,72 +7,42 @@ permissions:
   contents: read
 
 jobs:
-  sforzando:
-    runs-on: ubuntu-latest
+  avldrums-exact:
+    runs-on: ubuntu-24.04
     steps:
-      - name: Fetch official Linux x86_64 sforzando
-        shell: bash
+      - name: Install build dependencies
         run: |
-          set -euxo pipefail
-          mkdir -p out
-          curl -fL --retry 4 'https://sforzando.s3.us-east-1.amazonaws.com/LINUX_plogue-sforzando_1.982_x86_64.zip' -o out/LINUX_plogue-sforzando_1.982_x86_64.zip
-          sha256sum out/LINUX_plogue-sforzando_1.982_x86_64.zip > out/SHA256SUMS.txt
-          unzip -l out/LINUX_plogue-sforzando_1.982_x86_64.zip > out/ARCHIVE-CONTENTS.txt
-      - name: Upload sforzando
-        uses: actions/upload-artifact@v4
-        with:
-          name: sforzando-1.982-linux-x86_64
-          path: out/
-          compression-level: 0
-          retention-days: 1
-
-  mtpdk:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Fetch official MTPDK Linux VST3
-        shell: bash
-        run: |
-          set -euxo pipefail
-          mkdir -p out
-          curl -fL --retry 4 'https://cdn1.resources.manda-audio.com/DOWNLOADS/products/mtpdk2_free/2.1.5/MTPDK-2.1.5.1-VST3-64bit-Linux-FULL.zip' -o out/MTPDK-2.1.5.1-VST3-64bit-Linux-FULL.zip
-          echo '95bf11b8874b8030b6cbd29217a86559758a96de2323cb6775693f5956a7a46a  out/MTPDK-2.1.5.1-VST3-64bit-Linux-FULL.zip' | sha256sum -c -
-          unzip -l out/MTPDK-2.1.5.1-VST3-64bit-Linux-FULL.zip > out/ARCHIVE-CONTENTS.txt
-      - name: Fetch libxcb-cursor runtime
-        shell: bash
-        run: |
-          set -euxo pipefail
-          cd out
           sudo apt-get update -qq
-          apt download libxcb-cursor0
-          sha256sum libxcb-cursor0*.deb > LIBXCB-SHA256SUMS.txt
-      - name: Upload MTPDK
-        uses: actions/upload-artifact@v4
-        with:
-          name: mtpdk-2.1.5.1-linux-vst3
-          path: out/
-          compression-level: 0
-          retention-days: 1
-
-  avldrums:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Fetch exact x42 binary delivery
+          sudo apt-get install -y build-essential pkg-config lv2-dev libglib2.0-dev libcairo2-dev libpango1.0-dev libglu1-mesa-dev libgl1-mesa-dev libx11-dev
+      - name: Checkout exact source
         shell: bash
         run: |
           set -euxo pipefail
-          mkdir -p out
-          V=$(curl -fLsS 'https://x42-plugins.com/x42/linux/x42-avldrums.latest.txt' | tr -d '\r\n')
-          echo "$V" | tee out/VERSION.txt
-          curl -fL --retry 4 "https://x42-plugins.com/x42/linux/x42-avldrums-lv2-linux-x86_64-${V}.zip" -o out/avldrums-build-delivery.zip
-          unzip -q out/avldrums-build-delivery.zip -d out/unpacked
-          find out/unpacked -type f -maxdepth 4 -print0 | sort -z | xargs -0 sha256sum > out/UNPACKED-SHA256SUMS.txt
-          find out/unpacked -type f -name avldrums.so -exec sha256sum {} \;
-          find out/unpacked -type f -name avldrumsUI_gl.so -exec sha256sum {} \;
-          find out/unpacked -type f -name Black_Pearl_4_LV2.sf2 -exec sha256sum {} \;
-      - name: Upload AVLDrums
+          git clone https://github.com/x42/avldrums.lv2.git src
+          cd src
+          git checkout 9389f16f139410d9a55f9006976bd54cbd8b7806
+          git submodule update --init --recursive
+          test "$(git -C robtk rev-parse HEAD)" = "c6c3ade30b1cffb12e4cd6eda5a46bf1c96cb318"
+      - name: Build exact AVLDrums
+        shell: bash
+        run: |
+          set -euxo pipefail
+          cd src
+          make -j2
+          rm -rf ../stage
+          make install DESTDIR="$PWD/../stage" PREFIX=/usr
+          cd ..
+          sha256sum stage/usr/lib/lv2/avldrums.lv2/avldrums.so
+          sha256sum stage/usr/lib/lv2/avldrums.lv2/avldrumsUI_gl.so
+          sha256sum stage/usr/lib/lv2/avldrums.lv2/Black_Pearl_4_LV2.sf2
+          tar -C stage/usr/lib/lv2 -czf avldrums-exact.tar.gz avldrums.lv2
+          sha256sum avldrums-exact.tar.gz > avldrums-exact.tar.gz.sha256
+      - name: Upload exact AVL
         uses: actions/upload-artifact@v4
         with:
-          name: avldrums-linux-x86_64
-          path: out/
+          name: avldrums-exact-9389f16
+          path: |
+            avldrums-exact.tar.gz
+            avldrums-exact.tar.gz.sha256
           compression-level: 0
           retention-days: 1
