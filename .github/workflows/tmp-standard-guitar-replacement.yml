@@ -10,58 +10,112 @@ jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
-      - name: Clone exact Black And Green Guitars replacement
+      - name: Fetch exact raw source archive
         shell: bash
         run: |
           set -euxo pipefail
-          git clone --depth=1 https://github.com/sfzinstruments/karoryfer.black-and-green-guitars.git Black-And-Green-Guitars
-          cd Black-And-Green-Guitars
-          git rev-parse HEAD | tee ../SOURCE-COMMIT.txt
-          cd ..
-          rm -rf Black-And-Green-Guitars/.git
+          COMMIT='b3b3249d37dc977a1a297bd2dc053e6d9b6b805c'
+          printf '%s\n' "$COMMIT" > SOURCE-COMMIT.txt
+          curl -fL --retry 4 \
+            "https://codeload.github.com/sfzinstruments/karoryfer.black-and-green-guitars/tar.gz/$COMMIT" \
+            -o source.tar.gz
+          mkdir source
+          tar -xzf source.tar.gz -C source --strip-components=1
+          mv source Black-And-Green-Guitars
           test -f 'Black-And-Green-Guitars/Programs/01-green_keyswitch.sfz'
           test -f 'Black-And-Green-Guitars/Programs/02-black_keyswitch.sfz'
-          find Black-And-Green-Guitars/Samples -type f | wc -l | tee SAMPLE-COUNT.txt
+      - name: Validate every WAV structurally
+        shell: bash
+        run: |
+          set -euxo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import struct, sys
+          root=Path("Black-And-Green-Guitars/Samples")
+          wavs=sorted(root.rglob("*.wav"))
+          bad=[]
+          def valid_wav(p):
+              b=p.read_bytes()
+              if len(b)<44 or b[:4]!=b"RIFF" or b[8:12]!=b"WAVE":
+                  return False, "header"
+              declared=struct.unpack_from("<I",b,4)[0]+8
+              if declared>len(b):
+                  return False, f"riff-size {declared}>{len(b)}"
+              pos=12; fmt=False; data=False
+              lim=min(declared,len(b))
+              while pos+8<=lim:
+                  cid=b[pos:pos+4]
+                  n=struct.unpack_from("<I",b,pos+4)[0]
+                  end=pos+8+n
+                  if end>lim:
+                      return False, f"chunk {cid!r} overflow"
+                  if cid==b"fmt ":
+                      fmt=True
+                  elif cid==b"data":
+                      data=True
+                  pos=end+(n&1)
+              return (fmt and data), ("ok" if fmt and data else "missing fmt/data")
+          for p in wavs:
+              ok,why=valid_wav(p)
+              if not ok:
+                  bad.append((str(p),why))
+          Path("WAV-VALIDATION.txt").write_text(
+              f"total={len(wavs)}\nvalid={len(wavs)-len(bad)}\ninvalid={len(bad)}\n"+
+              "".join(f"BAD\t{why}\t{p}\n" for p,why in bad)
+          )
+          print(Path("WAV-VALIDATION.txt").read_text())
+          if not wavs or bad:
+              sys.exit(1)
+          PY
+          find Black-And-Green-Guitars/Samples -type f -name '*.wav' | wc -l | tee SAMPLE-COUNT.txt
+      - name: Package exact payload
+        shell: bash
+        run: |
+          set -euxo pipefail
           tar -cf black-and-green-guitars.tar Black-And-Green-Guitars
           sha256sum black-and-green-guitars.tar | tee black-and-green-guitars.tar.sha256
           split -b 180M -d -a 2 black-and-green-guitars.tar black-and-green.part-
           sha256sum black-and-green.part-* > PARTS-SHA256SUMS.txt
-          test "$(find . -maxdepth 1 -name 'black-and-green.part-*' | wc -l)" -le 4
+          PARTS="$(find . -maxdepth 1 -name 'black-and-green.part-*' | wc -l)"
+          echo "$PARTS" | tee PART-COUNT.txt
+          test "$PARTS" -le 4
       - name: Upload manifest
         uses: actions/upload-artifact@v4
         with:
-          name: black-green-manifest-v3
+          name: black-green-raw-manifest
           path: |
             SOURCE-COMMIT.txt
             SAMPLE-COUNT.txt
+            WAV-VALIDATION.txt
             black-and-green-guitars.tar.sha256
             PARTS-SHA256SUMS.txt
+            PART-COUNT.txt
           retention-days: 1
       - name: Upload part 00
         uses: actions/upload-artifact@v4
         with:
-          name: black-green-v3-part-00
+          name: black-green-raw-part-00
           path: black-and-green.part-00
           compression-level: 0
           retention-days: 1
       - name: Upload part 01
         uses: actions/upload-artifact@v4
         with:
-          name: black-green-v3-part-01
+          name: black-green-raw-part-01
           path: black-and-green.part-01
           compression-level: 0
           retention-days: 1
       - name: Upload part 02
         uses: actions/upload-artifact@v4
         with:
-          name: black-green-v3-part-02
+          name: black-green-raw-part-02
           path: black-and-green.part-02
           compression-level: 0
           retention-days: 1
       - name: Upload part 03
         uses: actions/upload-artifact@v4
         with:
-          name: black-green-v3-part-03
+          name: black-green-raw-part-03
           path: black-and-green.part-03
           compression-level: 0
           retention-days: 1
