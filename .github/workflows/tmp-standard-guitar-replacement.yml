@@ -10,7 +10,7 @@ jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
-      - name: Reconstruct exact Git blobs without checkout filters
+      - name: Reconstruct exact tree from Git blob objects
         shell: bash
         run: |
           set -euxo pipefail
@@ -18,35 +18,40 @@ jobs:
           git clone --depth=1 --no-checkout https://github.com/sfzinstruments/karoryfer.black-and-green-guitars.git source-repo
           test "$(git -C source-repo rev-parse HEAD)" = "$COMMIT"
           printf '%s\n' "$COMMIT" > SOURCE-COMMIT.txt
-          git -C source-repo archive --format=tar HEAD > exact-tree.tar
-          mkdir Black-And-Green-Guitars
-          tar -xf exact-tree.tar -C Black-And-Green-Guitars
-      - name: Prove every extracted file is byte-identical to its Git blob
-        shell: bash
-        run: |
-          set -euxo pipefail
           python3 - <<'PY'
           from pathlib import Path
-          import hashlib, subprocess, sys
-          repo=Path("source-repo")
+          import hashlib, os, subprocess, sys
+          repo="source-repo"
           root=Path("Black-And-Green-Guitars")
-          raw=subprocess.check_output(["git","-C",str(repo),"ls-tree","-r","-z","HEAD"])
+          root.mkdir()
+          raw=subprocess.check_output(["git","-C",repo,"ls-tree","-r","-z","HEAD"])
           entries=[x for x in raw.split(b"\0") if x]
-          mism=[]
           checked=0
+          mism=[]
+          links=0
           for e in entries:
-              meta,path=e.split(b"\t",1)
+              meta,path_b=e.split(b"\t",1)
               mode,typ,sha=meta.decode().split()
-              if typ!="blob" or mode=="120000":
+              if typ!="blob":
                   continue
-              p=root/path.decode("utf-8","surrogateescape")
-              data=p.read_bytes()
+              path=path_b.decode("utf-8","surrogateescape")
+              data=subprocess.check_output(["git","-C",repo,"cat-file","blob",sha])
               h=hashlib.sha1(b"blob "+str(len(data)).encode()+b"\0"+data).hexdigest()
               checked+=1
               if h!=sha:
-                  mism.append((str(p),sha,h))
+                  mism.append((path,sha,h))
+                  continue
+              p=root/path
+              p.parent.mkdir(parents=True,exist_ok=True)
+              if mode=="120000":
+                  os.symlink(data.decode("utf-8","surrogateescape"),p)
+                  links+=1
+              else:
+                  p.write_bytes(data)
+                  if mode=="100755":
+                      p.chmod(0o755)
           Path("BLOB-IDENTITY.txt").write_text(
-              f"checked={checked}\nmismatches={len(mism)}\n"+
+              f"checked={checked}\nmismatches={len(mism)}\nsymlinks={links}\n"+
               "".join(f"MISMATCH\t{a}\t{b}\t{c}\n" for a,b,c in mism)
           )
           print(Path("BLOB-IDENTITY.txt").read_text())
@@ -88,7 +93,7 @@ jobs:
       - name: Upload manifest
         uses: actions/upload-artifact@v4
         with:
-          name: black-green-exact-manifest
+          name: black-green-blob-manifest
           path: |
             SOURCE-COMMIT.txt
             SAMPLE-COUNT.txt
@@ -102,28 +107,28 @@ jobs:
       - name: Upload part 00
         uses: actions/upload-artifact@v4
         with:
-          name: black-green-exact-part-00
+          name: black-green-blob-part-00
           path: black-and-green.part-00
           compression-level: 0
           retention-days: 1
       - name: Upload part 01
         uses: actions/upload-artifact@v4
         with:
-          name: black-green-exact-part-01
+          name: black-green-blob-part-01
           path: black-and-green.part-01
           compression-level: 0
           retention-days: 1
       - name: Upload part 02
         uses: actions/upload-artifact@v4
         with:
-          name: black-green-exact-part-02
+          name: black-green-blob-part-02
           path: black-and-green.part-02
           compression-level: 0
           retention-days: 1
       - name: Upload part 03
         uses: actions/upload-artifact@v4
         with:
-          name: black-green-exact-part-03
+          name: black-green-blob-part-03
           path: black-and-green.part-03
           compression-level: 0
           retention-days: 1
