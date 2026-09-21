@@ -29,7 +29,7 @@ jobs:
           set -euxo pipefail
           export PATH="$HOME/.local/bin:$PATH"
           mkdir -p /tmp/metal-extract payload
-          gdown --id 1FurY3_x_tog_56irX1VDNyRCUt5JD7bO -O /tmp/metal-gtx.download
+          gdown 1FurY3_x_tog_56irX1VDNyRCUt5JD7bO -O /tmp/metal-gtx.download
           test -s /tmp/metal-gtx.download
           sha256sum /tmp/metal-gtx.download | tee /tmp/metal-gtx-source.sha256
           file /tmp/metal-gtx.download | tee /tmp/metal-gtx-filetype.txt
