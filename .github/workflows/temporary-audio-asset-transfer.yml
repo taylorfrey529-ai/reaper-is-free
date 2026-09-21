@@ -1,4 +1,4 @@
-name: Temporary audio asset transfer bridge
+name: Temporary Metal GTX extraction bridge
 
 on:
   push:
@@ -9,232 +9,290 @@ permissions:
   contents: read
 
 jobs:
-  transfer:
+  extract:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
-      - name: Fetch official assets and split for connector transfer
+      - name: Download and extract Metal GTX
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p transfer
           cd transfer
-
-          curl -fL --retry 5 --retry-delay 2 \
-            -o LINUX_plogue-sforzando_1.982_x86_64.zip \
-            "https://sforzando.s3.us-east-1.amazonaws.com/LINUX_plogue-sforzando_1.982_x86_64.zip"
-
           python3 -m pip install --disable-pip-version-check -q gdown
           gdown "1FurY3_x_tog_56irX1VDNyRCUt5JD7bO" -O UI_METAL-GTX.rar
+          command -v 7z
+          mkdir metal-gtx
+          7z x -y UI_METAL-GTX.rar -ometal-gtx
+          find metal-gtx -type f -printf '%P\n' | sort > METAL_GTX_FILES.txt
+          tar -C metal-gtx -czf metal-gtx-extracted.tar.gz .
+          sha256sum metal-gtx-extracted.tar.gz > EXTRACTED_SHA256SUMS
+          du -sh metal-gtx metal-gtx-extracted.tar.gz | tee EXTRACTED_SIZES.txt
+          split -b 70M -d -a 3 metal-gtx-extracted.tar.gz metal-gtx-extracted.part.
+          ls -lh metal-gtx-extracted.part.* >> EXTRACTED_SIZES.txt
 
-          sha256sum LINUX_plogue-sforzando_1.982_x86_64.zip UI_METAL-GTX.rar | tee SHA256SUMS
-          split -b 70M -d -a 3 UI_METAL-GTX.rar metal-gtx.part.
-          ls -lh LINUX_plogue-sforzando_1.982_x86_64.zip UI_METAL-GTX.rar metal-gtx.part.* | tee FILES.txt
-
-      - name: Upload sforzando
+      - name: Upload extracted manifest
         uses: actions/upload-artifact@v4
         with:
-          name: sforzando-linux-1.982
-          path: transfer/LINUX_plogue-sforzando_1.982_x86_64.zip
-          compression-level: 0
-
-      - name: Upload manifest
-        uses: actions/upload-artifact@v4
-        with:
-          name: asset-manifest
+          name: metal-gtx-extracted-manifest
           path: |
-            transfer/SHA256SUMS
-            transfer/FILES.txt
+            transfer/EXTRACTED_SHA256SUMS
+            transfer/EXTRACTED_SIZES.txt
+            transfer/METAL_GTX_FILES.txt
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 000
+      - name: Upload extracted Metal GTX chunk 000
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-000
-          path: transfer/metal-gtx.part.000
+          name: metal-gtx-extracted-000
+          path: transfer/metal-gtx-extracted.part.000
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 001
+      - name: Upload extracted Metal GTX chunk 001
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-001
-          path: transfer/metal-gtx.part.001
+          name: metal-gtx-extracted-001
+          path: transfer/metal-gtx-extracted.part.001
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 002
+      - name: Upload extracted Metal GTX chunk 002
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-002
-          path: transfer/metal-gtx.part.002
+          name: metal-gtx-extracted-002
+          path: transfer/metal-gtx-extracted.part.002
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 003
+      - name: Upload extracted Metal GTX chunk 003
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-003
-          path: transfer/metal-gtx.part.003
+          name: metal-gtx-extracted-003
+          path: transfer/metal-gtx-extracted.part.003
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 004
+      - name: Upload extracted Metal GTX chunk 004
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-004
-          path: transfer/metal-gtx.part.004
+          name: metal-gtx-extracted-004
+          path: transfer/metal-gtx-extracted.part.004
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 005
+      - name: Upload extracted Metal GTX chunk 005
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-005
-          path: transfer/metal-gtx.part.005
+          name: metal-gtx-extracted-005
+          path: transfer/metal-gtx-extracted.part.005
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 006
+      - name: Upload extracted Metal GTX chunk 006
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-006
-          path: transfer/metal-gtx.part.006
+          name: metal-gtx-extracted-006
+          path: transfer/metal-gtx-extracted.part.006
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 007
+      - name: Upload extracted Metal GTX chunk 007
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-007
-          path: transfer/metal-gtx.part.007
+          name: metal-gtx-extracted-007
+          path: transfer/metal-gtx-extracted.part.007
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 008
+      - name: Upload extracted Metal GTX chunk 008
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-008
-          path: transfer/metal-gtx.part.008
+          name: metal-gtx-extracted-008
+          path: transfer/metal-gtx-extracted.part.008
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 009
+      - name: Upload extracted Metal GTX chunk 009
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-009
-          path: transfer/metal-gtx.part.009
+          name: metal-gtx-extracted-009
+          path: transfer/metal-gtx-extracted.part.009
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 010
+      - name: Upload extracted Metal GTX chunk 010
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-010
-          path: transfer/metal-gtx.part.010
+          name: metal-gtx-extracted-010
+          path: transfer/metal-gtx-extracted.part.010
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 011
+      - name: Upload extracted Metal GTX chunk 011
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-011
-          path: transfer/metal-gtx.part.011
+          name: metal-gtx-extracted-011
+          path: transfer/metal-gtx-extracted.part.011
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 012
+      - name: Upload extracted Metal GTX chunk 012
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-012
-          path: transfer/metal-gtx.part.012
+          name: metal-gtx-extracted-012
+          path: transfer/metal-gtx-extracted.part.012
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 013
+      - name: Upload extracted Metal GTX chunk 013
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-013
-          path: transfer/metal-gtx.part.013
+          name: metal-gtx-extracted-013
+          path: transfer/metal-gtx-extracted.part.013
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 014
+      - name: Upload extracted Metal GTX chunk 014
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-014
-          path: transfer/metal-gtx.part.014
+          name: metal-gtx-extracted-014
+          path: transfer/metal-gtx-extracted.part.014
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 015
+      - name: Upload extracted Metal GTX chunk 015
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-015
-          path: transfer/metal-gtx.part.015
+          name: metal-gtx-extracted-015
+          path: transfer/metal-gtx-extracted.part.015
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 016
+      - name: Upload extracted Metal GTX chunk 016
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-016
-          path: transfer/metal-gtx.part.016
+          name: metal-gtx-extracted-016
+          path: transfer/metal-gtx-extracted.part.016
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 017
+      - name: Upload extracted Metal GTX chunk 017
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-017
-          path: transfer/metal-gtx.part.017
+          name: metal-gtx-extracted-017
+          path: transfer/metal-gtx-extracted.part.017
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 018
+      - name: Upload extracted Metal GTX chunk 018
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-018
-          path: transfer/metal-gtx.part.018
+          name: metal-gtx-extracted-018
+          path: transfer/metal-gtx-extracted.part.018
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 019
+      - name: Upload extracted Metal GTX chunk 019
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-019
-          path: transfer/metal-gtx.part.019
+          name: metal-gtx-extracted-019
+          path: transfer/metal-gtx-extracted.part.019
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 020
+      - name: Upload extracted Metal GTX chunk 020
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-020
-          path: transfer/metal-gtx.part.020
+          name: metal-gtx-extracted-020
+          path: transfer/metal-gtx-extracted.part.020
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 021
+      - name: Upload extracted Metal GTX chunk 021
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-021
-          path: transfer/metal-gtx.part.021
+          name: metal-gtx-extracted-021
+          path: transfer/metal-gtx-extracted.part.021
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 022
+      - name: Upload extracted Metal GTX chunk 022
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-022
-          path: transfer/metal-gtx.part.022
+          name: metal-gtx-extracted-022
+          path: transfer/metal-gtx-extracted.part.022
           if-no-files-found: ignore
           compression-level: 0
 
-      - name: Upload Metal GTX chunk 023
+      - name: Upload extracted Metal GTX chunk 023
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-023
-          path: transfer/metal-gtx.part.023
+          name: metal-gtx-extracted-023
+          path: transfer/metal-gtx-extracted.part.023
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload extracted Metal GTX chunk 024
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-extracted-024
+          path: transfer/metal-gtx-extracted.part.024
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload extracted Metal GTX chunk 025
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-extracted-025
+          path: transfer/metal-gtx-extracted.part.025
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload extracted Metal GTX chunk 026
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-extracted-026
+          path: transfer/metal-gtx-extracted.part.026
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload extracted Metal GTX chunk 027
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-extracted-027
+          path: transfer/metal-gtx-extracted.part.027
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload extracted Metal GTX chunk 028
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-extracted-028
+          path: transfer/metal-gtx-extracted.part.028
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload extracted Metal GTX chunk 029
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-extracted-029
+          path: transfer/metal-gtx-extracted.part.029
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload extracted Metal GTX chunk 030
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-extracted-030
+          path: transfer/metal-gtx-extracted.part.030
+          if-no-files-found: ignore
+          compression-level: 0
+
+      - name: Upload extracted Metal GTX chunk 031
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-extracted-031
+          path: transfer/metal-gtx-extracted.part.031
           if-no-files-found: ignore
           compression-level: 0
