@@ -1,0 +1,50 @@
+name: Restore Black Blue Split
+on:
+  push:
+    branches:
+      - tmp/restore-gm2-instruments-20260920
+permissions:
+  contents: read
+jobs:
+  split:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build split payload
+        shell: bash
+        run: |
+          set -euxo pipefail
+          git clone --depth=1 https://github.com/sfzinstruments/karoryfer.black-and-blue-basses.git Black-And-Blue-Basses
+          rm -rf Black-And-Blue-Basses/.git
+          tar -cf black-and-blue-basses.tar Black-And-Blue-Basses
+          sha256sum black-and-blue-basses.tar > black-and-blue-basses.sha256
+          split -b 400M black-and-blue-basses.tar black-and-blue-basses.part-
+          test -f black-and-blue-basses.part-aa
+          test -f black-and-blue-basses.part-ab
+          test -f black-and-blue-basses.part-ac
+      - name: Upload aa
+        uses: actions/upload-artifact@v4
+        with:
+          name: black-and-blue-aa
+          path: black-and-blue-basses.part-aa
+          compression-level: 0
+          retention-days: 1
+      - name: Upload ab
+        uses: actions/upload-artifact@v4
+        with:
+          name: black-and-blue-ab
+          path: black-and-blue-basses.part-ab
+          compression-level: 0
+          retention-days: 1
+      - name: Upload ac
+        uses: actions/upload-artifact@v4
+        with:
+          name: black-and-blue-ac
+          path: black-and-blue-basses.part-ac
+          compression-level: 0
+          retention-days: 1
+      - name: Upload checksum
+        uses: actions/upload-artifact@v4
+        with:
+          name: black-and-blue-checksum
+          path: black-and-blue-basses.sha256
+          retention-days: 1
