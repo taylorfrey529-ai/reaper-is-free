@@ -1,0 +1,207 @@
+name: Sunwell Metal GTX Bridge
+
+on:
+  push:
+    branches:
+      - sunwell-metal-gtx-20260921
+    paths:
+      - .github/workflows/sunwell-metal-gtx-bridge.yml
+
+permissions:
+  contents: read
+
+jobs:
+  bridge:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Install transport tools
+        shell: bash
+        run: |
+          set -euxo pipefail
+          sudo apt-get update
+          sudo apt-get install -y p7zip-full
+          python3 -m pip install --user --upgrade gdown
+
+      - name: Download authoritative Metal GTX source
+        shell: bash
+        run: |
+          set -euxo pipefail
+          export PATH="$HOME/.local/bin:$PATH"
+          mkdir -p /tmp/metal-extract payload
+          gdown --id 1FurY3_x_tog_56irX1VDNyRCUt5JD7bO -O /tmp/metal-gtx.download
+          test -s /tmp/metal-gtx.download
+          sha256sum /tmp/metal-gtx.download | tee /tmp/metal-gtx-source.sha256
+          file /tmp/metal-gtx.download | tee /tmp/metal-gtx-filetype.txt
+
+      - name: Extract and normalize Metal GTX
+        shell: bash
+        run: |
+          set -euxo pipefail
+          7z x -y -o/tmp/metal-extract /tmp/metal-gtx.download
+          program="$(find /tmp/metal-extract -type f -name '03-METAL-GTX XTracking.sfz' -print -quit)"
+          test -n "$program"
+          root="$(dirname "$(dirname "$program")")"
+          mkdir -p payload/Metal-GTX
+          cp -a "$root"/. payload/Metal-GTX/
+          test -f 'payload/Metal-GTX/Programs/03-METAL-GTX XTracking.sfz'
+          test -f 'payload/Metal-GTX/Programs/01-METAL-GTX Full.sfz'
+          cp /tmp/metal-gtx-source.sha256 payload/Metal-GTX/UPSTREAM-SOURCE-SHA256.txt
+          cp /tmp/metal-gtx-filetype.txt payload/Metal-GTX/UPSTREAM-FILETYPE.txt
+          {
+            echo 'Metal GTX'
+            echo 'Author: Unreal Instruments'
+            echo 'Catalog: https://sfzinstruments.github.io/guitars/metal_gtx/'
+            echo 'Source page: https://unreal-instruments.wixsite.com/unreal-instruments/metal-gtx'
+            echo 'Google Drive source id: 1FurY3_x_tog_56irX1VDNyRCUt5JD7bO'
+          } > payload/Metal-GTX/SUNWELL-PROVENANCE.txt
+          find payload/Metal-GTX -type f | sort > payload/Metal-GTX/SUNWELL-FILELIST.txt
+
+      - name: Prepare verified transport
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p transfer
+          tar -czf transfer/metal-gtx.tar.gz -C payload Metal-GTX
+          python3 - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          src=Path('transfer/metal-gtx.tar.gz')
+          chunk=200*1024*1024
+          def sha(p):
+              h=hashlib.sha256()
+              with p.open('rb') as f:
+                  for b in iter(lambda:f.read(8*1024*1024), b''):
+                      h.update(b)
+              return h.hexdigest()
+          parts=[]
+          with src.open('rb') as f:
+              i=0
+              while True:
+                  data=f.read(chunk)
+                  if not data:
+                      break
+                  name=f'metal-gtx.tar.gz.part.{i:03d}'
+                  p=Path('transfer')/name
+                  p.write_bytes(data)
+                  parts.append({'index':i,'name':name,'size':len(data),'sha256':sha(p)})
+                  i+=1
+          source_sha=Path('/tmp/metal-gtx-source.sha256').read_text().split()[0]
+          manifest={
+              'schema_version':1,
+              'source_kind':'directory',
+              'source_name':'Metal-GTX',
+              'logical_name':'metal-gtx.tar.gz',
+              'logical_size':src.stat().st_size,
+              'logical_sha256':sha(src),
+              'chunk_size_bytes':chunk,
+              'hard_transport_limit_bytes':256*1024*1024,
+              'upstream_file_id':'1FurY3_x_tog_56irX1VDNyRCUt5JD7bO',
+              'upstream_source_sha256':source_sha,
+              'parts':parts
+          }
+          Path('transfer/manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+          if len(parts) > 10:
+              raise SystemExit(f'too many parts: {len(parts)}')
+          print(json.dumps(manifest,indent=2))
+          PY
+          rm transfer/metal-gtx.tar.gz
+
+      - name: Upload Metal GTX manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-manifest
+          path: transfer/manifest.json
+          compression-level: 0
+          retention-days: 1
+
+      - name: Upload Metal GTX part 000
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-part-000
+          path: transfer/metal-gtx.tar.gz.part.000
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - name: Upload Metal GTX part 001
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-part-001
+          path: transfer/metal-gtx.tar.gz.part.001
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - name: Upload Metal GTX part 002
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-part-002
+          path: transfer/metal-gtx.tar.gz.part.002
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - name: Upload Metal GTX part 003
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-part-003
+          path: transfer/metal-gtx.tar.gz.part.003
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - name: Upload Metal GTX part 004
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-part-004
+          path: transfer/metal-gtx.tar.gz.part.004
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - name: Upload Metal GTX part 005
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-part-005
+          path: transfer/metal-gtx.tar.gz.part.005
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - name: Upload Metal GTX part 006
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-part-006
+          path: transfer/metal-gtx.tar.gz.part.006
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - name: Upload Metal GTX part 007
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-part-007
+          path: transfer/metal-gtx.tar.gz.part.007
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - name: Upload Metal GTX part 008
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-part-008
+          path: transfer/metal-gtx.tar.gz.part.008
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - name: Upload Metal GTX part 009
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-part-009
+          path: transfer/metal-gtx.tar.gz.part.009
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
