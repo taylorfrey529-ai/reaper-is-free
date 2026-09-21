@@ -10,68 +10,74 @@ jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
-      - name: Fetch exact raw source archive
+      - name: Reconstruct exact Git blobs without checkout filters
         shell: bash
         run: |
           set -euxo pipefail
           COMMIT='b3b3249d37dc977a1a297bd2dc053e6d9b6b805c'
+          git clone --depth=1 --no-checkout https://github.com/sfzinstruments/karoryfer.black-and-green-guitars.git source-repo
+          test "$(git -C source-repo rev-parse HEAD)" = "$COMMIT"
           printf '%s\n' "$COMMIT" > SOURCE-COMMIT.txt
-          curl -fL --retry 4 \
-            "https://codeload.github.com/sfzinstruments/karoryfer.black-and-green-guitars/tar.gz/$COMMIT" \
-            -o source.tar.gz
-          mkdir source
-          tar -xzf source.tar.gz -C source --strip-components=1
-          mv source Black-And-Green-Guitars
-          test -f 'Black-And-Green-Guitars/Programs/01-green_keyswitch.sfz'
-          test -f 'Black-And-Green-Guitars/Programs/02-black_keyswitch.sfz'
-      - name: Validate every WAV structurally
+          git -C source-repo archive --format=tar HEAD > exact-tree.tar
+          mkdir Black-And-Green-Guitars
+          tar -xf exact-tree.tar -C Black-And-Green-Guitars
+      - name: Prove every extracted file is byte-identical to its Git blob
         shell: bash
         run: |
           set -euxo pipefail
           python3 - <<'PY'
           from pathlib import Path
-          import struct, sys
-          root=Path("Black-And-Green-Guitars/Samples")
-          wavs=sorted(root.rglob("*.wav"))
-          bad=[]
-          def valid_wav(p):
-              b=p.read_bytes()
-              if len(b)<44 or b[:4]!=b"RIFF" or b[8:12]!=b"WAVE":
-                  return False, "header"
-              declared=struct.unpack_from("<I",b,4)[0]+8
-              if declared>len(b):
-                  return False, f"riff-size {declared}>{len(b)}"
-              pos=12; fmt=False; data=False
-              lim=min(declared,len(b))
-              while pos+8<=lim:
-                  cid=b[pos:pos+4]
-                  n=struct.unpack_from("<I",b,pos+4)[0]
-                  end=pos+8+n
-                  if end>lim:
-                      return False, f"chunk {cid!r} overflow"
-                  if cid==b"fmt ":
-                      fmt=True
-                  elif cid==b"data":
-                      data=True
-                  pos=end+(n&1)
-              return (fmt and data), ("ok" if fmt and data else "missing fmt/data")
-          for p in wavs:
-              ok,why=valid_wav(p)
-              if not ok:
-                  bad.append((str(p),why))
-          Path("WAV-VALIDATION.txt").write_text(
-              f"total={len(wavs)}\nvalid={len(wavs)-len(bad)}\ninvalid={len(bad)}\n"+
-              "".join(f"BAD\t{why}\t{p}\n" for p,why in bad)
+          import hashlib, subprocess, sys
+          repo=Path("source-repo")
+          root=Path("Black-And-Green-Guitars")
+          raw=subprocess.check_output(["git","-C",str(repo),"ls-tree","-r","-z","HEAD"])
+          entries=[x for x in raw.split(b"\0") if x]
+          mism=[]
+          checked=0
+          for e in entries:
+              meta,path=e.split(b"\t",1)
+              mode,typ,sha=meta.decode().split()
+              if typ!="blob" or mode=="120000":
+                  continue
+              p=root/path.decode("utf-8","surrogateescape")
+              data=p.read_bytes()
+              h=hashlib.sha1(b"blob "+str(len(data)).encode()+b"\0"+data).hexdigest()
+              checked+=1
+              if h!=sha:
+                  mism.append((str(p),sha,h))
+          Path("BLOB-IDENTITY.txt").write_text(
+              f"checked={checked}\nmismatches={len(mism)}\n"+
+              "".join(f"MISMATCH\t{a}\t{b}\t{c}\n" for a,b,c in mism)
           )
-          print(Path("WAV-VALIDATION.txt").read_text())
-          if not wavs or bad:
+          print(Path("BLOB-IDENTITY.txt").read_text())
+          if mism:
               sys.exit(1)
           PY
-          find Black-And-Green-Guitars/Samples -type f -name '*.wav' | wc -l | tee SAMPLE-COUNT.txt
-      - name: Package exact payload
+      - name: Validate all WAVs with ffprobe
         shell: bash
         run: |
           set -euxo pipefail
+          find Black-And-Green-Guitars/Samples -type f -name '*.wav' -print0 > wavs.list
+          tr -cd '\0' < wavs.list | wc -c | tee SAMPLE-COUNT.txt
+          test "$(cat SAMPLE-COUNT.txt)" = "1776"
+          : > WAV-FAILURES.txt
+          export FAILFILE="$PWD/WAV-FAILURES.txt"
+          xargs -0 -P 8 -n 1 bash -c '
+            f="$1"
+            if ! ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 "$f" >/dev/null 2>&1; then
+              printf "%s\n" "$f" >> "$FAILFILE"
+            fi
+          ' _ < wavs.list
+          sort -u WAV-FAILURES.txt -o WAV-FAILURES.txt
+          FAILS="$(wc -l < WAV-FAILURES.txt)"
+          printf "total=1776\nffprobe_failures=%s\n" "$FAILS" | tee WAV-VALIDATION.txt
+          test "$FAILS" = "0"
+      - name: Package exact validated payload
+        shell: bash
+        run: |
+          set -euxo pipefail
+          test -f 'Black-And-Green-Guitars/Programs/01-green_keyswitch.sfz'
+          test -f 'Black-And-Green-Guitars/Programs/02-black_keyswitch.sfz'
           tar -cf black-and-green-guitars.tar Black-And-Green-Guitars
           sha256sum black-and-green-guitars.tar | tee black-and-green-guitars.tar.sha256
           split -b 180M -d -a 2 black-and-green-guitars.tar black-and-green.part-
@@ -82,11 +88,13 @@ jobs:
       - name: Upload manifest
         uses: actions/upload-artifact@v4
         with:
-          name: black-green-raw-manifest
+          name: black-green-exact-manifest
           path: |
             SOURCE-COMMIT.txt
             SAMPLE-COUNT.txt
+            BLOB-IDENTITY.txt
             WAV-VALIDATION.txt
+            WAV-FAILURES.txt
             black-and-green-guitars.tar.sha256
             PARTS-SHA256SUMS.txt
             PART-COUNT.txt
@@ -94,28 +102,28 @@ jobs:
       - name: Upload part 00
         uses: actions/upload-artifact@v4
         with:
-          name: black-green-raw-part-00
+          name: black-green-exact-part-00
           path: black-and-green.part-00
           compression-level: 0
           retention-days: 1
       - name: Upload part 01
         uses: actions/upload-artifact@v4
         with:
-          name: black-green-raw-part-01
+          name: black-green-exact-part-01
           path: black-and-green.part-01
           compression-level: 0
           retention-days: 1
       - name: Upload part 02
         uses: actions/upload-artifact@v4
         with:
-          name: black-green-raw-part-02
+          name: black-green-exact-part-02
           path: black-and-green.part-02
           compression-level: 0
           retention-days: 1
       - name: Upload part 03
         uses: actions/upload-artifact@v4
         with:
-          name: black-green-raw-part-03
+          name: black-green-exact-part-03
           path: black-and-green.part-03
           compression-level: 0
           retention-days: 1
