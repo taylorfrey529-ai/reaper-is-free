@@ -25,9 +25,7 @@ jobs:
             "https://sforzando.s3.us-east-1.amazonaws.com/LINUX_plogue-sforzando_1.982_x86_64.zip"
 
           python3 -m pip install --disable-pip-version-check -q gdown
-          gdown --fuzzy \
-            "https://drive.google.com/file/d/1FurY3_x_tog_56irX1VDNyRCUt5JD7bO/view" \
-            -O UI_METAL-GTX.rar
+          gdown "1FurY3_x_tog_56irX1VDNyRCUt5JD7bO" -O UI_METAL-GTX.rar
 
           sha256sum LINUX_plogue-sforzando_1.982_x86_64.zip UI_METAL-GTX.rar | tee SHA256SUMS
           split -b 70M -d -a 3 UI_METAL-GTX.rar metal-gtx.part.
