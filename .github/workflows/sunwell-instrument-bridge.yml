@@ -1,0 +1,366 @@
+name: Sunwell Instrument Bridge
+
+on:
+  push:
+    branches:
+      - sunwell-transfer-20260921
+    paths:
+      - .github/workflows/sunwell-instrument-bridge.yml
+
+permissions:
+  contents: read
+
+jobs:
+  bridge:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Install build and extraction tools
+        run: |
+          set -euxo pipefail
+          sudo apt-get update
+          sudo apt-get install -y p7zip-full build-essential cmake pkg-config lv2-dev libglib2.0-dev libcairo2-dev libpango1.0-dev libgl1-mesa-dev libglu1-mesa-dev libsndfile1-dev
+
+      - name: Fetch sforzando and official free sound bank
+        run: |
+          set -euxo pipefail
+          mkdir -p payload/sforzando/official payload/sforzando/free-sounds
+          curl -fL --retry 5 'https://sforzando.s3.us-east-1.amazonaws.com/LINUX_plogue-sforzando_1.982_x86_64.zip' -o payload/sforzando/official/LINUX_plogue-sforzando_1.982_x86_64.zip
+          curl -fL --retry 5 'https://s3.amazonaws.com/sforzando/FreeSounds/WIN_ARIA_Engine_Free_Sounds_Vol1.exe' -o /tmp/WIN_ARIA_Engine_Free_Sounds_Vol1.exe
+          sha256sum payload/sforzando/official/LINUX_plogue-sforzando_1.982_x86_64.zip /tmp/WIN_ARIA_Engine_Free_Sounds_Vol1.exe > payload/sforzando/SHA256SUMS-upstream.txt
+          7z x -y -opayload/sforzando/free-sounds /tmp/WIN_ARIA_Engine_Free_Sounds_Vol1.exe
+          find payload/sforzando/free-sounds -type f | sort > payload/sforzando/free-sounds-files.txt
+
+      - name: Build AVLDrums LV2
+        run: |
+          set -euxo pipefail
+          git clone --depth=1 https://github.com/x42/avldrums.lv2.git /tmp/avldrums
+          cd /tmp/avldrums
+          git rev-parse HEAD > /tmp/avldrums-commit.txt
+          make submodules
+          make -j2
+          mkdir -p "$GITHUB_WORKSPACE/payload/avldrums/stage"
+          make install DESTDIR="$GITHUB_WORKSPACE/payload/avldrums/stage" PREFIX=/usr
+          cp /tmp/avldrums-commit.txt "$GITHUB_WORKSPACE/payload/avldrums/UPSTREAM-COMMIT.txt"
+
+      - name: Fetch NAM sources and build Linux LV2
+        run: |
+          set -euxo pipefail
+          mkdir -p payload/nam/sources payload/nam/lv2
+          git clone --depth=1 --recurse-submodules -j4 https://github.com/sdatkinson/neural-amp-modeler.git payload/nam/sources/neural-amp-modeler
+          git clone --depth=1 --recurse-submodules -j4 https://github.com/sdatkinson/NeuralAmpModelerCore.git payload/nam/sources/NeuralAmpModelerCore
+          git clone --depth=1 --recurse-submodules -j4 https://github.com/sdatkinson/NeuralAmpModelerPlugin.git payload/nam/sources/NeuralAmpModelerPlugin
+          for d in payload/nam/sources/*; do rm -rf "$d/.git"; done
+          git clone --depth=1 --recurse-submodules -j4 https://github.com/mikeoliphant/neural-amp-modeler-lv2.git /tmp/nam-lv2
+          cmake -S /tmp/nam-lv2 -B /tmp/nam-lv2/build -DCMAKE_BUILD_TYPE=Release
+          cmake --build /tmp/nam-lv2/build -j2
+          cp -a /tmp/nam-lv2/build/neural_amp_modeler.lv2 payload/nam/lv2/
+          git -C /tmp/nam-lv2 rev-parse HEAD > payload/nam/LINUX-LV2-COMMIT.txt
+
+      - name: Prepare verified 70 MiB transfer chunks
+        run: |
+          set -euxo pipefail
+          mkdir -p transfer
+          python3 - <<'PY'
+          import hashlib, json, tarfile
+          from pathlib import Path
+          MIB=1024*1024
+          CHUNK=70*MIB
+          HARD=256*MIB
+          def sha(p):
+              h=hashlib.sha256()
+              with open(p,'rb') as f:
+                  for b in iter(lambda:f.read(8*MIB),b''): h.update(b)
+              return h.hexdigest()
+          def prep(srcname):
+              src=Path('payload')/srcname
+              out=Path('transfer')/srcname
+              out.mkdir(parents=True,exist_ok=True)
+              logical=out/(src.name+'.tar.gz')
+              with tarfile.open(logical,'w:gz') as tf:
+                  tf.add(src,arcname=src.name,recursive=True)
+              size=logical.stat().st_size
+              logical_sha=sha(logical)
+              parts=[]
+              with open(logical,'rb') as f:
+                  i=0
+                  while True:
+                      data=f.read(CHUNK)
+                      if not data: break
+                      name=f'{logical.name}.part.{i:03d}'
+                      p=out/name
+                      p.write_bytes(data)
+                      parts.append({'index':i,'name':name,'size':len(data),'sha256':sha(p)})
+                      i+=1
+              logical.unlink()
+              manifest={'schema_version':1,'source_kind':'directory','source_name':src.name,'logical_name':logical.name,'logical_size':size,'logical_sha256':logical_sha,'chunk_size_bytes':CHUNK,'hard_transport_limit_bytes':HARD,'parts':parts}
+              (out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+              if len(parts)>10: raise SystemExit(f'{srcname}: too many parts {len(parts)}')
+              print(srcname, size, logical_sha, len(parts))
+          for name in ('sforzando','avldrums','nam'):
+              prep(name)
+          PY
+
+      - name: Upload sforzando manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: sforzando-manifest
+          path: transfer/sforzando/manifest.json
+          compression-level: 0
+          retention-days: 1
+      - name: Upload sforzando part 000
+        uses: actions/upload-artifact@v4
+        with:
+          name: sforzando-part-000
+          path: transfer/sforzando/*.part.000
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload sforzando part 001
+        uses: actions/upload-artifact@v4
+        with:
+          name: sforzando-part-001
+          path: transfer/sforzando/*.part.001
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload sforzando part 002
+        uses: actions/upload-artifact@v4
+        with:
+          name: sforzando-part-002
+          path: transfer/sforzando/*.part.002
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload sforzando part 003
+        uses: actions/upload-artifact@v4
+        with:
+          name: sforzando-part-003
+          path: transfer/sforzando/*.part.003
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload sforzando part 004
+        uses: actions/upload-artifact@v4
+        with:
+          name: sforzando-part-004
+          path: transfer/sforzando/*.part.004
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload sforzando part 005
+        uses: actions/upload-artifact@v4
+        with:
+          name: sforzando-part-005
+          path: transfer/sforzando/*.part.005
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload sforzando part 006
+        uses: actions/upload-artifact@v4
+        with:
+          name: sforzando-part-006
+          path: transfer/sforzando/*.part.006
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload sforzando part 007
+        uses: actions/upload-artifact@v4
+        with:
+          name: sforzando-part-007
+          path: transfer/sforzando/*.part.007
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload sforzando part 008
+        uses: actions/upload-artifact@v4
+        with:
+          name: sforzando-part-008
+          path: transfer/sforzando/*.part.008
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload sforzando part 009
+        uses: actions/upload-artifact@v4
+        with:
+          name: sforzando-part-009
+          path: transfer/sforzando/*.part.009
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - name: Upload avldrums manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: avldrums-manifest
+          path: transfer/avldrums/manifest.json
+          compression-level: 0
+          retention-days: 1
+      - name: Upload avldrums part 000
+        uses: actions/upload-artifact@v4
+        with:
+          name: avldrums-part-000
+          path: transfer/avldrums/*.part.000
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload avldrums part 001
+        uses: actions/upload-artifact@v4
+        with:
+          name: avldrums-part-001
+          path: transfer/avldrums/*.part.001
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload avldrums part 002
+        uses: actions/upload-artifact@v4
+        with:
+          name: avldrums-part-002
+          path: transfer/avldrums/*.part.002
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload avldrums part 003
+        uses: actions/upload-artifact@v4
+        with:
+          name: avldrums-part-003
+          path: transfer/avldrums/*.part.003
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload avldrums part 004
+        uses: actions/upload-artifact@v4
+        with:
+          name: avldrums-part-004
+          path: transfer/avldrums/*.part.004
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload avldrums part 005
+        uses: actions/upload-artifact@v4
+        with:
+          name: avldrums-part-005
+          path: transfer/avldrums/*.part.005
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload avldrums part 006
+        uses: actions/upload-artifact@v4
+        with:
+          name: avldrums-part-006
+          path: transfer/avldrums/*.part.006
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload avldrums part 007
+        uses: actions/upload-artifact@v4
+        with:
+          name: avldrums-part-007
+          path: transfer/avldrums/*.part.007
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload avldrums part 008
+        uses: actions/upload-artifact@v4
+        with:
+          name: avldrums-part-008
+          path: transfer/avldrums/*.part.008
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload avldrums part 009
+        uses: actions/upload-artifact@v4
+        with:
+          name: avldrums-part-009
+          path: transfer/avldrums/*.part.009
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - name: Upload nam manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: nam-manifest
+          path: transfer/nam/manifest.json
+          compression-level: 0
+          retention-days: 1
+      - name: Upload nam part 000
+        uses: actions/upload-artifact@v4
+        with:
+          name: nam-part-000
+          path: transfer/nam/*.part.000
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload nam part 001
+        uses: actions/upload-artifact@v4
+        with:
+          name: nam-part-001
+          path: transfer/nam/*.part.001
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload nam part 002
+        uses: actions/upload-artifact@v4
+        with:
+          name: nam-part-002
+          path: transfer/nam/*.part.002
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload nam part 003
+        uses: actions/upload-artifact@v4
+        with:
+          name: nam-part-003
+          path: transfer/nam/*.part.003
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload nam part 004
+        uses: actions/upload-artifact@v4
+        with:
+          name: nam-part-004
+          path: transfer/nam/*.part.004
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload nam part 005
+        uses: actions/upload-artifact@v4
+        with:
+          name: nam-part-005
+          path: transfer/nam/*.part.005
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload nam part 006
+        uses: actions/upload-artifact@v4
+        with:
+          name: nam-part-006
+          path: transfer/nam/*.part.006
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload nam part 007
+        uses: actions/upload-artifact@v4
+        with:
+          name: nam-part-007
+          path: transfer/nam/*.part.007
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload nam part 008
+        uses: actions/upload-artifact@v4
+        with:
+          name: nam-part-008
+          path: transfer/nam/*.part.008
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - name: Upload nam part 009
+        uses: actions/upload-artifact@v4
+        with:
+          name: nam-part-009
+          path: transfer/nam/*.part.009
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
