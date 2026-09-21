@@ -10,7 +10,7 @@ jobs:
   black-blue:
     runs-on: ubuntu-latest
     steps:
-      - name: Fetch library
+      - name: Build split payload
         shell: bash
         run: |
           set -euxo pipefail
@@ -18,36 +18,34 @@ jobs:
           rm -rf Black-And-Blue-Basses/.git
           tar -cf black-and-blue-basses.tar Black-And-Blue-Basses
           sha256sum black-and-blue-basses.tar > black-and-blue-basses.sha256
-          split -b 300M black-and-blue-basses.tar black-and-blue-basses.part-
-      - name: Upload pieces
+          split -b 400M black-and-blue-basses.tar black-and-blue-basses.part-
+          test -f black-and-blue-basses.part-aa
+          test -f black-and-blue-basses.part-ab
+          test -f black-and-blue-basses.part-ac
+      - name: Upload aa
         uses: actions/upload-artifact@v4
         with:
-          name: black-and-blue-basses-parts
-          path: |
-            black-and-blue-basses.part-*
-            black-and-blue-basses.sha256
+          name: black-and-blue-aa
+          path: black-and-blue-basses.part-aa
           compression-level: 0
           retention-days: 1
-
-  metal-gtx:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Fetch Metal GTX
-        shell: bash
-        run: |
-          set -euxo pipefail
-          python3 -m pip install --quiet gdown
-          gdown 1FurY3_x_tog_56irX1VDNyRCUt5JD7bO -O metal-gtx.pack
-          test -s metal-gtx.pack
-          file metal-gtx.pack
-          sha256sum metal-gtx.pack > metal-gtx.sha256
-          split -b 300M metal-gtx.pack metal-gtx.part-
-      - name: Upload pieces
+      - name: Upload ab
         uses: actions/upload-artifact@v4
         with:
-          name: metal-gtx-parts
-          path: |
-            metal-gtx.part-*
-            metal-gtx.sha256
+          name: black-and-blue-ab
+          path: black-and-blue-basses.part-ab
           compression-level: 0
+          retention-days: 1
+      - name: Upload ac
+        uses: actions/upload-artifact@v4
+        with:
+          name: black-and-blue-ac
+          path: black-and-blue-basses.part-ac
+          compression-level: 0
+          retention-days: 1
+      - name: Upload checksum
+        uses: actions/upload-artifact@v4
+        with:
+          name: black-and-blue-checksum
+          path: black-and-blue-basses.sha256
           retention-days: 1
