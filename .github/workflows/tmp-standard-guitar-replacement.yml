@@ -58,25 +58,54 @@ jobs:
           if mism:
               sys.exit(1)
           PY
-      - name: Validate all WAVs with ffprobe
+      - name: Validate all WAVs structurally
         shell: bash
         run: |
           set -euxo pipefail
-          find Black-And-Green-Guitars/Samples -type f -name '*.wav' -print0 > wavs.list
-          tr -cd '\0' < wavs.list | wc -c | tee SAMPLE-COUNT.txt
-          test "$(cat SAMPLE-COUNT.txt)" = "1776"
-          : > WAV-FAILURES.txt
-          export FAILFILE="$PWD/WAV-FAILURES.txt"
-          xargs -0 -P 8 -n 1 bash -c '
-            f="$1"
-            if ! ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 "$f" >/dev/null 2>&1; then
-              printf "%s\n" "$f" >> "$FAILFILE"
-            fi
-          ' _ < wavs.list
-          sort -u WAV-FAILURES.txt -o WAV-FAILURES.txt
-          FAILS="$(wc -l < WAV-FAILURES.txt)"
-          printf "total=1776\nffprobe_failures=%s\n" "$FAILS" | tee WAV-VALIDATION.txt
-          test "$FAILS" = "0"
+          python3 - <<'PY'
+          from pathlib import Path
+          import struct, sys
+          root=Path("Black-And-Green-Guitars/Samples")
+          wavs=sorted(root.rglob("*.wav"))
+          bad=[]
+          def check(p):
+              b=p.read_bytes()
+              if len(b)<44 or b[:4]!=b"RIFF" or b[8:12]!=b"WAVE":
+                  return "header"
+              declared=struct.unpack_from("<I",b,4)[0]+8
+              if declared!=len(b):
+                  return f"riff-size {declared}!={len(b)}"
+              pos=12; got_fmt=False; got_data=False
+              while pos+8<=len(b):
+                  cid=b[pos:pos+4]
+                  n=struct.unpack_from("<I",b,pos+4)[0]
+                  end=pos+8+n
+                  if end>len(b):
+                      return f"chunk {cid!r} overflow"
+                  if cid==b"fmt ":
+                      got_fmt=True
+                  elif cid==b"data":
+                      got_data=True
+                  pos=end+(n&1)
+              if pos!=len(b):
+                  return f"trailing/align {pos}!={len(b)}"
+              if not got_fmt or not got_data:
+                  return "missing fmt/data"
+              return None
+          for p in wavs:
+              why=check(p)
+              if why:
+                  bad.append((str(p),why))
+          Path("SAMPLE-COUNT.txt").write_text(str(len(wavs))+"\n")
+          Path("WAV-FAILURES.txt").write_text("".join(f"{why}\t{p}\n" for p,why in bad))
+          Path("WAV-VALIDATION.txt").write_text(
+              f"total={len(wavs)}\nvalid={len(wavs)-len(bad)}\ninvalid={len(bad)}\n"
+          )
+          print(Path("WAV-VALIDATION.txt").read_text())
+          if len(wavs)!=1776 or bad:
+              print(Path("WAV-FAILURES.txt").read_text()[:20000])
+              sys.exit(1)
+          PY
       - name: Package exact validated payload
         shell: bash
         run: |
