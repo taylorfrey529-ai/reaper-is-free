@@ -1,4 +1,4 @@
-name: Restore GM2 Instruments
+name: Restore GM2 Instrument Runtimes
 on:
   push:
     branches:
@@ -7,45 +7,72 @@ permissions:
   contents: read
 
 jobs:
-  black-blue:
+  sforzando:
     runs-on: ubuntu-latest
     steps:
-      - name: Build split payload
+      - name: Fetch official Linux x86_64 sforzando
         shell: bash
         run: |
           set -euxo pipefail
-          git clone --depth=1 https://github.com/sfzinstruments/karoryfer.black-and-blue-basses.git Black-And-Blue-Basses
-          rm -rf Black-And-Blue-Basses/.git
-          tar -cf black-and-blue-basses.tar Black-And-Blue-Basses
-          sha256sum black-and-blue-basses.tar > black-and-blue-basses.sha256
-          split -b 400M black-and-blue-basses.tar black-and-blue-basses.part-
-          test -f black-and-blue-basses.part-aa
-          test -f black-and-blue-basses.part-ab
-          test -f black-and-blue-basses.part-ac
-      - name: Upload aa
+          mkdir -p out
+          curl -fL --retry 4 'https://sforzando.s3.us-east-1.amazonaws.com/LINUX_plogue-sforzando_1.982_x86_64.zip' -o out/LINUX_plogue-sforzando_1.982_x86_64.zip
+          sha256sum out/LINUX_plogue-sforzando_1.982_x86_64.zip > out/SHA256SUMS.txt
+          unzip -l out/LINUX_plogue-sforzando_1.982_x86_64.zip > out/ARCHIVE-CONTENTS.txt
+      - name: Upload sforzando
         uses: actions/upload-artifact@v4
         with:
-          name: black-and-blue-aa
-          path: black-and-blue-basses.part-aa
+          name: sforzando-1.982-linux-x86_64
+          path: out/
           compression-level: 0
           retention-days: 1
-      - name: Upload ab
+
+  mtpdk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch official MTPDK Linux VST3
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p out
+          curl -fL --retry 4 'https://cdn1.resources.manda-audio.com/DOWNLOADS/products/mtpdk2_free/2.1.5/MTPDK-2.1.5.1-VST3-64bit-Linux-FULL.zip' -o out/MTPDK-2.1.5.1-VST3-64bit-Linux-FULL.zip
+          echo '95bf11b8874b8030b6cbd29217a86559758a96de2323cb6775693f5956a7a46a  out/MTPDK-2.1.5.1-VST3-64bit-Linux-FULL.zip' | sha256sum -c -
+          unzip -l out/MTPDK-2.1.5.1-VST3-64bit-Linux-FULL.zip > out/ARCHIVE-CONTENTS.txt
+      - name: Fetch libxcb-cursor runtime
+        shell: bash
+        run: |
+          set -euxo pipefail
+          cd out
+          sudo apt-get update -qq
+          apt download libxcb-cursor0
+          sha256sum libxcb-cursor0*.deb > LIBXCB-SHA256SUMS.txt
+      - name: Upload MTPDK
         uses: actions/upload-artifact@v4
         with:
-          name: black-and-blue-ab
-          path: black-and-blue-basses.part-ab
+          name: mtpdk-2.1.5.1-linux-vst3
+          path: out/
           compression-level: 0
           retention-days: 1
-      - name: Upload ac
+
+  avldrums:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch exact x42 binary delivery
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p out
+          V=$(curl -fLsS 'https://x42-plugins.com/x42/linux/x42-avldrums.latest.txt' | tr -d '\r\n')
+          echo "$V" | tee out/VERSION.txt
+          curl -fL --retry 4 "https://x42-plugins.com/x42/linux/x42-avldrums-lv2-linux-x86_64-${V}.zip" -o out/avldrums-build-delivery.zip
+          unzip -q out/avldrums-build-delivery.zip -d out/unpacked
+          find out/unpacked -type f -maxdepth 4 -print0 | sort -z | xargs -0 sha256sum > out/UNPACKED-SHA256SUMS.txt
+          find out/unpacked -type f -name avldrums.so -exec sha256sum {} \;
+          find out/unpacked -type f -name avldrumsUI_gl.so -exec sha256sum {} \;
+          find out/unpacked -type f -name Black_Pearl_4_LV2.sf2 -exec sha256sum {} \;
+      - name: Upload AVLDrums
         uses: actions/upload-artifact@v4
         with:
-          name: black-and-blue-ac
-          path: black-and-blue-basses.part-ac
+          name: avldrums-linux-x86_64
+          path: out/
           compression-level: 0
-          retention-days: 1
-      - name: Upload checksum
-        uses: actions/upload-artifact@v4
-        with:
-          name: black-and-blue-checksum
-          path: black-and-blue-basses.sha256
           retention-days: 1
