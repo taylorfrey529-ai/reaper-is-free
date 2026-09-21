@@ -21,9 +21,10 @@ jobs:
           cd transfer
           python3 -m pip install --disable-pip-version-check -q gdown
           gdown "1FurY3_x_tog_56irX1VDNyRCUt5JD7bO" -O UI_METAL-GTX.rar
-          command -v 7z
+          sudo apt-get update -qq
+          sudo apt-get install -y unrar
           mkdir metal-gtx
-          7z x -y UI_METAL-GTX.rar -ometal-gtx
+          unrar x -o+ UI_METAL-GTX.rar metal-gtx/
           find metal-gtx -type f -printf '%P\n' | sort > METAL_GTX_FILES.txt
           tar -C metal-gtx -czf metal-gtx-extracted.tar.gz .
           sha256sum metal-gtx-extracted.tar.gz > EXTRACTED_SHA256SUMS
