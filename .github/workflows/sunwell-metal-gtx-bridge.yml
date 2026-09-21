@@ -20,7 +20,7 @@ jobs:
         run: |
           set -euxo pipefail
           sudo apt-get update
-          sudo apt-get install -y p7zip-full
+          sudo apt-get install -y p7zip-full unrar
           python3 -m pip install --user --upgrade gdown
 
       - name: Download authoritative Metal GTX source
@@ -38,7 +38,7 @@ jobs:
         shell: bash
         run: |
           set -euxo pipefail
-          7z x -y -o/tmp/metal-extract /tmp/metal-gtx.download
+          unrar x -o+ /tmp/metal-gtx.download /tmp/metal-extract/
           program="$(find /tmp/metal-extract -type f -name '03-METAL-GTX XTracking.sfz' -print -quit)"
           test -n "$program"
           root="$(dirname "$(dirname "$program")")"
