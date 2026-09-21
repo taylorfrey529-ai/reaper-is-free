@@ -1,0 +1,39 @@
+name: Bundle Guitarix Debian Trixie
+on:
+  push:
+    branches:
+      - tmp/guitarix-debian-trixie-20260920
+permissions:
+  contents: read
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    container: debian:trixie
+    steps:
+      - name: Resolve and cache Guitarix Debian packages
+        shell: bash
+        run: |
+          set -euxo pipefail
+          export DEBIAN_FRONTEND=noninteractive
+          apt-get update
+          mkdir -p /out/debs
+          apt-get -y --download-only --no-install-recommends \
+            -o APT::Keep-Downloaded-Packages=true \
+            -o Dir::Cache::archives=/out/debs \
+            install guitarix guitarix-lv2
+          rm -f /out/debs/lock
+          rm -rf /out/debs/partial
+          dpkg-query -W -f='base-image \${Package}\t\${Version}\n' > /out/base-packages.txt
+          apt-cache policy guitarix guitarix-common guitarix-lv2 > /out/guitarix-policy.txt
+          find /out/debs -maxdepth 1 -type f -name '*.deb' -print0 | sort -z | xargs -0 sha256sum > /out/SHA256SUMS.txt
+          dpkg-deb -f /out/debs/guitarix_*_amd64.deb Package Version Architecture Depends > /out/guitarix-control.txt
+          dpkg-deb -f /out/debs/guitarix-lv2_*_amd64.deb Package Version Architecture Depends > /out/guitarix-lv2-control.txt
+          du -sh /out/debs | tee /out/SIZE.txt
+      - name: Upload bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: guitarix-debian-trixie-amd64
+          path: /out/
+          compression-level: 0
+          retention-days: 1
