@@ -1,0 +1,192 @@
+name: VCSO CE VM Bridge
+on:
+  push:
+    branches: [vcso-ce-transfer-20260922]
+    paths: [.github/workflows/vcso-ce-vm-bridge.yml]
+permissions:
+  contents: read
+jobs:
+  bridge:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - name: Fetch source
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p transfer
+          curl -fL --retry 5 --retry-delay 3 'https://codeload.github.com/sgossner/VSCO-2-CE/tar.gz/refs/tags/1.1.0' -o /tmp/vsco.tar.gz
+          sha256sum /tmp/vsco.tar.gz
+      - name: Split
+        shell: bash
+        run: |
+          set -euxo pipefail
+          python3 - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          src=Path('/tmp/vsco.tar.gz'); out=Path('transfer'); chunk=200*1024*1024
+          def sha(p):
+              h=hashlib.sha256()
+              with p.open('rb') as f:
+                  for b in iter(lambda:f.read(8*1024*1024),b''): h.update(b)
+              return h.hexdigest()
+          parts=[]
+          with src.open('rb') as f:
+              i=0
+              while True:
+                  b=f.read(chunk)
+                  if not b: break
+                  p=out/f'vsco-2-ce-1.1.0.tar.gz.part.{i:03d}'
+                  p.write_bytes(b)
+                  parts.append({'index':i,'name':p.name,'size':len(b),'sha256':sha(p)})
+                  i+=1
+          m={'schema_version':1,'source_kind':'file','source_name':'VSCO-2-CE-1.1.0','logical_name':'vsco-2-ce-1.1.0.tar.gz','logical_size':src.stat().st_size,'logical_sha256':sha(src),'chunk_size_bytes':chunk,'hard_transport_limit_bytes':256*1024*1024,'upstream_url':'https://codeload.github.com/sgossner/VSCO-2-CE/tar.gz/refs/tags/1.1.0','upstream_tag':'1.1.0','parts':parts}
+          (out/'manifest.json').write_text(json.dumps(m,indent=2)+'\n')
+          print(json.dumps(m,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-manifest
+          path: transfer/manifest.json
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-000
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.000
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-001
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.001
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-002
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.002
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-003
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.003
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-004
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.004
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-005
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.005
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-006
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.006
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-007
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.007
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-008
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.008
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-009
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.009
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-010
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.010
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-011
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.011
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-012
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.012
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-013
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.013
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-014
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.014
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-015
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.015
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-016
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.016
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-017
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.017
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-018
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.018
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-019
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.019
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
