@@ -18,7 +18,7 @@
     "output_device": "apollo_spdif_playback"
   },
   "project": {
-    "path": "projects/ultra-realism/Ultra-Realism-seed16-g1-NAM-retained.RPP",
+    "path": "projects/Ultra-Realism/Ultra-Realism-seed16-g1-NAM-retained.RPP",
     "sha256": "bd6d031156df0ab024e0a624ca05d368859d652846447a547433bd4dea08a751",
     "original_sha256": "97fbe088a673649a72a7dfe467e9868e02aacc781b5354c67877652d98279056"
   },
@@ -33,13 +33,16 @@
     },
     "avldrums": {
       "plugin_path": "home/.lv2/avldrums.lv2/avldrums.so",
-      "plugin_sha256": "d095514e1a132fb95949a30b54091689af2af9549402cb3a013159918f60564d",
+      "plugin_sha256": "f995c3a4a359e523b78a8417e7e4a9085718659ee72050bc0d5606b21b100c8d",
       "black_pearl_path": "home/.lv2/avldrums.lv2/Black_Pearl_4_LV2.sf2",
       "black_pearl_sha256": "e0542ec19f2816ef4e0d00aeb087e7aa311e888d6f4805f971688bb267c6d405",
       "recovery": {
-        "directory": "packages/gm2-runtimes/avldrums",
-        "note": "Recovery cache must remain non-empty; active binary and Black Pearl hashes are authoritative."
-      }
+        "path": "packages/gm2-runtimes/avldrums/avldrums-exact-9389f16.tar.gz",
+        "sha256": "1add114ca5644ab00d2ca3e0e15ed6069db50b9140ee81382c800d7589c00056",
+        "build_policy": "reproducible Ubuntu 24.04 rebuild from pinned source/submodule"
+      },
+      "source_commit": "9389f16f139410d9a55f9006976bd54cbd8b7806",
+      "robtk_commit": "c6c3ade30b1cffb12e4cd6eda5a46bf1c96cb318"
     },
     "black_and_blue": {
       "root": "instruments/Black-And-Blue-Basses-Upstream",
@@ -67,8 +70,12 @@
         "bytes": 1324342318
       },
       "sfz": {
-        "files": 578,
-        "bytes": 5467084
+        "files": 579,
+        "bytes": 5478452,
+        "upstream_files": 578,
+        "upstream_bytes": 5467084,
+        "approved_clean_di_derivative_files": 1,
+        "approved_clean_di_derivative_bytes": 11368
       },
       "stock_xtracking": {
         "path": "instruments/Metal-GTX/Programs/03-METAL-GTX XTracking.sfz",
