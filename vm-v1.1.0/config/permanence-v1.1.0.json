@@ -14,8 +14,10 @@
     "display_geometry": "2560x1440x24",
     "audio_backend": "ALSA",
     "sample_rate_hz": 48000,
-    "input_device": "apollo_spdif_capture",
-    "output_device": "apollo_spdif_playback"
+    "input_device": "apollo_spdif",
+    "output_device": "apollo_spdif",
+    "underlying_capture": "apollo_spdif_capture",
+    "underlying_playback": "apollo_spdif_playback"
   },
   "project": {
     "path": "projects/Ultra-Realism/Ultra-Realism-seed16-g1-NAM-retained.RPP",
@@ -59,9 +61,10 @@
         "sha256": "98ce9c4a206a4807c934286e663dafaf6d7d89f4b7a98a22cc5d251c1b808699"
       },
       "recovery": {
-        "path": "/mnt/data/bab-restore-parts/black-and-blue-basses.tar",
-        "sha256": "36a7270acb08333e47fe13b5fbd2d6977a65eaae6e598d6e14c1a3c2110093d7"
-      }
+        "path": "packages/source-archives/black-and-blue-basses-v1.1.0.tar",
+        "sha256": "014c6ee845bffbe83903e5f5a38efb19eaaa8397dcc8fe7a761ace6e90a9c91a"
+      },
+      "source_commit": "6e7d674cdb41be7a54dbccb15472401ad01099b9"
     },
     "metal_gtx": {
       "root": "instruments/Metal-GTX",
