@@ -63,3 +63,15 @@ It verifies the exact 23-track order/colors, expected FX roles, DI-to-Neural rec
 ```
 
 No PASS from this source branch is a substitute for a fresh live REAPER + Virtual Apollo proof. Owner Golden Master/release promotion remains manual.
+
+## Durable recovery custody
+
+The external instrument/NAM recovery layer is pinned in `config/durable-recovery-v1.1.0.json`. Google Drive is durable custody; GitHub Actions artifacts are staging only.
+
+After the Drive files named by that manifest have been staged into one local directory, verify them offline with:
+
+```bash
+python3 vm-v1.1.0/bin/verify-durable-recovery-v1.1.0.py --staging /path/to/staged-drive-files
+```
+
+The verifier performs no downloads, installs, repairs, or substitutions. It validates sforzando, AVL/Black Pearl, Black & Blue, Metal GTX, VSCO 2 CE, NAM, and Obsidian and reconstructs the chunked library digests fail-closed.
