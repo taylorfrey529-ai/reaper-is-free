@@ -62,7 +62,8 @@
       },
       "recovery": {
         "path": "packages/source-archives/black-and-blue-basses-v1.1.0.tar",
-        "sha256": "014c6ee845bffbe83903e5f5a38efb19eaaa8397dcc8fe7a761ace6e90a9c91a"
+        "sha256": "3cb100299cb8b2800fdb99a13747a8908c6b74c2f97b1d66653023db8f996d9f",
+        "build_policy": "normalized deterministic tar from pinned source commit"
       },
       "source_commit": "6e7d674cdb41be7a54dbccb15472401ad01099b9"
     },
