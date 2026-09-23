@@ -6,7 +6,6 @@ on:
   pull_request:
     paths:
       - '.github/workflows/vm-v1.1.0-runtime-restore-bridge.yml'
-      - 'vm-v1.1.0/**'
   workflow_dispatch:
 permissions:
   contents: read
@@ -25,28 +24,16 @@ jobs:
           echo 'ee6b354fd375ff9d0ce30819683f44d3b712a1fe4ff53c77e44df036da82a900  out/LINUX_plogue-sforzando_1.982_x86_64.zip' | sha256sum -c -
           unzip -l out/LINUX_plogue-sforzando_1.982_x86_64.zip > out/ARCHIVE-CONTENTS.txt
           unzip -q out/LINUX_plogue-sforzando_1.982_x86_64.zip -d unpacked
-          python3 - <<'PY'
-          import hashlib
-          from pathlib import Path
-
-          expected = '6327bb446f4a0dba8730b29d6598bc039b17db55e895eee7c95f1fa8e439d5d0'
-          matches = []
-          for p in Path('unpacked').rglob('*'):
-              if not p.is_file():
-                  continue
-              h = hashlib.sha256()
-              with p.open('rb') as f:
-                  for chunk in iter(lambda: f.read(8 * 1024 * 1024), b''):
-                      h.update(chunk)
-              if h.hexdigest() == expected:
-                  matches.append(p)
-          if len(matches) != 1:
-              raise SystemExit(f'expected exactly one sforzando binary hash match, found {len(matches)}: {matches}')
-          p = matches[0]
-          Path('out/BINARY-PATH.txt').write_text(str(p) + '\n')
-          Path('out/BINARY-SHA256.txt').write_text(f'{expected}  {p}\n')
-          print(f'validated sforzando binary: {p}')
-          PY
+          deb=$(find unpacked -type f -name 'plogue-sforzando_1.982_amd64.deb' -print -quit)
+          test -n "$deb"
+          sha256sum "$deb" | tee out/DEB-SHA256.txt
+          mkdir -p debroot
+          dpkg-deb -x "$deb" debroot
+          so=$(find debroot -type f -path '*/sforzando.vst3/Contents/x86_64-linux/sforzando.so' -print -quit)
+          test -n "$so"
+          test "$(sha256sum "$so" | cut -d' ' -f1)" = '6327bb446f4a0dba8730b29d6598bc039b17db55e895eee7c95f1fa8e439d5d0'
+          printf '%s  %s\n' '6327bb446f4a0dba8730b29d6598bc039b17db55e895eee7c95f1fa8e439d5d0' "$so" | tee out/BINARY-SHA256.txt
+          printf '%s\n' "$so" > out/BINARY-PATH.txt
       - uses: actions/upload-artifact@v4
         with:
           name: sforzando-1.982-linux-x86_64
@@ -76,7 +63,10 @@ jobs:
           cd ..
           test "$(sha256sum stage/usr/lib/lv2/avldrums.lv2/avldrums.so | cut -d' ' -f1)" = 'f995c3a4a359e523b78a8417e7e4a9085718659ee72050bc0d5606b21b100c8d'
           test "$(sha256sum stage/usr/lib/lv2/avldrums.lv2/Black_Pearl_4_LV2.sf2 | cut -d' ' -f1)" = 'e0542ec19f2816ef4e0d00aeb087e7aa311e888d6f4805f971688bb267c6d405'
-          tar -C stage/usr/lib/lv2 -czf avldrums-exact.tar.gz avldrums.lv2
+          tar --sort=name --mtime='UTC 1970-01-01' --owner=0 --group=0 --numeric-owner -C stage/usr/lib/lv2 -cf - avldrums.lv2 | gzip -n > avldrums-exact.tar.gz
+          tar --sort=name --mtime='UTC 1970-01-01' --owner=0 --group=0 --numeric-owner -C stage/usr/lib/lv2 -cf - avldrums.lv2 | gzip -n > avldrums-exact.repro.tar.gz
+          cmp avldrums-exact.tar.gz avldrums-exact.repro.tar.gz
+          rm avldrums-exact.repro.tar.gz
           sha256sum avldrums-exact.tar.gz > avldrums-exact.tar.gz.sha256
       - uses: actions/upload-artifact@v4
         with:
@@ -104,7 +94,10 @@ jobs:
           test "$(find Black-And-Blue-Basses-Upstream -type f -name '*.wav' | wc -l)" -eq 2208
           test "$(find Black-And-Blue-Basses-Upstream -type f -name '*.sfz' | wc -l)" -eq 64
           echo '98ce9c4a206a4807c934286e663dafaf6d7d89f4b7a98a22cc5d251c1b808699  Black-And-Blue-Basses-Upstream/Programs/01-darkblack_keysw.sfz' | sha256sum -c -
-          tar -cf /tmp/blackblue.tar Black-And-Blue-Basses-Upstream
+          tar --sort=name --mtime='UTC 1970-01-01' --owner=0 --group=0 --numeric-owner -cf /tmp/blackblue.tar Black-And-Blue-Basses-Upstream
+          archive_sha=$(sha256sum /tmp/blackblue.tar | cut -d' ' -f1)
+          stream_sha=$(tar --sort=name --mtime='UTC 1970-01-01' --owner=0 --group=0 --numeric-owner -cf - Black-And-Blue-Basses-Upstream | sha256sum | cut -d' ' -f1)
+          test "$archive_sha" = "$stream_sha"
           python3 - <<'PY'
           import hashlib,json
           from pathlib import Path
