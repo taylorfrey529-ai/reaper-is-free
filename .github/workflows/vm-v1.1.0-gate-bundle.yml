@@ -1,0 +1,30 @@
+name: VM v1.1.0 Gate Bundle
+on:
+  push:
+    branches: [vm-v1.1.0-permanence]
+    paths:
+      - 'vm-v1.1.0/**'
+      - '.github/workflows/vm-v1.1.0-gate-bundle.yml'
+permissions:
+  contents: read
+jobs:
+  bundle:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate and bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash -n vm-v1.1.0/bin/*.sh
+          python3 -m json.tool vm-v1.1.0/config/permanence-v1.1.0.json >/dev/null
+          tar -czf vm-v1.1.0-gate-bundle.tar.gz vm-v1.1.0
+          sha256sum vm-v1.1.0-gate-bundle.tar.gz > vm-v1.1.0-gate-bundle.tar.gz.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vm-v1.1.0-gate-bundle
+          path: |
+            vm-v1.1.0-gate-bundle.tar.gz
+            vm-v1.1.0-gate-bundle.tar.gz.sha256
+          compression-level: 0
+          retention-days: 1
