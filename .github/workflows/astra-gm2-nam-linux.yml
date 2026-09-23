@@ -62,3 +62,5 @@ jobs:
             /tmp/astra-nam-gm2-linux.tar.gz
             /tmp/astra-nam-gm2-linux.tar.gz.sha256
           retention-days: 1
+
+# clean-di-diagnostic-rebuild 2026-09-22
