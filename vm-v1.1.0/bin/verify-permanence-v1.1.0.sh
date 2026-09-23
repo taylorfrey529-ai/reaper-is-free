@@ -88,13 +88,13 @@ m = json.loads(manifest_path.read_text(encoding="utf-8"))
 check("manifest version", m.get("version") == "vm-v1.1.0")
 check("fail-closed policy", m["policy"].get("mode") == "fail-closed")
 check("automatic download disabled", m["policy"].get("automatic_download") is False)
-check("automatic reinstall disabled", m["policy"].get("automatic_reinstall") is False)
+check("automatic reinstall disabled", m["policy"].get("automatic_reinstall") is False)\ncheck("owner release gate retained", m["policy"].get("owner_release_gate") is True)
 
 a = m["assets"]
-check_hash("sforzando binary", a["sforzando"]["path"], a["sforzando"]["sha256"])
+check_hash("sforzando binary", a["sforzando"]["path"], a["sforzando"]["sha256"])\ncheck_hash("sforzando recovery ZIP", a["sforzando"]["recovery"]["path"], a["sforzando"]["recovery"]["sha256"])
 check_hash("AVLDrums LV2 binary", a["avldrums"]["plugin_path"], a["avldrums"]["plugin_sha256"])
-check_hash("AVL Black Pearl kit", a["avldrums"]["black_pearl_path"], a["avldrums"]["black_pearl_sha256"])
-check_hash("Black & Blue Dark Black", a["black_and_blue"]["dark_black"]["path"], a["black_and_blue"]["dark_black"]["sha256"])
+check_hash("AVL Black Pearl kit", a["avldrums"]["black_pearl_path"], a["avldrums"]["black_pearl_sha256"])\ncheck_hash("AVL recovery archive", a["avldrums"]["recovery"]["path"], a["avldrums"]["recovery"]["sha256"])
+check_hash("Black & Blue Dark Black", a["black_and_blue"]["dark_black"]["path"], a["black_and_blue"]["dark_black"]["sha256"])\ncheck_hash("Black & Blue recovery archive", a["black_and_blue"]["recovery"]["path"], a["black_and_blue"]["recovery"]["sha256"])
 check_stats("Black & Blue sample inventory", a["black_and_blue"]["root"], {".wav", ".flac", ".aif", ".aiff"}, a["black_and_blue"]["samples"])
 check_stats("Black & Blue SFZ inventory", a["black_and_blue"]["root"], {".sfz"}, a["black_and_blue"]["sfz"])
 check_hash("Metal GTX stock XTracking", a["metal_gtx"]["stock_xtracking"]["path"], a["metal_gtx"]["stock_xtracking"]["sha256"])
@@ -103,7 +103,7 @@ check_stats("Metal GTX sample inventory", a["metal_gtx"]["root"], {".wav", ".fla
 check_stats("Metal GTX SFZ inventory", a["metal_gtx"]["root"], {".sfz"}, a["metal_gtx"]["sfz"])
 check_hash("NAM LV2 binary", a["nam"]["plugin_path"], a["nam"]["plugin_sha256"])
 check_hash("NAM Obsidian model", a["nam"]["model_path"], a["nam"]["model_sha256"])
-ldd_clean("AVLDrums dependency closure", a["avldrums"]["plugin_path"])
+ldd_clean("sforzando dependency closure", a["sforzando"]["path"])\nldd_clean("AVLDrums dependency closure", a["avldrums"]["plugin_path"])
 ldd_clean("NAM dependency closure", a["nam"]["plugin_path"])
 
 vsco = a["vsco_2_ce"]
@@ -126,16 +126,38 @@ if fast:
 else:
     check_hash("VSCO recovery archive", vsco["archive_path"], vsco["archive_sha256"])
 
+nam_recovery = root / a["nam"]["recovery_dir"]
+nam_recovery_match = False
+if nam_recovery.is_dir():
+    for candidate in nam_recovery.rglob("*"):
+        if candidate.is_file():
+            try:
+                if sha256(candidate) == a["nam"]["recovery_artifact_sha256"]:
+                    nam_recovery_match = True
+                    break
+            except OSError:
+                pass
+check("NAM recovery artifact", nam_recovery_match, str(nam_recovery))
+
+ini = root / "config/REAPER/reaper.ini"
+ini_text = ini.read_text(errors="ignore") if ini.is_file() else ""
+check("REAPER sample rate 48 kHz", "linux_audio_srate=48000" in ini_text, str(ini))
+check("REAPER ALSA input", f'alsa_indev={m["runtime"]["input_device"]}' in ini_text, m["runtime"]["input_device"])
+check("REAPER ALSA output", f'alsa_outdev={m["runtime"]["output_device"]}' in ini_text, m["runtime"]["output_device"])
+
 cache = root / "config/REAPER/reaper-vstplugins64.ini"
 if cache.is_file():
     txt = cache.read_text(errors="ignore").lower()
-    check("REAPER sforzando cache", "sforzando" in txt)
+    if "sforzando" in txt:
+        emit("PASS", "REAPER sforzando cache", str(cache))
+    else:
+        emit("SKIP", "REAPER sforzando cache", "cold scan required; live gate must prove load")
 else:
-    emit("FAIL", "REAPER sforzando cache", f"missing {cache}")
+    emit("SKIP", "REAPER sforzando cache", "cold scan required; live gate must prove load")
 
 rpp = root / m["project"]["path"]
-check("Ultra Realism retained project", rpp.is_file(), str(rpp))
-if rpp.is_file():
+check_hash("Ultra Realism retained project SHA-256", m["project"]["path"], m["project"]["sha256"])
+if rpp.is_file() and sha256(rpp) == m["project"]["sha256"]:
     text = rpp.read_text(errors="ignore")
     starts = [x.start() for x in re.finditer(r"(?m)^<TRACK(?:\s|$)", text)]
     blocks = []
