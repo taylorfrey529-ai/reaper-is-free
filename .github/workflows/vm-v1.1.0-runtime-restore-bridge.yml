@@ -22,11 +22,8 @@ jobs:
           mkdir -p out unpacked
           curl -fL --retry 5 --retry-delay 3 'https://sforzando.s3.us-east-1.amazonaws.com/LINUX_plogue-sforzando_1.982_x86_64.zip' -o out/LINUX_plogue-sforzando_1.982_x86_64.zip
           sha256sum out/LINUX_plogue-sforzando_1.982_x86_64.zip | tee out/SOURCE-SHA256.txt
-          unzip -q out/LINUX_plogue-sforzando_1.982_x86_64.zip -d unpacked
-          so=$(find unpacked -type f -path '*sforzando.vst3*' -name sforzando.so | head -1)
-          test -n "$so"
-          test "$(sha256sum "$so" | cut -d' ' -f1)" = '6327bb446f4a0dba8730b29d6598bc039b17db55e895eee7c95f1fa8e439d5d0'
-          sha256sum "$so" | tee out/BINARY-SHA256.txt
+          echo 'ee6b354fd375ff9d0ce30819683f44d3b712a1fe4ff53c77e44df036da82a900  out/LINUX_plogue-sforzando_1.982_x86_64.zip' | sha256sum -c -
+          unzip -l out/LINUX_plogue-sforzando_1.982_x86_64.zip > out/ARCHIVE-CONTENTS.txt
       - uses: actions/upload-artifact@v4
         with:
           name: sforzando-1.982-linux-x86_64
