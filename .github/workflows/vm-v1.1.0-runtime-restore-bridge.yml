@@ -1,0 +1,309 @@
+name: VM v1.1.0 Runtime Restore Bridge
+on:
+  push:
+    branches: [vm-v1.1.0-permanence]
+    paths: [.github/workflows/vm-v1.1.0-runtime-restore-bridge.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+
+jobs:
+  sforzando:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Fetch and validate sforzando 1.982
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p out unpacked
+          curl -fL --retry 5 --retry-delay 3 'https://sforzando.s3.us-east-1.amazonaws.com/LINUX_plogue-sforzando_1.982_x86_64.zip' -o out/LINUX_plogue-sforzando_1.982_x86_64.zip
+          sha256sum out/LINUX_plogue-sforzando_1.982_x86_64.zip | tee out/SOURCE-SHA256.txt
+          unzip -q out/LINUX_plogue-sforzando_1.982_x86_64.zip -d unpacked
+          so=$(find unpacked -type f -path '*sforzando.vst3*' -name sforzando.so | head -1)
+          test -n "$so"
+          test "$(sha256sum "$so" | cut -d' ' -f1)" = '6327bb446f4a0dba8730b29d6598bc039b17db55e895eee7c95f1fa8e439d5d0'
+          sha256sum "$so" | tee out/BINARY-SHA256.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sforzando-1.982-linux-x86_64
+          path: out/
+          compression-level: 0
+          retention-days: 1
+
+  avldrums:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y build-essential pkg-config lv2-dev libglib2.0-dev libcairo2-dev libpango1.0-dev libglu1-mesa-dev libgl1-mesa-dev libx11-dev
+      - name: Rebuild exact AVL source
+        shell: bash
+        run: |
+          set -euxo pipefail
+          git clone https://github.com/x42/avldrums.lv2.git src
+          cd src
+          git checkout 9389f16f139410d9a55f9006976bd54cbd8b7806
+          git submodule update --init --recursive
+          test "$(git -C robtk rev-parse HEAD)" = "c6c3ade30b1cffb12e4cd6eda5a46bf1c96cb318"
+          make -j2
+          rm -rf ../stage
+          make install DESTDIR="$PWD/../stage" PREFIX=/usr
+          cd ..
+          test "$(sha256sum stage/usr/lib/lv2/avldrums.lv2/avldrums.so | cut -d' ' -f1)" = 'f995c3a4a359e523b78a8417e7e4a9085718659ee72050bc0d5606b21b100c8d'
+          test "$(sha256sum stage/usr/lib/lv2/avldrums.lv2/Black_Pearl_4_LV2.sf2 | cut -d' ' -f1)" = 'e0542ec19f2816ef4e0d00aeb087e7aa311e888d6f4805f971688bb267c6d405'
+          tar -C stage/usr/lib/lv2 -czf avldrums-exact.tar.gz avldrums.lv2
+          sha256sum avldrums-exact.tar.gz > avldrums-exact.tar.gz.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: avldrums-exact-9389f16
+          path: |
+            avldrums-exact.tar.gz
+            avldrums-exact.tar.gz.sha256
+          compression-level: 0
+          retention-days: 1
+
+  blackblue:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Fetch pinned Black And Blue Basses
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p transfer
+          git clone https://github.com/sfzinstruments/karoryfer.black-and-blue-basses.git Black-And-Blue-Basses-Upstream
+          cd Black-And-Blue-Basses-Upstream
+          git checkout 6e7d674cdb41be7a54dbccb15472401ad01099b9
+          rm -rf .git
+          cd ..
+          test "$(find Black-And-Blue-Basses-Upstream -type f -name '*.wav' | wc -l)" -eq 2208
+          test "$(find Black-And-Blue-Basses-Upstream -type f -name '*.sfz' | wc -l)" -eq 64
+          echo '98ce9c4a206a4807c934286e663dafaf6d7d89f4b7a98a22cc5d251c1b808699  Black-And-Blue-Basses-Upstream/Programs/01-darkblack_keysw.sfz' | sha256sum -c -
+          tar -cf /tmp/blackblue.tar Black-And-Blue-Basses-Upstream
+          python3 - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          src=Path('/tmp/blackblue.tar'); out=Path('transfer'); chunk=200*1024*1024
+          def sha(p):
+              h=hashlib.sha256()
+              with p.open('rb') as f:
+                  for b in iter(lambda:f.read(8*1024*1024),b''): h.update(b)
+              return h.hexdigest()
+          parts=[]
+          with src.open('rb') as f:
+              i=0
+              while True:
+                  b=f.read(chunk)
+                  if not b: break
+                  p=out/f'blackblue.tar.part.{i:03d}'; p.write_bytes(b)
+                  parts.append({'index':i,'name':p.name,'size':len(b),'sha256':sha(p)}); i+=1
+          m={'logical_name':'blackblue.tar','logical_size':src.stat().st_size,'logical_sha256':sha(src),'source_commit':'6e7d674cdb41be7a54dbccb15472401ad01099b9','parts':parts}
+          (out/'manifest.json').write_text(json.dumps(m,indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blackblue-v110-manifest
+          path: transfer/manifest.json
+          compression-level: 0
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blackblue-v110-part-000
+          path: transfer/blackblue.tar.part.000
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blackblue-v110-part-001
+          path: transfer/blackblue.tar.part.001
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blackblue-v110-part-002
+          path: transfer/blackblue.tar.part.002
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blackblue-v110-part-003
+          path: transfer/blackblue.tar.part.003
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blackblue-v110-part-004
+          path: transfer/blackblue.tar.part.004
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blackblue-v110-part-005
+          path: transfer/blackblue.tar.part.005
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blackblue-v110-part-006
+          path: transfer/blackblue.tar.part.006
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blackblue-v110-part-007
+          path: transfer/blackblue.tar.part.007
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+
+  vsco:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - name: Fetch VSCO 2 CE 1.1.0
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p transfer
+          curl -fL --retry 5 --retry-delay 3 'https://codeload.github.com/sgossner/VSCO-2-CE/tar.gz/refs/tags/1.1.0' -o /tmp/vsco.tar.gz
+          test "$(sha256sum /tmp/vsco.tar.gz | cut -d' ' -f1)" = 'ac577fd3bc9171560087c8182ef6072f11ae0b63b3c3af9a5f752b91e26d3b96'
+          python3 - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          src=Path('/tmp/vsco.tar.gz'); out=Path('transfer'); chunk=200*1024*1024
+          def sha(p):
+              h=hashlib.sha256()
+              with p.open('rb') as f:
+                  for b in iter(lambda:f.read(8*1024*1024),b''): h.update(b)
+              return h.hexdigest()
+          parts=[]
+          with src.open('rb') as f:
+              i=0
+              while True:
+                  b=f.read(chunk)
+                  if not b: break
+                  p=out/f'vsco-2-ce-1.1.0.tar.gz.part.{i:03d}'; p.write_bytes(b)
+                  parts.append({'index':i,'name':p.name,'size':len(b),'sha256':sha(p)}); i+=1
+          m={'logical_name':'vsco-2-ce-1.1.0.tar.gz','logical_size':src.stat().st_size,'logical_sha256':sha(src),'upstream_tag':'1.1.0','parts':parts}
+          (out/'manifest.json').write_text(json.dumps(m,indent=2)+'\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-manifest
+          path: transfer/manifest.json
+          compression-level: 0
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-000
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.000
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-001
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.001
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-002
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.002
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-003
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.003
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-004
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.004
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-005
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.005
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-006
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.006
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-007
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.007
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-008
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.008
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-009
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.009
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-010
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.010
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-011
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.011
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 1
+
