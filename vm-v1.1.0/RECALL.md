@@ -33,3 +33,11 @@ Audio boundary: ALSA / `apollo_spdif_capture` + `apollo_spdif_playback` / 48 kHz
 ## Current branch status
 
 Source hardening is implemented. A fresh live `:88` re-application/cold-cycle remains the runtime certification gate.
+
+## Durable recovery authority
+
+- Custody manifest: `vm-v1.1.0/config/durable-recovery-v1.1.0.json`
+- Offline verifier: `vm-v1.1.0/bin/verify-durable-recovery-v1.1.0.py`
+- Durable Drive folder: `VM v1.1.0 Durable Recovery - 2026-09-23`
+- The verifier must PASS after staging Drive bytes before a cold runtime restore is admitted.
+- GitHub Actions artifacts are staging evidence only and are never the permanence authority.
