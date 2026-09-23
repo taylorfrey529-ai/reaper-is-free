@@ -5,6 +5,7 @@ import re
 
 BASE = pathlib.Path(__file__).resolve().parents[1]
 manifest = json.loads((BASE / "config/permanence-v1.1.0.json").read_text())
+durable = json.loads((BASE / "config/durable-recovery-v1.1.0.json").read_text())
 
 expected_tracks = [
     ["Drum Buss","FFF468"],["Kick","0070DD"],["Snare","00FF98"],["Tom 1","F48CBA"],
@@ -35,6 +36,26 @@ require(manifest["assets"]["nam"]["bass_model_policy"] == "unassigned", "Bass Ne
 require(manifest.get("contract", {}).get("no_silent_substitution", True) is True, "no silent substitution")
 require(manifest.get("contract", {}).get("no_auto_heal", True) is True, "no automatic healing")
 
+require(durable["version"] == "vm-v1.1.0", "durable-recovery version pin")
+require(durable["policy"]["durable_custody_required"] is True, "durable custody required")
+require(durable["policy"]["upstream_network_is_not_permanence"] is True, "upstream network is not permanence")
+require(durable["policy"]["actions_artifacts_are_staging_only"] is True, "Actions artifacts are staging only")
+require(durable["policy"]["owner_release_gate"] is True, "durable recovery preserves owner gate")
+required_durable_assets = {
+    "sforzando", "avldrums", "black_and_blue", "metal_gtx", "vsco_2_ce", "nam", "obsidian"
+}
+require(set(durable["assets"]) == required_durable_assets, "durable asset set is exact")
+for asset_name in sorted(required_durable_assets):
+    asset = durable["assets"][asset_name]
+    require(asset.get("status") == "DURABLE", f"{asset_name} durable custody")
+    has_drive_object = bool(asset.get("drive_objects"))
+    has_drive_folder = bool(asset.get("drive_folder_id"))
+    require(has_drive_object or has_drive_folder, f"{asset_name} has durable Drive identity")
+require(durable["admission"]["require_all_assets_durable"] is True, "all assets required durable")
+require(durable["admission"]["cold_restore_required"] is True, "cold restore required")
+require(durable["admission"]["live_reaper_required"] is True, "live REAPER required")
+require(durable["admission"]["virtual_apollo_non_silent_required"] is True, "non-silent Virtual Apollo required")
+
 hashes = []
 def collect(v):
     if isinstance(v, dict):
@@ -46,6 +67,7 @@ def collect(v):
         for x in v:
             collect(x)
 collect(manifest)
+collect(durable)
 for key, value in hashes:
     require(isinstance(value, str) and re.fullmatch(r"[0-9a-f]{64}", value) is not None,
             f"valid SHA-256 field {key}")
