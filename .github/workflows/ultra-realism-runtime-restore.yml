@@ -63,3 +63,93 @@ jobs:
             avldrums-archive.sha256
           compression-level: 0
           retention-days: 1
+
+
+  vsco:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build pinned VSCO 2 CE 1.1.0 subset
+        shell: bash
+        run: |
+          set -euxo pipefail
+          git clone --depth 1 --branch 1.1.0 https://github.com/sgossner/VSCO-2-CE.git src
+          mkdir -p stage/VSCO-2-CE
+          cp src/ViolinEnsSusVib.sfz stage/VSCO-2-CE/
+          cp src/CelloEnsSusVib.sfz stage/VSCO-2-CE/
+          cp src/FHornSus.sfz stage/VSCO-2-CE/
+          mkdir -p 'stage/VSCO-2-CE/Strings/Violin Section' 'stage/VSCO-2-CE/Strings/Cello Section' 'stage/VSCO-2-CE/Brass/F Horn'
+          cp -a 'src/Strings/Violin Section/susVib' 'stage/VSCO-2-CE/Strings/Violin Section/'
+          cp -a 'src/Strings/Cello Section/susvib' 'stage/VSCO-2-CE/Strings/Cello Section/'
+          cp -a 'src/Brass/F Horn/sus' 'stage/VSCO-2-CE/Brass/F Horn/'
+          python3 - <<'PY'
+          import pathlib,re,sys
+          root=pathlib.Path('stage/VSCO-2-CE')
+          missing=[]
+          for sfz in ['ViolinEnsSusVib.sfz','CelloEnsSusVib.sfz','FHornSus.sfz']:
+              text=(root/sfz).read_text(errors='replace')
+              m=re.search(r'default_path=(.+)',text,re.I)
+              base=(m.group(1).strip().replace('\\','/') if m else '')
+              for sample in re.findall(r'^sample=(.+)$',text,re.I|re.M):
+                  p=root/base/sample.strip()
+                  if not p.exists(): missing.append(str(p))
+          if missing:
+              print('\n'.join(missing),file=sys.stderr); sys.exit(1)
+          PY
+          find stage/VSCO-2-CE -type f -print0 | sort -z | xargs -0 sha256sum > VSCO-2-CE-subset-files.sha256
+          tar -C stage -cf VSCO-2-CE-subset.tar VSCO-2-CE
+          sha256sum VSCO-2-CE-subset.tar > VSCO-2-CE-subset.tar.sha256
+          split -b 180M -d -a 3 VSCO-2-CE-subset.tar VSCO-2-CE-subset.tar.part.
+          printf 'tag=1.1.0\ncommit=' > VSCO-2-CE-provenance.txt
+          git -C src rev-parse HEAD >> VSCO-2-CE-provenance.txt
+          ls -lh VSCO-2-CE-subset.tar.part.*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vsco-subset-manifest
+          path: |
+            VSCO-2-CE-subset.tar.sha256
+            VSCO-2-CE-subset-files.sha256
+            VSCO-2-CE-provenance.txt
+          compression-level: 0
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vsco-subset-000
+          path: VSCO-2-CE-subset.tar.part.000
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vsco-subset-001
+          path: VSCO-2-CE-subset.tar.part.001
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vsco-subset-002
+          path: VSCO-2-CE-subset.tar.part.002
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vsco-subset-003
+          path: VSCO-2-CE-subset.tar.part.003
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vsco-subset-004
+          path: VSCO-2-CE-subset.tar.part.004
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vsco-subset-005
+          path: VSCO-2-CE-subset.tar.part.005
+          compression-level: 0
+          if-no-files-found: ignore
+          retention-days: 1
