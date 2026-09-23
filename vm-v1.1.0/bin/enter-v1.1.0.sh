@@ -2,7 +2,8 @@
 set -euo pipefail
 
 ROOT="${SUNWELL_ROOT:-/mnt/data/ubuntu-desktop-workspace}"
-SELF_PATH=$(readlink -f "$0")\nSELF_DIR=$(CDPATH= cd -- "$(dirname -- "$SELF_PATH")" && pwd)
+SELF_PATH=$(readlink -f "$0")
+SELF_DIR=$(CDPATH= cd -- "$(dirname -- "$SELF_PATH")" && pwd)
 V110_GATE="$SELF_DIR/verify-permanence-v1.1.0.sh"
 GATEWAY="$ROOT/bin/sunwell-gateway-v1.1.0.sh"
 LOG="$ROOT/logs/vm-v1.1.0-enter.log"
