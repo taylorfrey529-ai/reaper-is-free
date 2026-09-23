@@ -208,8 +208,10 @@ if rpp.is_file() and sha256(rpp) == m["project"]["sha256"]:
         block = by_name.get(track, (None, ""))[1].lower()
         check(f"serialized FX role {track}", any(t.lower() in block for t in terms))
     obsidian = str(root / a["nam"]["model_path"])
-    check("three guitar Obsidian references", text.count(obsidian) == a["nam"]["guitar_model_ref_count"],
-          f"count={text.count(obsidian)}")
+    guitar_neural_names = ["L Guitar Neural", "R Guitar Neural", "Lead Guitar Neural"]
+    obsidian_track_count = sum(1 for name in guitar_neural_names if obsidian in by_name.get(name, (None, ""))[1])
+    check("three guitar Neural tracks reference Obsidian", obsidian_track_count == a["nam"]["guitar_model_ref_count"],
+          f"tracks={obsidian_track_count}")
     bass_block = by_name.get("Bass Neural", (None, ""))[1]
     check("Bass Neural model remains owner-select", obsidian not in bass_block)
 
