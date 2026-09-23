@@ -25,13 +25,21 @@
   "assets": {
     "sforzando": {
       "path": "home/.vst3/sforzando.vst3/Contents/x86_64-linux/sforzando.so",
-      "sha256": "6327bb446f4a0dba8730b29d6598bc039b17db55e895eee7c95f1fa8e439d5d0"
+      "sha256": "6327bb446f4a0dba8730b29d6598bc039b17db55e895eee7c95f1fa8e439d5d0",
+      "recovery": {
+        "path": "packages/gm2-runtimes/sforzando/LINUX_plogue-sforzando_1.982_x86_64.zip",
+        "sha256": "ee6b354fd375ff9d0ce30819683f44d3b712a1fe4ff53c77e44df036da82a900"
+      }
     },
     "avldrums": {
       "plugin_path": "home/.lv2/avldrums.lv2/avldrums.so",
       "plugin_sha256": "d095514e1a132fb95949a30b54091689af2af9549402cb3a013159918f60564d",
       "black_pearl_path": "home/.lv2/avldrums.lv2/Black_Pearl_4_LV2.sf2",
-      "black_pearl_sha256": "e0542ec19f2816ef4e0d00aeb087e7aa311e888d6f4805f971688bb267c6d405"
+      "black_pearl_sha256": "e0542ec19f2816ef4e0d00aeb087e7aa311e888d6f4805f971688bb267c6d405",
+      "recovery": {
+        "directory": "packages/gm2-runtimes/avldrums",
+        "note": "Recovery cache must remain non-empty; active binary and Black Pearl hashes are authoritative."
+      }
     },
     "black_and_blue": {
       "root": "instruments/Black-And-Blue-Basses-Upstream",
@@ -46,6 +54,10 @@
       "dark_black": {
         "path": "instruments/Black-And-Blue-Basses-Upstream/Programs/01-darkblack_keysw.sfz",
         "sha256": "98ce9c4a206a4807c934286e663dafaf6d7d89f4b7a98a22cc5d251c1b808699"
+      },
+      "recovery": {
+        "path": "/mnt/data/bab-restore-parts/black-and-blue-basses.tar",
+        "sha256": "36a7270acb08333e47fe13b5fbd2d6977a65eaae6e598d6e14c1a3c2110093d7"
       }
     },
     "metal_gtx": {
@@ -72,7 +84,16 @@
       "recovery_bridge": {
         "repository": "taylorfrey529-ai/reaper-is-free",
         "workflow_run": 35778221842,
-        "chunk_count": 7
+        "chunk_count": 7,
+        "artifacts": [
+          10717295231,
+          10716134356,
+          10717230404,
+          10716786675,
+          10716771774,
+          10716786694,
+          10717006218
+        ]
       }
     },
     "vsco_2_ce": {
@@ -87,7 +108,8 @@
         "ViolinEnsSusVib.sfz",
         "CelloEnsSusVib.sfz",
         "FHornSus.sfz"
-      ]
+      ],
+      "recovery_required": true
     },
     "nam": {
       "plugin_path": "home/.lv2/neural_amp_modeler.lv2/neural_amp_modeler.so",
@@ -96,7 +118,8 @@
       "model_sha256": "8d5d62626945e079a34a09e91d6ddef575beaea3bc17efdb4dee4afed9be81c7",
       "recovery_artifact_sha256": "4f80428ed7ea94f190a4885b10113cf4d737766afd0b2791f6b45bdabc35bc22",
       "guitar_model_ref_count": 3,
-      "bass_model_policy": "unassigned"
+      "bass_model_policy": "unassigned",
+      "recovery_dir": "packages/gm2-runtimes/nam"
     }
   },
   "tracks": [
@@ -192,5 +215,15 @@
       "Horns",
       "33937F"
     ]
-  ]
+  ],
+  "contract": {
+    "exact_track_count": 23,
+    "exact_metal_gtx_clean_di_instances": 3,
+    "exact_nam_guitar_model_refs": 3,
+    "exact_dark_black_instances": 1,
+    "exact_orchestra_patch_instances": 3,
+    "bass_neural_model": "OWNER SELECT / unassigned",
+    "no_silent_substitution": true,
+    "no_auto_heal": true
+  }
 }
