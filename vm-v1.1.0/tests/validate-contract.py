@@ -56,6 +56,49 @@ require(durable["admission"]["cold_restore_required"] is True, "cold restore req
 require(durable["admission"]["live_reaper_required"] is True, "live REAPER required")
 require(durable["admission"]["virtual_apollo_non_silent_required"] is True, "non-silent Virtual Apollo required")
 
+# Cross-manifest identity locks: durable custody must restore exactly the runtime
+# identities admitted by the active permanence contract.
+pa = manifest["assets"]
+da = durable["assets"]
+require(da["sforzando"]["source_archive_sha256"] == pa["sforzando"]["recovery"]["sha256"],
+        "sforzando recovery hash agrees across manifests")
+require(da["sforzando"]["binary_sha256"] == pa["sforzando"]["sha256"],
+        "sforzando binary hash agrees across manifests")
+require(da["avldrums"]["binary_sha256"] == pa["avldrums"]["plugin_sha256"],
+        "AVL binary hash agrees across manifests")
+require(da["avldrums"]["black_pearl_sha256"] == pa["avldrums"]["black_pearl_sha256"],
+        "AVL Black Pearl hash agrees across manifests")
+require(da["avldrums"]["recovery_tar_sha256"] == pa["avldrums"]["recovery"]["sha256"],
+        "AVL recovery archive hash agrees across manifests")
+require(da["black_and_blue"]["source_commit"] == pa["black_and_blue"]["source_commit"],
+        "BlackBlue source commit agrees across manifests")
+require(da["black_and_blue"]["logical_tar_sha256"] == pa["black_and_blue"]["recovery"]["sha256"],
+        "BlackBlue recovery archive hash agrees across manifests")
+require(da["black_and_blue"]["sample_files"] == pa["black_and_blue"]["samples"]["files"],
+        "BlackBlue sample count agrees across manifests")
+require(da["black_and_blue"]["sample_bytes"] == pa["black_and_blue"]["samples"]["bytes"],
+        "BlackBlue sample bytes agree across manifests")
+require(da["black_and_blue"]["sfz_files"] == pa["black_and_blue"]["sfz"]["files"],
+        "BlackBlue SFZ count agrees across manifests")
+require(da["black_and_blue"]["dark_black_sha256"] == pa["black_and_blue"]["dark_black"]["sha256"],
+        "Dark Black hash agrees across manifests")
+require(da["metal_gtx"]["logical_archive_sha256"] == pa["metal_gtx"]["recovery_bridge"]["logical_archive_sha256"],
+        "Metal GTX logical archive agrees across manifests")
+require(da["metal_gtx"]["authoritative_source_sha256"] == pa["metal_gtx"]["authoritative_source_sha256"],
+        "Metal GTX source authority agrees across manifests")
+require(da["vsco_2_ce"]["archive_sha256"] == pa["vsco_2_ce"]["archive_sha256"],
+        "VSCO archive hash agrees across manifests")
+require(da["vsco_2_ce"]["sfz_files"] == pa["vsco_2_ce"]["sfz_files"],
+        "VSCO SFZ count agrees across manifests")
+require(da["vsco_2_ce"]["wav_files"] == pa["vsco_2_ce"]["wav_files"],
+        "VSCO WAV count agrees across manifests")
+require(da["nam"]["artifact_sha256"] == pa["nam"]["recovery_artifact_sha256"],
+        "NAM recovery artifact agrees across manifests")
+require(da["nam"]["plugin_sha256"] == pa["nam"]["plugin_sha256"],
+        "NAM plugin hash agrees across manifests")
+require(da["obsidian"]["model_sha256"] == pa["nam"]["model_sha256"],
+        "Obsidian model hash agrees across manifests")
+
 require(len(durable["assets"]["sforzando"]["drive_objects"]) == 1, "one durable sforzando wrapper")
 require(len(durable["assets"]["avldrums"]["drive_objects"]) == 1, "one durable AVL wrapper")
 require(len(durable["assets"]["black_and_blue"]["drive_objects"]) == 13, "Black & Blue 13-part durable set")
