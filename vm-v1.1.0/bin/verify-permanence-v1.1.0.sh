@@ -164,7 +164,7 @@ rpp = root / m["project"]["path"]
 check_hash("Ultra Realism retained project SHA-256", m["project"]["path"], m["project"]["sha256"])
 if rpp.is_file() and sha256(rpp) == m["project"]["sha256"]:
     text = rpp.read_text(errors="ignore")
-    starts = [x.start() for x in re.finditer(r"(?m)^<TRACK(?:\s|$)", text)]
+    starts = [x.start() for x in re.finditer(r"(?m)^\s*<TRACK(?:\s|$)", text)]
     blocks = []
     for i, start in enumerate(starts):
         end = starts[i + 1] if i + 1 < len(starts) else len(text)
