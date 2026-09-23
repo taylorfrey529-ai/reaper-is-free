@@ -96,7 +96,12 @@
         ],
         "logical_archive_sha256": "9abb7c5618830c32e565ed331d386d4539d5a7d45a4ce836f2f941cd2ff51336",
         "upstream_source_sha256": "c5756f95fcc30ac680f6034bb2e54c636e67fd0b53b1d40babada7257e782e73",
-        "source_workflow_run": 35778221842
+        "source_workflow_run": 35778221842,
+        "drive_folder_id": "15BDyYyfg2OZ7dRvtpRtC2f_dvxAF85pP",
+        "drive_folder_url": "https://drive.google.com/drive/folders/15BDyYyfg2OZ7dRvtpRtC2f_dvxAF85pP",
+        "drive_part_count": 15,
+        "drive_part_max_bytes": 94372016,
+        "drive_manifest_name": "metal-gtx-drive-manifest.zip"
       }
     },
     "vsco_2_ce": {
