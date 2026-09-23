@@ -40,8 +40,8 @@
       "black_pearl_sha256": "e0542ec19f2816ef4e0d00aeb087e7aa311e888d6f4805f971688bb267c6d405",
       "recovery": {
         "path": "packages/gm2-runtimes/avldrums/avldrums-exact-9389f16.tar.gz",
-        "sha256": "1add114ca5644ab00d2ca3e0e15ed6069db50b9140ee81382c800d7589c00056",
-        "build_policy": "reproducible Ubuntu 24.04 rebuild from pinned source/submodule"
+        "sha256": "1c63a981e2f87c9b0ffe8bbfe64af9a44e6e5caed58ffd4b64cf6358e1cae0c6",
+        "build_policy": "normalized deterministic archive from pinned source/submodule; active binary/SF2 hashes independently pinned"
       },
       "source_commit": "9389f16f139410d9a55f9006976bd54cbd8b7806",
       "robtk_commit": "c6c3ade30b1cffb12e4cd6eda5a46bf1c96cb318"
