@@ -1,0 +1,65 @@
+name: Ultra Realism Runtime Restore
+
+on:
+  push:
+    branches:
+      - temp/ultra-realism-runtime-restore-20260923
+    paths:
+      - .github/workflows/ultra-realism-runtime-restore.yml
+
+permissions:
+  contents: read
+
+jobs:
+  sforzando:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch official sforzando 1.982 Linux x86_64
+        shell: bash
+        run: |
+          set -euxo pipefail
+          curl -fL --retry 4 'https://sforzando.s3.us-east-1.amazonaws.com/LINUX_plogue-sforzando_1.982_x86_64.zip' -o LINUX_plogue-sforzando_1.982_x86_64.zip
+          sha256sum LINUX_plogue-sforzando_1.982_x86_64.zip > sforzando.sha256
+          unzip -l LINUX_plogue-sforzando_1.982_x86_64.zip | tee sforzando.contents.txt
+      - name: Upload sforzando
+        uses: actions/upload-artifact@v4
+        with:
+          name: sforzando-1.982-linux-x86_64
+          path: |
+            LINUX_plogue-sforzando_1.982_x86_64.zip
+            sforzando.sha256
+            sforzando.contents.txt
+          compression-level: 0
+          retention-days: 1
+
+  avldrums:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build pinned AVLDrums LV2
+        shell: bash
+        run: |
+          set -euxo pipefail
+          sudo apt-get update
+          sudo apt-get install -y build-essential git lv2-dev libglib2.0-dev libcairo2-dev libpango1.0-dev libgl1-mesa-dev libglu1-mesa-dev libx11-dev
+          git clone https://github.com/x42/avldrums.lv2.git src
+          cd src
+          git checkout 9389f16f139410d9a55f9006976bd54cbd8b7806
+          make submodules
+          make -j2
+          make install DESTDIR="$GITHUB_WORKSPACE/stage" PREFIX=/usr
+          cd "$GITHUB_WORKSPACE"
+          sha256sum stage/usr/lib/lv2/avldrums.lv2/avldrums.so > avldrums-binary.sha256
+          find stage/usr/lib/lv2/avldrums.lv2 -type f -print0 | sort -z | xargs -0 sha256sum > avldrums-files.sha256
+          tar -C stage/usr/lib/lv2 -czf avldrums.lv2-9389f16.tar.gz avldrums.lv2
+          sha256sum avldrums.lv2-9389f16.tar.gz > avldrums-archive.sha256
+      - name: Upload AVLDrums
+        uses: actions/upload-artifact@v4
+        with:
+          name: avldrums-lv2-9389f16
+          path: |
+            avldrums.lv2-9389f16.tar.gz
+            avldrums-binary.sha256
+            avldrums-files.sha256
+            avldrums-archive.sha256
+          compression-level: 0
+          retention-days: 1
