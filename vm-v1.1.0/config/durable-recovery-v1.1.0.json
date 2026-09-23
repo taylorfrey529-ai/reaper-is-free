@@ -35,13 +35,14 @@
       "black_pearl_sha256": "e0542ec19f2816ef4e0d00aeb087e7aa311e888d6f4805f971688bb267c6d405",
       "drive_objects": [
         {
-          "file_id": "1h7qrY_gSJ15SY0mFIQuQgXKqW5jje0ix",
-          "name": "avldrums-exact-9389f16-e6ab.zip",
-          "bytes": 97293716,
-          "wrapper_sha256": "79d17a66f7ccd44979b38f659bb84dde74a99f25a16995f81a3a769f767bf1e5"
+          "file_id": "1rv6Px1y5h0xylH5Jhm8uP_Oj6Dr-oeLH",
+          "name": "avldrums-exact-9389f16-final-b383.zip",
+          "bytes": 97295631,
+          "wrapper_sha256": "d53ed58e81cbbd8ec6b0f848a579353674bfe7da07f78012204aa7ca5db47c64"
         }
       ],
-      "recovery_tar_sha256": "d08fc2f0807b829feb025417ee88612b1c9f5a1901a330c71cc14ee568ad75dd"
+      "recovery_tar_sha256": "1c63a981e2f87c9b0ffe8bbfe64af9a44e6e5caed58ffd4b64cf6358e1cae0c6",
+      "recovery_policy": "normalized tar metadata + gzip -n; active plugin and Black Pearl hashes remain authoritative"
     },
     "black_and_blue": {
       "status": "DURABLE",
@@ -439,6 +440,7 @@
     "black_and_blue_sfz_files": 64,
     "black_and_blue_dark_black_sha256": "98ce9c4a206a4807c934286e663dafaf6d7d89f4b7a98a22cc5d251c1b808699",
     "vsco_wav_files": 3168,
-    "vsco_sfz_files": 75
+    "vsco_sfz_files": 75,
+    "recovery_bridge_result": "PASS_ALL_4_JOBS"
   }
 }
