@@ -20,10 +20,10 @@
       "binary_sha256": "6327bb446f4a0dba8730b29d6598bc039b17db55e895eee7c95f1fa8e439d5d0",
       "drive_objects": [
         {
-          "file_id": "15NfJ1QyeFIN-bsuK5-yt9tlgh14jf761",
-          "name": "sforzando-1.982-linux-x86_64-e6ab.zip",
-          "bytes": 9490316,
-          "wrapper_sha256": "9fe20948cd3f4afddd40cbc067c25dc4e52f7b867ad2ce604d1301791399f721"
+          "file_id": "1Znzy0c1r6z7UZ1Ih43Zo8DpdEro0f1dt",
+          "name": "sforzando-1.982-final-b383.zip",
+          "bytes": 9491036,
+          "wrapper_sha256": "2262df0524ed7947585a03d8a54c7013f0923992fa14edd8e1ef20c91fddedc3"
         }
       ]
     },
@@ -52,92 +52,92 @@
       "dark_black_sha256": "98ce9c4a206a4807c934286e663dafaf6d7d89f4b7a98a22cc5d251c1b808699",
       "drive_objects": [
         {
-          "file_id": "1GSFCEmdj2g61m3h9keGIcSas6LV-pkDU",
-          "name": "blackblue-v110-part-000.zip",
+          "file_id": "1xZ2mIC_Y19Z2n7BxHfzYJtmK71Wyb0AJ",
+          "name": "b383-blackblue-v110-part-000.zip",
           "bytes": 94371998,
-          "wrapper_sha256": "4f6524170c1aa16302c2e6ff7a4cea7c5f5ee309e0ed3dfbea8bd029628a3952"
+          "wrapper_sha256": "c3d0010f7c423eb0314af25b9195de842ef47ec91e358fb13bb35359b6ea6e7e"
         },
         {
-          "file_id": "1oQlbPOFX3AxadGt4_GMnySk7pv_4fyqC",
-          "name": "blackblue-v110-part-001.zip",
+          "file_id": "17J08YoqvrOwfp4CdOQigRs_f2jbcFd38",
+          "name": "b383-blackblue-v110-part-001.zip",
           "bytes": 94371998,
-          "wrapper_sha256": "d9c69f27a11f36ff1c69a6ae9b43e5488f0ccb1b2eda35b41b454839ef42d2ce"
+          "wrapper_sha256": "f68df5fab67ed58770d5a162f64f5b7873f64385fb115827dcd06f73aa7561af"
         },
         {
-          "file_id": "1HBOf-PWBLAijX2jrQ2j54pNKOuRlvjSc",
-          "name": "blackblue-v110-part-002.zip",
+          "file_id": "1FYANgp0UDpPj6UfkiOhERLWLe1X8L25t",
+          "name": "b383-blackblue-v110-part-002.zip",
           "bytes": 94371998,
-          "wrapper_sha256": "1f28b781872d3deb52855136e93a68df7d568625e572b2d4ac5be0db77c4cfe1"
+          "wrapper_sha256": "fd16f33ee17409c42dffcaa1b576e307022dee94b92539a2335ed738f6568833"
         },
         {
-          "file_id": "1WmAtQl_UmknaYnHjeRcEDxGBgBmWlmEE",
-          "name": "blackblue-v110-part-003.zip",
+          "file_id": "11vi_OZA6TE1OojbKzJxVZl7u-48p4UhT",
+          "name": "b383-blackblue-v110-part-003.zip",
           "bytes": 94371998,
-          "wrapper_sha256": "eb48fee095a8e0d1777c42baa5a5218c24a089f6e8ccc5247ee66cf0349336fb"
+          "wrapper_sha256": "e60751cf3387437c19f138c7f8012c33e8e3bcf50c2c6df443dc751e589036ec"
         },
         {
-          "file_id": "1sQBVuT9jFQgrcHo7lJi65AaU4U547-8O",
-          "name": "blackblue-v110-part-004.zip",
+          "file_id": "13KXxDBQY0wasgR6dnxg2yUSzbP5eniMV",
+          "name": "b383-blackblue-v110-part-004.zip",
           "bytes": 94371998,
-          "wrapper_sha256": "112c8da718178e330660ca29f73bf848594f3cfa230cb0014497e9275f875b08"
+          "wrapper_sha256": "837184c74b4039143ba92eac365bf11045b350766ead255e4f6f23c5bbd2db8a"
         },
         {
-          "file_id": "1YLPL3_48QCvUrjJwA1foN8p8D19ayDuu",
-          "name": "blackblue-v110-part-005.zip",
+          "file_id": "1J_Dys5t7Qp1ox1C74n2gn54oM5zgZYff",
+          "name": "b383-blackblue-v110-part-005.zip",
           "bytes": 94371998,
-          "wrapper_sha256": "d53f9e7434c53eb23855fe2db03c60bb7039cc3f754550321fdbdef57d6c7a93"
+          "wrapper_sha256": "7bb7991b444640fb64db71b810b087dfb8b3dfb01bf6947bd0ef828cb2f8c730"
         },
         {
-          "file_id": "1ajj4Thk7mkFp1G-Kd1wFtqgglhnDmQHf",
-          "name": "blackblue-v110-part-006.zip",
+          "file_id": "1eKNDODKxZMCms_Wuv3yXhg89-nqsFddg",
+          "name": "b383-blackblue-v110-part-006.zip",
           "bytes": 94371998,
-          "wrapper_sha256": "09625aa26b63e74382a7966e793dbdefbf41233fb1464d24d47e1492bb88e889"
+          "wrapper_sha256": "503ef5effe0aed9440ca40a7b0b0536bcc3b2d6368c37cc9a19d8595944fef0f"
         },
         {
-          "file_id": "1GDPLiHVw1710vb_LLsg5jRkFmzBhiw9T",
-          "name": "blackblue-v110-part-007.zip",
+          "file_id": "1xrpRGQ3XmRi9UvfHxFeI1B-Lfft-lknB",
+          "name": "b383-blackblue-v110-part-007.zip",
           "bytes": 94371998,
-          "wrapper_sha256": "e0360721c7db3b1913a171573c9ec94f05153b48542be207ee348e9b9bc84341"
+          "wrapper_sha256": "ba7ac90010ebe71de50866249cb7ffc4f2cd868cb98fe1175a9f36ada350c79e"
         },
         {
-          "file_id": "1LzajlHFTIijWjyR2mKHBcI12JQkpNxU6",
-          "name": "blackblue-v110-part-008.zip",
+          "file_id": "1M_Jqp9ok4q1WimR6PptRVWM1PoI1c6O4",
+          "name": "b383-blackblue-v110-part-008.zip",
           "bytes": 94371998,
-          "wrapper_sha256": "1e6c9cbf2a13a9f0f4bab9423cb816b2097f53d98360f9d0c4ea48c01e424d90"
+          "wrapper_sha256": "0ecd9d01809fbdc9b1219d7a870c560a316bf3fd2086ce1de9fe64802fcf476e"
         },
         {
-          "file_id": "1MbDAT2WUPi-es6oYnzSZ76llQXBgM-Po",
-          "name": "blackblue-v110-part-009.zip",
+          "file_id": "1bYFR8PpnWw8_1M4Vo-GfcjBfdVkykylQ",
+          "name": "b383-blackblue-v110-part-009.zip",
           "bytes": 94371998,
-          "wrapper_sha256": "3d7b2ff642c947d5e24663835aade5794701855c52644a835422225c95112b4f"
+          "wrapper_sha256": "a9834d707cefd0e71497e24e690500f77ffe0dd05ba2abcdf99f565107bc034e"
         },
         {
-          "file_id": "1smvOlzWAljIuJMxzhv9RMwZ3Ot1WPjJH",
-          "name": "blackblue-v110-part-010.zip",
+          "file_id": "1P4lbQAQKaFOyvuKSFax3_tZiFKvYcbbn",
+          "name": "b383-blackblue-v110-part-010.zip",
           "bytes": 94371998,
-          "wrapper_sha256": "2fc6a500c66b4667cb87e94ec4850163f34ea928e1e4f52e4e36f414b7243461"
+          "wrapper_sha256": "524b5c26096a7713c402460c87cf0ece356588b7435bb8f0128d0c7bcdf4f012"
         },
         {
-          "file_id": "16mhlF16Xu8dc0X-DAdg8U2X04m_yRNbn",
-          "name": "blackblue-v110-part-011.zip",
+          "file_id": "1v17wVzxmEbmhGgxfNK92EtAPW631zScC",
+          "name": "b383-blackblue-v110-part-011.zip",
           "bytes": 94371998,
-          "wrapper_sha256": "d232a4896b4818d46741262ba98fbebca63d5ccbabd5845894910165f5aef783"
+          "wrapper_sha256": "23bae4fd0f99dcdcdc06780fdd67be2cc8f5e9d94d5a37c8522b833c1228877b"
         },
         {
-          "file_id": "1Ji3NKC8hvoncyDMi7bOhUPuMqK1AnBRN",
-          "name": "blackblue-v110-part-012.zip",
+          "file_id": "1A7iz3T12zTt9I9GnXjeN-W7Jtnp5L4ta",
+          "name": "b383-blackblue-v110-part-012.zip",
           "bytes": 3747998,
-          "wrapper_sha256": "18241baf8f6b968530dcbf37db88f6eb3bd8d1b47532d8f7195970bfaa149dd8"
+          "wrapper_sha256": "a3ddb25108857d04821299dee260c86353a7b2692d77491003aa7d2d626c8fb0"
         }
       ],
-      "logical_tar_sha256": "f715545b4d834c7c87341e6edaa155f3419a09f11e6c8d072e79a196fe388dd8",
+      "logical_tar_sha256": "3cb100299cb8b2800fdb99a13747a8908c6b74c2f97b1d66653023db8f996d9f",
       "logical_tar_bytes": 1136209920,
-      "note": "Tar byte identity is bridge-specific; content authority remains pinned source commit + counts + Dark Black hash.",
+      "note": "Canonical recovery tar uses normalized name/mtime/owner/group metadata; source content authority remains pinned commit + inventory + Dark Black hash.",
       "manifest": {
-        "file_id": "1SmVLyO881txBuKZS3Q9PuRuwqx4T9TB6",
-        "name": "blackblue-v110-manifest-e6ab.zip",
+        "file_id": "11PGpuJvzVpDGL25laE3qHbPAQnLQiyDb",
+        "name": "b383-blackblue-v110-manifest.zip",
         "bytes": 2692,
-        "wrapper_sha256": "b9c3bde3797fe5165e5c95375f09526d1f8c399751f4f41fd18c70b6e5b2a947"
+        "wrapper_sha256": "7fedd24b64f92f50ce125d786d1f06d90ad61416ad4e0ca1cd5abe7aaabc16e3"
       }
     },
     "metal_gtx": {
@@ -431,9 +431,9 @@
     "merge_allowed_only_after_owner_approval": true
   },
   "evidence": {
-    "recovery_bridge_run_id": 35925848048,
-    "recovery_bridge_head": "e6ab03d10bc200cb07a7147d2c0d9d34c11b168b",
-    "black_and_blue_stream_reconstruction": "PASS",
+    "recovery_bridge_run_id": 35927801811,
+    "recovery_bridge_head": "b383cc7af4ffddd674356fb0a0b4c38e86696697",
+    "black_and_blue_stream_reconstruction": "PASS_DETERMINISTIC",
     "vsco_stream_reconstruction": "PASS",
     "black_and_blue_audio_files": 2208,
     "black_and_blue_sfz_files": 64,
