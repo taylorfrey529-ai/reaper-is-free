@@ -1,0 +1,25 @@
+name: VM v1.1.0 sforzando recovery
+on:
+  push:
+    branches: [vm-v1.1.0-permanence]
+    paths: [.github/workflows/vm-v1.1.0-sforzando-recovery.yml]
+permissions:
+  contents: read
+jobs:
+  bridge:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Fetch exact official recovery ZIP
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p out
+          curl -fL --retry 5 --retry-delay 3 'https://sforzando.s3.us-east-1.amazonaws.com/LINUX_plogue-sforzando_1.982_x86_64.zip' -o out/LINUX_plogue-sforzando_1.982_x86_64.zip
+          echo 'ee6b354fd375ff9d0ce30819683f44d3b712a1fe4ff53c77e44df036da82a900  out/LINUX_plogue-sforzando_1.982_x86_64.zip' | sha256sum -c -
+          unzip -l out/LINUX_plogue-sforzando_1.982_x86_64.zip > out/ARCHIVE-CONTENTS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sforzando-1.982-linux-x86_64
+          path: out/
+          compression-level: 0
+          retention-days: 1
