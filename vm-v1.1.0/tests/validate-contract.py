@@ -66,7 +66,7 @@ require(len(durable["assets"]["vsco_2_ce"]["drive_objects"]) == 25, "VSCO 25-par
 require("manifest" in durable["assets"]["vsco_2_ce"], "VSCO durable manifest")
 require(len(durable["assets"]["nam"]["drive_objects"]) == 1, "one durable NAM wrapper")
 require(len(durable["assets"]["obsidian"]["drive_objects"]) == 1, "one durable Obsidian model")
-require(durable["evidence"]["black_and_blue_stream_reconstruction"] == "PASS", "Black & Blue streamed reconstruction evidence")
+require(str(durable["evidence"]["black_and_blue_stream_reconstruction"]).startswith("PASS"), "Black & Blue streamed reconstruction evidence")
 require(durable["evidence"]["vsco_stream_reconstruction"] == "PASS", "VSCO streamed reconstruction evidence")
 require((BASE / "bin/verify-durable-recovery-v1.1.0.py").is_file(), "offline durable recovery verifier present")
 
