@@ -34,20 +34,20 @@ jobs:
           test "$(find input -maxdepth 1 -type f -name 'metal-gtx.tar.gz.part.*' | wc -l)" -eq 7
           mkdir -p bridge/drive-parts
           cat input/metal-gtx.tar.gz.part.* > bridge/metal-gtx.tar.gz
-          echo "3156e089ec067e58913e0e4185a0ac211653f204dcaad85cf223056bec3039df  bridge/metal-gtx.tar.gz" | sha256sum -c -
+          echo "9abb7c5618830c32e565ed331d386d4539d5a7d45a4ce836f2f941cd2ff51336  bridge/metal-gtx.tar.gz" | sha256sum -c -
           split -b 90M -d -a 3 bridge/metal-gtx.tar.gz bridge/drive-parts/metal-gtx.tar.gz.drive.part.
           test "$(find bridge/drive-parts -maxdepth 1 -type f -name 'metal-gtx.tar.gz.drive.part.*' | wc -l)" -eq 15
           sha256sum bridge/drive-parts/metal-gtx.tar.gz.drive.part.* > bridge/drive-parts/SHA256SUMS
           cat > bridge/drive-parts/RECOVERY.txt <<'EOF'
           Metal GTX vm-v1.1.0 Drive recovery bridge
-          Authority archive SHA-256: 3156e089ec067e58913e0e4185a0ac211653f204dcaad85cf223056bec3039df
+          Authority archive SHA-256: 9abb7c5618830c32e565ed331d386d4539d5a7d45a4ce836f2f941cd2ff51336
           Source workflow run: 35778221842
           Original source payload SHA-256: c5756f95fcc30ac680f6034bb2e54c636e67fd0b53b1d40babada7257e782e73
           Reconstruct:
             cat metal-gtx.tar.gz.drive.part.* > metal-gtx.tar.gz
             sha256sum metal-gtx.tar.gz
           Expected reconstructed SHA-256:
-            3156e089ec067e58913e0e4185a0ac211653f204dcaad85cf223056bec3039df
+            9abb7c5618830c32e565ed331d386d4539d5a7d45a4ce836f2f941cd2ff51336
           EOF
 
       - name: Upload manifest
