@@ -18,7 +18,7 @@
     "output_device": "apollo_spdif_playback"
   },
   "project": {
-    "path": "projects/Ultra-Realism/Ultra-Realism-seed16-g1-NAM-retained.RPP",
+    "path": "projects/ultra-realism/Ultra-Realism-seed16-g1-NAM-retained.RPP",
     "sha256": "bd6d031156df0ab024e0a624ca05d368859d652846447a547433bd4dea08a751",
     "original_sha256": "97fbe088a673649a72a7dfe467e9868e02aacc781b5354c67877652d98279056"
   },
@@ -46,8 +46,7 @@
       "dark_black": {
         "path": "instruments/Black-And-Blue-Basses-Upstream/Programs/01-darkblack_keysw.sfz",
         "sha256": "98ce9c4a206a4807c934286e663dafaf6d7d89f4b7a98a22cc5d251c1b808699"
-      },
-      "source_bundle_sha256": "f4cf7e228091b561c7e5e98bd1ba2a55e4f6103900f941071309675e2f4ae19c"
+      }
     },
     "metal_gtx": {
       "root": "instruments/Metal-GTX",
