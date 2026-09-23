@@ -26,3 +26,12 @@ jobs:
           bash -n vm-v1.1.0/bin/install-v1.1.0.sh
       - name: Validate JSON syntax
         run: python3 -m json.tool vm-v1.1.0/config/permanence-v1.1.0.json >/dev/null
+      - name: Package vm-v1.1.0 source
+        run: tar -czf vm-v1.1.0-source.tar.gz vm-v1.1.0
+      - name: Upload vm-v1.1.0 source artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vm-v1.1.0-source
+          path: vm-v1.1.0-source.tar.gz
+          if-no-files-found: error
+          retention-days: 7
