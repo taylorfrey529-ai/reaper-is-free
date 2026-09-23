@@ -3,6 +3,10 @@ on:
   push:
     branches: [vm-v1.1.0-permanence]
     paths: [.github/workflows/vm-v1.1.0-runtime-restore-bridge.yml]
+  pull_request:
+    paths:
+      - '.github/workflows/vm-v1.1.0-runtime-restore-bridge.yml'
+      - 'vm-v1.1.0/**'
   workflow_dispatch:
 permissions:
   contents: read
@@ -28,7 +32,7 @@ jobs:
           name: sforzando-1.982-linux-x86_64
           path: out/
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
   avldrums:
     runs-on: ubuntu-24.04
@@ -61,7 +65,7 @@ jobs:
             avldrums-exact.tar.gz
             avldrums-exact.tar.gz.sha256
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
   blackblue:
     runs-on: ubuntu-24.04
@@ -106,7 +110,7 @@ jobs:
           name: blackblue-v110-manifest
           path: transfer/manifest.json
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
       - uses: actions/upload-artifact@v4
         with:
@@ -114,7 +118,7 @@ jobs:
           path: transfer/blackblue.tar.part.000
           if-no-files-found: ignore
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
       - uses: actions/upload-artifact@v4
         with:
@@ -122,7 +126,7 @@ jobs:
           path: transfer/blackblue.tar.part.001
           if-no-files-found: ignore
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
       - uses: actions/upload-artifact@v4
         with:
@@ -130,7 +134,7 @@ jobs:
           path: transfer/blackblue.tar.part.002
           if-no-files-found: ignore
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
       - uses: actions/upload-artifact@v4
         with:
@@ -138,7 +142,7 @@ jobs:
           path: transfer/blackblue.tar.part.003
           if-no-files-found: ignore
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
       - uses: actions/upload-artifact@v4
         with:
@@ -146,7 +150,7 @@ jobs:
           path: transfer/blackblue.tar.part.004
           if-no-files-found: ignore
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
       - uses: actions/upload-artifact@v4
         with:
@@ -154,7 +158,7 @@ jobs:
           path: transfer/blackblue.tar.part.005
           if-no-files-found: ignore
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
       - uses: actions/upload-artifact@v4
         with:
@@ -162,7 +166,7 @@ jobs:
           path: transfer/blackblue.tar.part.006
           if-no-files-found: ignore
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
       - uses: actions/upload-artifact@v4
         with:
@@ -170,7 +174,7 @@ jobs:
           path: transfer/blackblue.tar.part.007
           if-no-files-found: ignore
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
 
   vsco:
@@ -209,7 +213,7 @@ jobs:
           name: vcso-ce-manifest
           path: transfer/manifest.json
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
       - uses: actions/upload-artifact@v4
         with:
@@ -217,7 +221,7 @@ jobs:
           path: transfer/vsco-2-ce-1.1.0.tar.gz.part.000
           if-no-files-found: ignore
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
       - uses: actions/upload-artifact@v4
         with:
@@ -225,7 +229,7 @@ jobs:
           path: transfer/vsco-2-ce-1.1.0.tar.gz.part.001
           if-no-files-found: ignore
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
       - uses: actions/upload-artifact@v4
         with:
@@ -233,7 +237,7 @@ jobs:
           path: transfer/vsco-2-ce-1.1.0.tar.gz.part.002
           if-no-files-found: ignore
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
       - uses: actions/upload-artifact@v4
         with:
@@ -241,7 +245,7 @@ jobs:
           path: transfer/vsco-2-ce-1.1.0.tar.gz.part.003
           if-no-files-found: ignore
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
       - uses: actions/upload-artifact@v4
         with:
@@ -249,7 +253,7 @@ jobs:
           path: transfer/vsco-2-ce-1.1.0.tar.gz.part.004
           if-no-files-found: ignore
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
       - uses: actions/upload-artifact@v4
         with:
@@ -257,7 +261,7 @@ jobs:
           path: transfer/vsco-2-ce-1.1.0.tar.gz.part.005
           if-no-files-found: ignore
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
       - uses: actions/upload-artifact@v4
         with:
@@ -265,7 +269,7 @@ jobs:
           path: transfer/vsco-2-ce-1.1.0.tar.gz.part.006
           if-no-files-found: ignore
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
       - uses: actions/upload-artifact@v4
         with:
@@ -273,7 +277,7 @@ jobs:
           path: transfer/vsco-2-ce-1.1.0.tar.gz.part.007
           if-no-files-found: ignore
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
       - uses: actions/upload-artifact@v4
         with:
@@ -281,7 +285,7 @@ jobs:
           path: transfer/vsco-2-ce-1.1.0.tar.gz.part.008
           if-no-files-found: ignore
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
       - uses: actions/upload-artifact@v4
         with:
@@ -289,7 +293,7 @@ jobs:
           path: transfer/vsco-2-ce-1.1.0.tar.gz.part.009
           if-no-files-found: ignore
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
       - uses: actions/upload-artifact@v4
         with:
@@ -297,7 +301,7 @@ jobs:
           path: transfer/vsco-2-ce-1.1.0.tar.gz.part.010
           if-no-files-found: ignore
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
       - uses: actions/upload-artifact@v4
         with:
@@ -305,5 +309,5 @@ jobs:
           path: transfer/vsco-2-ce-1.1.0.tar.gz.part.011
           if-no-files-found: ignore
           compression-level: 0
-          retention-days: 1
+          retention-days: 7
 
