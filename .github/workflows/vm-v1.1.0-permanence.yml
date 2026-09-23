@@ -39,7 +39,11 @@ jobs:
           print("embedded verifier Python: PASS")
           PY
       - name: Validate JSON syntax
-        run: python3 -m json.tool vm-v1.1.0/config/permanence-v1.1.0.json >/dev/null
+        run: |
+          python3 -m json.tool vm-v1.1.0/config/permanence-v1.1.0.json >/dev/null
+          python3 -m json.tool vm-v1.1.0/config/durable-recovery-v1.1.0.json >/dev/null
+      - name: Compile durable recovery verifier
+        run: python3 -m py_compile vm-v1.1.0/bin/verify-durable-recovery-v1.1.0.py
       - name: Package vm-v1.1.0 source
         run: tar -czf vm-v1.1.0-source.tar.gz vm-v1.1.0
       - name: Upload vm-v1.1.0 source artifact
