@@ -85,7 +85,7 @@ jobs:
           python3 - <<'PY'
           import hashlib,json
           from pathlib import Path
-          src=Path('/tmp/blackblue.tar'); out=Path('transfer'); chunk=200*1024*1024
+          src=Path('/tmp/blackblue.tar'); out=Path('transfer'); chunk=90*1024*1024
           def sha(p):
               h=hashlib.sha256()
               with p.open('rb') as f:
@@ -173,6 +173,46 @@ jobs:
           compression-level: 0
           retention-days: 7
 
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blackblue-v110-part-008
+          path: transfer/blackblue.tar.part.008
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blackblue-v110-part-009
+          path: transfer/blackblue.tar.part.009
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blackblue-v110-part-010
+          path: transfer/blackblue.tar.part.010
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blackblue-v110-part-011
+          path: transfer/blackblue.tar.part.011
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: blackblue-v110-part-012
+          path: transfer/blackblue.tar.part.012
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+
 
   vsco:
     runs-on: ubuntu-24.04
@@ -188,7 +228,7 @@ jobs:
           python3 - <<'PY'
           import hashlib,json
           from pathlib import Path
-          src=Path('/tmp/vsco.tar.gz'); out=Path('transfer'); chunk=200*1024*1024
+          src=Path('/tmp/vsco.tar.gz'); out=Path('transfer'); chunk=90*1024*1024
           def sha(p):
               h=hashlib.sha256()
               with p.open('rb') as f:
@@ -304,6 +344,110 @@ jobs:
         with:
           name: vcso-ce-part-011
           path: transfer/vsco-2-ce-1.1.0.tar.gz.part.011
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-012
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.012
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-013
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.013
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-014
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.014
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-015
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.015
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-016
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.016
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-017
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.017
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-018
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.018
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-019
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.019
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-020
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.020
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-021
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.021
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-022
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.022
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-023
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.023
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 7
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vcso-ce-part-024
+          path: transfer/vsco-2-ce-1.1.0.tar.gz.part.024
           if-no-files-found: ignore
           compression-level: 0
           retention-days: 7
