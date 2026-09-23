@@ -1,0 +1,167 @@
+name: Metal GTX Drive bridge
+
+on:
+  push:
+    branches:
+      - vm-v1.1.0-permanence
+    paths:
+      - '.github/workflows/metal-gtx-drive-bridge.yml'
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  rechunk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download verified Metal GTX parts
+        uses: actions/download-artifact@v5
+        with:
+          pattern: metal-gtx-part-*
+          path: input
+          merge-multiple: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: 35778221842
+
+      - name: Reassemble and verify authority
+        shell: bash
+        run: |
+          set -euo pipefail
+          ls -lh input
+          test "$(find input -maxdepth 1 -type f -name 'metal-gtx.tar.gz.part.*' | wc -l)" -eq 7
+          mkdir -p bridge/drive-parts
+          cat input/metal-gtx.tar.gz.part.* > bridge/metal-gtx.tar.gz
+          echo "9abb7c5618830c32e565ed331d386d4539d5a7d45a4ce836f2f941cd2ff51336  bridge/metal-gtx.tar.gz" | sha256sum -c -
+          split -b 90M -d -a 3 bridge/metal-gtx.tar.gz bridge/drive-parts/metal-gtx.tar.gz.drive.part.
+          test "$(find bridge/drive-parts -maxdepth 1 -type f -name 'metal-gtx.tar.gz.drive.part.*' | wc -l)" -eq 15
+          sha256sum bridge/drive-parts/metal-gtx.tar.gz.drive.part.* > bridge/drive-parts/SHA256SUMS
+          cat > bridge/drive-parts/RECOVERY.txt <<'EOF'
+          Metal GTX vm-v1.1.0 Drive recovery bridge
+          Authority archive SHA-256: 9abb7c5618830c32e565ed331d386d4539d5a7d45a4ce836f2f941cd2ff51336
+          Source workflow run: 35778221842
+          Original source payload SHA-256: c5756f95fcc30ac680f6034bb2e54c636e67fd0b53b1d40babada7257e782e73
+          Reconstruct:
+            cat metal-gtx.tar.gz.drive.part.* > metal-gtx.tar.gz
+            sha256sum metal-gtx.tar.gz
+          Expected reconstructed SHA-256:
+            9abb7c5618830c32e565ed331d386d4539d5a7d45a4ce836f2f941cd2ff51336
+          EOF
+
+      - name: Upload manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-drive-manifest
+          path: |
+            bridge/drive-parts/SHA256SUMS
+            bridge/drive-parts/RECOVERY.txt
+          compression-level: 0
+          retention-days: 1
+
+      - name: Upload part 000
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-drive-part-000
+          path: bridge/drive-parts/metal-gtx.tar.gz.drive.part.000
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 001
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-drive-part-001
+          path: bridge/drive-parts/metal-gtx.tar.gz.drive.part.001
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 002
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-drive-part-002
+          path: bridge/drive-parts/metal-gtx.tar.gz.drive.part.002
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 003
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-drive-part-003
+          path: bridge/drive-parts/metal-gtx.tar.gz.drive.part.003
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 004
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-drive-part-004
+          path: bridge/drive-parts/metal-gtx.tar.gz.drive.part.004
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 005
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-drive-part-005
+          path: bridge/drive-parts/metal-gtx.tar.gz.drive.part.005
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 006
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-drive-part-006
+          path: bridge/drive-parts/metal-gtx.tar.gz.drive.part.006
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 007
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-drive-part-007
+          path: bridge/drive-parts/metal-gtx.tar.gz.drive.part.007
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 008
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-drive-part-008
+          path: bridge/drive-parts/metal-gtx.tar.gz.drive.part.008
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 009
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-drive-part-009
+          path: bridge/drive-parts/metal-gtx.tar.gz.drive.part.009
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 010
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-drive-part-010
+          path: bridge/drive-parts/metal-gtx.tar.gz.drive.part.010
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 011
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-drive-part-011
+          path: bridge/drive-parts/metal-gtx.tar.gz.drive.part.011
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 012
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-drive-part-012
+          path: bridge/drive-parts/metal-gtx.tar.gz.drive.part.012
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 013
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-drive-part-013
+          path: bridge/drive-parts/metal-gtx.tar.gz.drive.part.013
+          compression-level: 0
+          retention-days: 1
+      - name: Upload part 014
+        uses: actions/upload-artifact@v4
+        with:
+          name: metal-gtx-drive-part-014
+          path: bridge/drive-parts/metal-gtx.tar.gz.drive.part.014
+          compression-level: 0
+          retention-days: 1

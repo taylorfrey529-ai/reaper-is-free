@@ -1,0 +1,237 @@
+{
+  "schema_version": 1,
+  "version": "vm-v1.1.0",
+  "policy": {
+    "mode": "fail-closed",
+    "automatic_download": false,
+    "automatic_reinstall": false,
+    "owner_release_gate": true,
+    "canonical_root": "/mnt/data/ubuntu-desktop-workspace"
+  },
+  "runtime": {
+    "reaper": "7.79 Linux x86_64",
+    "display": ":88",
+    "display_geometry": "2560x1440x24",
+    "audio_backend": "ALSA",
+    "sample_rate_hz": 48000,
+    "input_device": "apollo_spdif_capture",
+    "output_device": "apollo_spdif_playback"
+  },
+  "project": {
+    "path": "projects/ultra-realism/Ultra-Realism-seed16-g1-NAM-retained.RPP",
+    "sha256": "bd6d031156df0ab024e0a624ca05d368859d652846447a547433bd4dea08a751",
+    "original_sha256": "97fbe088a673649a72a7dfe467e9868e02aacc781b5354c67877652d98279056"
+  },
+  "assets": {
+    "sforzando": {
+      "path": "home/.vst3/sforzando.vst3/Contents/x86_64-linux/sforzando.so",
+      "sha256": "6327bb446f4a0dba8730b29d6598bc039b17db55e895eee7c95f1fa8e439d5d0",
+      "recovery": {
+        "path": "packages/gm2-runtimes/sforzando/LINUX_plogue-sforzando_1.982_x86_64.zip",
+        "sha256": "ee6b354fd375ff9d0ce30819683f44d3b712a1fe4ff53c77e44df036da82a900"
+      }
+    },
+    "avldrums": {
+      "plugin_path": "home/.lv2/avldrums.lv2/avldrums.so",
+      "plugin_sha256": "d095514e1a132fb95949a30b54091689af2af9549402cb3a013159918f60564d",
+      "black_pearl_path": "home/.lv2/avldrums.lv2/Black_Pearl_4_LV2.sf2",
+      "black_pearl_sha256": "e0542ec19f2816ef4e0d00aeb087e7aa311e888d6f4805f971688bb267c6d405",
+      "recovery": {
+        "directory": "packages/gm2-runtimes/avldrums",
+        "note": "Recovery cache must remain non-empty; active binary and Black Pearl hashes are authoritative."
+      }
+    },
+    "black_and_blue": {
+      "root": "instruments/Black-And-Blue-Basses-Upstream",
+      "samples": {
+        "files": 2208,
+        "bytes": 1123279082
+      },
+      "sfz": {
+        "files": 64,
+        "bytes": 871891
+      },
+      "dark_black": {
+        "path": "instruments/Black-And-Blue-Basses-Upstream/Programs/01-darkblack_keysw.sfz",
+        "sha256": "98ce9c4a206a4807c934286e663dafaf6d7d89f4b7a98a22cc5d251c1b808699"
+      },
+      "recovery": {
+        "path": "/mnt/data/bab-restore-parts/black-and-blue-basses.tar",
+        "sha256": "36a7270acb08333e47fe13b5fbd2d6977a65eaae6e598d6e14c1a3c2110093d7"
+      }
+    },
+    "metal_gtx": {
+      "root": "instruments/Metal-GTX",
+      "samples": {
+        "files": 2739,
+        "bytes": 1324342318
+      },
+      "sfz": {
+        "files": 578,
+        "bytes": 5467084
+      },
+      "stock_xtracking": {
+        "path": "instruments/Metal-GTX/Programs/03-METAL-GTX XTracking.sfz",
+        "sha256": "4072694674f583befec92f64a52b1cbaf08a00c73913220f95cd2d30429596c7"
+      },
+      "clean_di_xtracking": {
+        "path": "instruments/Metal-GTX/Programs/03-METAL-GTX XTracking Clean DI.sfz",
+        "sha256": "a5cb148de4600a16a8b5ebca7ddfae325a29f49874985f3a7d044e6a49a10d27",
+        "magnet_cc48": 0,
+        "mute_time_cc22": 51
+      },
+      "authoritative_source_sha256": "c5756f95fcc30ac680f6034bb2e54c636e67fd0b53b1d40babada7257e782e73",
+      "recovery_bridge": {
+        "repository": "taylorfrey529-ai/reaper-is-free",
+        "workflow_run": 35778221842,
+        "chunk_count": 7,
+        "artifacts": [
+          10717295231,
+          10716134356,
+          10717230404,
+          10716786675,
+          10716771774,
+          10716786694,
+          10717006218
+        ],
+        "logical_archive_sha256": "9abb7c5618830c32e565ed331d386d4539d5a7d45a4ce836f2f941cd2ff51336",
+        "upstream_source_sha256": "c5756f95fcc30ac680f6034bb2e54c636e67fd0b53b1d40babada7257e782e73",
+        "source_workflow_run": 35778221842,
+        "drive_folder_id": "15BDyYyfg2OZ7dRvtpRtC2f_dvxAF85pP",
+        "drive_folder_url": "https://drive.google.com/drive/folders/15BDyYyfg2OZ7dRvtpRtC2f_dvxAF85pP",
+        "drive_part_count": 15,
+        "drive_part_max_bytes": 94372016,
+        "drive_manifest_name": "metal-gtx-drive-manifest.zip"
+      }
+    },
+    "vsco_2_ce": {
+      "version": "1.1.0",
+      "root": "instruments/VSCO-2-CE-1.1.0",
+      "stable_path": "instruments/VSCO-2-CE",
+      "archive_path": "packages/source-archives/vsco-2-ce-1.1.0.tar.gz",
+      "archive_sha256": "ac577fd3bc9171560087c8182ef6072f11ae0b63b3c3af9a5f752b91e26d3b96",
+      "sfz_files": 75,
+      "wav_files": 3168,
+      "patches": [
+        "ViolinEnsSusVib.sfz",
+        "CelloEnsSusVib.sfz",
+        "FHornSus.sfz"
+      ],
+      "recovery_required": true
+    },
+    "nam": {
+      "plugin_path": "home/.lv2/neural_amp_modeler.lv2/neural_amp_modeler.so",
+      "plugin_sha256": "9096a4480621733a6a18c5f1af5edcd7f4d1188a5d7b1327d2b6406dddb1e692",
+      "model_path": "nam-models/Obsidian.nam",
+      "model_sha256": "8d5d62626945e079a34a09e91d6ddef575beaea3bc17efdb4dee4afed9be81c7",
+      "recovery_artifact_sha256": "4f80428ed7ea94f190a4885b10113cf4d737766afd0b2791f6b45bdabc35bc22",
+      "guitar_model_ref_count": 3,
+      "bass_model_policy": "unassigned",
+      "recovery_dir": "packages/gm2-runtimes/nam"
+    }
+  },
+  "tracks": [
+    [
+      "Drum Buss",
+      "FFF468"
+    ],
+    [
+      "Kick",
+      "0070DD"
+    ],
+    [
+      "Snare",
+      "00FF98"
+    ],
+    [
+      "Tom 1",
+      "F48CBA"
+    ],
+    [
+      "Tom 2",
+      "3FC7EB"
+    ],
+    [
+      "Tom 3",
+      "8788EE"
+    ],
+    [
+      "OH",
+      "FF7C0A"
+    ],
+    [
+      "Room",
+      "C69B6D"
+    ],
+    [
+      "Bass Buss",
+      "FFF468"
+    ],
+    [
+      "Bass DI",
+      "AAD372"
+    ],
+    [
+      "Bass Neural",
+      "AAD372"
+    ],
+    [
+      "Guitar Buss",
+      "FFF468"
+    ],
+    [
+      "L Guitar DI",
+      "C41E3A"
+    ],
+    [
+      "R Guitar DI",
+      "C41E3A"
+    ],
+    [
+      "L Guitar Neural",
+      "C41E3A"
+    ],
+    [
+      "R Guitar Neural",
+      "C41E3A"
+    ],
+    [
+      "Lead Buss",
+      "FFF468"
+    ],
+    [
+      "Lead Guitar DI",
+      "A330C9"
+    ],
+    [
+      "Lead Guitar Neural",
+      "A330C9"
+    ],
+    [
+      "Orchestra Buss",
+      "FFF468"
+    ],
+    [
+      "Strings High",
+      "33937F"
+    ],
+    [
+      "Strings Low",
+      "33937F"
+    ],
+    [
+      "Horns",
+      "33937F"
+    ]
+  ],
+  "contract": {
+    "exact_track_count": 23,
+    "exact_metal_gtx_clean_di_instances": 3,
+    "exact_nam_guitar_model_refs": 3,
+    "exact_dark_black_instances": 1,
+    "exact_orchestra_patch_instances": 3,
+    "bass_neural_model": "OWNER SELECT / unassigned",
+    "no_silent_substitution": true,
+    "no_auto_heal": true
+  }
+}
