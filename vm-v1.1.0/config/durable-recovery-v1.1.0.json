@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "version": "vm-v1.1.0",
+  "policy": {
+    "durable_custody_required": true,
+    "provider": "google_drive",
+    "fail_closed": true,
+    "upstream_network_is_not_permanence": true,
+    "actions_artifacts_are_staging_only": true,
+    "owner_release_gate": true
+  },
+  "drive": {
+    "folder_id": "19zCWV83jrSXEXkAs1WcPR4Ql1MgLk57O",
+    "folder_url": "https://drive.google.com/drive/folders/19zCWV83jrSXEXkAs1WcPR4Ql1MgLk57O"
+  },
+  "assets": {
+    "sforzando": {
+      "status": "PENDING_DURABLE_COPY",
+      "source_archive_sha256": "ee6b354fd375ff9d0ce30819683f44d3b712a1fe4ff53c77e44df036da82a900",
+      "binary_sha256": "6327bb446f4a0dba8730b29d6598bc039b17db55e895eee7c95f1fa8e439d5d0",
+      "drive_objects": []
+    },
+    "avldrums": {
+      "status": "PENDING_DURABLE_COPY",
+      "source_commit": "9389f16f139410d9a55f9006976bd54cbd8b7806",
+      "robtk_commit": "c6c3ade30b1cffb12e4cd6eda5a46bf1c96cb318",
+      "binary_sha256": "f995c3a4a359e523b78a8417e7e4a9085718659ee72050bc0d5606b21b100c8d",
+      "black_pearl_sha256": "e0542ec19f2816ef4e0d00aeb087e7aa311e888d6f4805f971688bb267c6d405",
+      "drive_objects": []
+    },
+    "black_and_blue": {
+      "status": "PENDING_DURABLE_COPY",
+      "source_commit": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "recovery_archive_sha256": "014c6ee845bffbe83903e5f5a38efb19eaaa8397dcc8fe7a761ace6e90a9c91a",
+      "sample_files": 2208,
+      "sample_bytes": 1123279082,
+      "sfz_files": 64,
+      "dark_black_sha256": "98ce9c4a206a4807c934286e663dafaf6d7d89f4b7a98a22cc5d251c1b808699",
+      "drive_objects": []
+    },
+    "metal_gtx": {
+      "status": "DURABLE",
+      "logical_archive_sha256": "9abb7c5618830c32e565ed331d386d4539d5a7d45a4ce836f2f941cd2ff51336",
+      "authoritative_source_sha256": "c5756f95fcc30ac680f6034bb2e54c636e67fd0b53b1d40babada7257e782e73",
+      "drive_folder_id": "15BDyYyfg2OZ7dRvtpRtC2f_dvxAF85pP",
+      "drive_part_count": 15,
+      "drive_manifest_name": "metal-gtx-drive-manifest.zip"
+    },
+    "vsco_2_ce": {
+      "status": "PENDING_DURABLE_COPY",
+      "version": "1.1.0",
+      "archive_sha256": "ac577fd3bc9171560087c8182ef6072f11ae0b63b3c3af9a5f752b91e26d3b96",
+      "sfz_files": 75,
+      "wav_files": 3168,
+      "drive_objects": []
+    },
+    "nam": {
+      "status": "DURABLE",
+      "artifact_sha256": "4f80428ed7ea94f190a4885b10113cf4d737766afd0b2791f6b45bdabc35bc22",
+      "plugin_sha256": "9096a4480621733a6a18c5f1af5edcd7f4d1188a5d7b1327d2b6406dddb1e692",
+      "drive_objects": [
+        {
+          "file_id": "18StyZCPxE_jwiDAF1Cd0BE2ciZ-URfzc",
+          "name": "astra-nam-gm2-linux.zip"
+        }
+      ]
+    },
+    "obsidian": {
+      "status": "DURABLE",
+      "model_sha256": "8d5d62626945e079a34a09e91d6ddef575beaea3bc17efdb4dee4afed9be81c7",
+      "drive_objects": [
+        {
+          "file_id": "1HxHoT3AnhzSCAC_jFJqZbG9Cwqda6ZUJ",
+          "name": "Obsidian.nam",
+          "bytes": 296243
+        }
+      ]
+    }
+  },
+  "admission": {
+    "allowed_status": "DURABLE",
+    "require_all_assets_durable": true,
+    "cold_restore_required": true,
+    "live_reaper_required": true,
+    "virtual_apollo_non_silent_required": true,
+    "merge_allowed_only_after_owner_approval": true
+  }
+}
