@@ -2,7 +2,6 @@
 import json
 import pathlib
 import re
-import sys
 
 BASE = pathlib.Path(__file__).resolve().parents[1]
 manifest = json.loads((BASE / "config/permanence-v1.1.0.json").read_text())
@@ -33,6 +32,8 @@ require(manifest["assets"]["metal_gtx"]["clean_di_xtracking"]["magnet_cc48"] == 
 require(manifest["assets"]["metal_gtx"]["clean_di_xtracking"]["mute_time_cc22"] == 51, "Metal GTX Mute_Time CC22=51")
 require(manifest["assets"]["nam"]["guitar_model_ref_count"] == 3, "three guitar NAM model references")
 require(manifest["assets"]["nam"]["bass_model_policy"] == "unassigned", "Bass Neural remains owner-select")
+require(manifest.get("contract", {}).get("no_silent_substitution", True) is True, "no silent substitution")
+require(manifest.get("contract", {}).get("no_auto_heal", True) is True, "no automatic healing")
 
 hashes = []
 def collect(v):
@@ -46,19 +47,22 @@ def collect(v):
             collect(x)
 collect(manifest)
 for key, value in hashes:
-    require(isinstance(value, str) and re.fullmatch(r"[0-9a-f]{64}", value) is not None, f"valid SHA-256 field {key}")
+    require(isinstance(value, str) and re.fullmatch(r"[0-9a-f]{64}", value) is not None,
+            f"valid SHA-256 field {key}")
 
-for rel in [
-    "bin/verify-permanence-v1.1.0.sh",
-    "bin/enter-v1.1.0.sh",
-    "bin/install-v1.1.0.sh",
-]:
-    text = (BASE / rel).read_text()
-    require(re.search(r"\b(curl|wget)\b|git\s+clone|apt(-get)?\s+install|dnf\s+install|yum\s+install", text) is None,
-            f"{rel} contains no downloader/package-install path")
+for path in sorted((BASE / "bin").glob("*.sh")):
+    text = path.read_text()
+    require(
+        re.search(r"\b(curl|wget)\b|git\s+clone|apt(-get)?\s+install|dnf\s+install|yum\s+install", text, re.I) is None,
+        f"{path.relative_to(BASE)} contains no downloader/package-install path",
+    )
 
 lua = (BASE / "reaper/Scripts/Sunwell/Sunwell_VM_v1_1_0_Regression.lua").read_text()
 require("owner promotion required" in lua.lower(), "REAPER action preserves owner gate")
-lua_code = re.sub(r"--.*", "", lua)\nrequire(re.search(r"\\b(curl|wget)\\b|git\\s+clone|apt(-get)?\\s+install|dnf\\s+install|yum\\s+install", lua_code, re.I) is None, "REAPER action contains no downloader/package-install command")
+lua_code = re.sub(r"--.*", "", lua)
+require(
+    re.search(r"\b(curl|wget)\b|git\s+clone|apt(-get)?\s+install|dnf\s+install|yum\s+install", lua_code, re.I) is None,
+    "REAPER action contains no downloader/package-install command",
+)
 
 print("VM v1.1.0 source contract: PASS")
