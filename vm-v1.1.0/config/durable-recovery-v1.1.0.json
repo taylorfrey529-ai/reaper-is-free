@@ -15,28 +15,130 @@
   },
   "assets": {
     "sforzando": {
-      "status": "PENDING_DURABLE_COPY",
+      "status": "DURABLE",
       "source_archive_sha256": "ee6b354fd375ff9d0ce30819683f44d3b712a1fe4ff53c77e44df036da82a900",
       "binary_sha256": "6327bb446f4a0dba8730b29d6598bc039b17db55e895eee7c95f1fa8e439d5d0",
-      "drive_objects": []
+      "drive_objects": [
+        {
+          "file_id": "15NfJ1QyeFIN-bsuK5-yt9tlgh14jf761",
+          "name": "sforzando-1.982-linux-x86_64-e6ab.zip",
+          "bytes": 9490316,
+          "wrapper_sha256": "9fe20948cd3f4afddd40cbc067c25dc4e52f7b867ad2ce604d1301791399f721"
+        }
+      ]
     },
     "avldrums": {
-      "status": "PENDING_DURABLE_COPY",
+      "status": "DURABLE",
       "source_commit": "9389f16f139410d9a55f9006976bd54cbd8b7806",
       "robtk_commit": "c6c3ade30b1cffb12e4cd6eda5a46bf1c96cb318",
       "binary_sha256": "f995c3a4a359e523b78a8417e7e4a9085718659ee72050bc0d5606b21b100c8d",
       "black_pearl_sha256": "e0542ec19f2816ef4e0d00aeb087e7aa311e888d6f4805f971688bb267c6d405",
-      "drive_objects": []
+      "drive_objects": [
+        {
+          "file_id": "1h7qrY_gSJ15SY0mFIQuQgXKqW5jje0ix",
+          "name": "avldrums-exact-9389f16-e6ab.zip",
+          "bytes": 97293716,
+          "wrapper_sha256": "79d17a66f7ccd44979b38f659bb84dde74a99f25a16995f81a3a769f767bf1e5"
+        }
+      ],
+      "recovery_tar_sha256": "d08fc2f0807b829feb025417ee88612b1c9f5a1901a330c71cc14ee568ad75dd"
     },
     "black_and_blue": {
-      "status": "PENDING_DURABLE_COPY",
+      "status": "DURABLE",
       "source_commit": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
-      "recovery_archive_sha256": "014c6ee845bffbe83903e5f5a38efb19eaaa8397dcc8fe7a761ace6e90a9c91a",
       "sample_files": 2208,
       "sample_bytes": 1123279082,
       "sfz_files": 64,
       "dark_black_sha256": "98ce9c4a206a4807c934286e663dafaf6d7d89f4b7a98a22cc5d251c1b808699",
-      "drive_objects": []
+      "drive_objects": [
+        {
+          "file_id": "1GSFCEmdj2g61m3h9keGIcSas6LV-pkDU",
+          "name": "blackblue-v110-part-000.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "4f6524170c1aa16302c2e6ff7a4cea7c5f5ee309e0ed3dfbea8bd029628a3952"
+        },
+        {
+          "file_id": "1oQlbPOFX3AxadGt4_GMnySk7pv_4fyqC",
+          "name": "blackblue-v110-part-001.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "d9c69f27a11f36ff1c69a6ae9b43e5488f0ccb1b2eda35b41b454839ef42d2ce"
+        },
+        {
+          "file_id": "1HBOf-PWBLAijX2jrQ2j54pNKOuRlvjSc",
+          "name": "blackblue-v110-part-002.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "1f28b781872d3deb52855136e93a68df7d568625e572b2d4ac5be0db77c4cfe1"
+        },
+        {
+          "file_id": "1WmAtQl_UmknaYnHjeRcEDxGBgBmWlmEE",
+          "name": "blackblue-v110-part-003.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "eb48fee095a8e0d1777c42baa5a5218c24a089f6e8ccc5247ee66cf0349336fb"
+        },
+        {
+          "file_id": "1sQBVuT9jFQgrcHo7lJi65AaU4U547-8O",
+          "name": "blackblue-v110-part-004.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "112c8da718178e330660ca29f73bf848594f3cfa230cb0014497e9275f875b08"
+        },
+        {
+          "file_id": "1YLPL3_48QCvUrjJwA1foN8p8D19ayDuu",
+          "name": "blackblue-v110-part-005.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "d53f9e7434c53eb23855fe2db03c60bb7039cc3f754550321fdbdef57d6c7a93"
+        },
+        {
+          "file_id": "1ajj4Thk7mkFp1G-Kd1wFtqgglhnDmQHf",
+          "name": "blackblue-v110-part-006.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "09625aa26b63e74382a7966e793dbdefbf41233fb1464d24d47e1492bb88e889"
+        },
+        {
+          "file_id": "1GDPLiHVw1710vb_LLsg5jRkFmzBhiw9T",
+          "name": "blackblue-v110-part-007.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "e0360721c7db3b1913a171573c9ec94f05153b48542be207ee348e9b9bc84341"
+        },
+        {
+          "file_id": "1LzajlHFTIijWjyR2mKHBcI12JQkpNxU6",
+          "name": "blackblue-v110-part-008.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "1e6c9cbf2a13a9f0f4bab9423cb816b2097f53d98360f9d0c4ea48c01e424d90"
+        },
+        {
+          "file_id": "1MbDAT2WUPi-es6oYnzSZ76llQXBgM-Po",
+          "name": "blackblue-v110-part-009.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "3d7b2ff642c947d5e24663835aade5794701855c52644a835422225c95112b4f"
+        },
+        {
+          "file_id": "1smvOlzWAljIuJMxzhv9RMwZ3Ot1WPjJH",
+          "name": "blackblue-v110-part-010.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "2fc6a500c66b4667cb87e94ec4850163f34ea928e1e4f52e4e36f414b7243461"
+        },
+        {
+          "file_id": "16mhlF16Xu8dc0X-DAdg8U2X04m_yRNbn",
+          "name": "blackblue-v110-part-011.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "d232a4896b4818d46741262ba98fbebca63d5ccbabd5845894910165f5aef783"
+        },
+        {
+          "file_id": "1Ji3NKC8hvoncyDMi7bOhUPuMqK1AnBRN",
+          "name": "blackblue-v110-part-012.zip",
+          "bytes": 3747998,
+          "wrapper_sha256": "18241baf8f6b968530dcbf37db88f6eb3bd8d1b47532d8f7195970bfaa149dd8"
+        }
+      ],
+      "logical_tar_sha256": "f715545b4d834c7c87341e6edaa155f3419a09f11e6c8d072e79a196fe388dd8",
+      "logical_tar_bytes": 1136209920,
+      "note": "Tar byte identity is bridge-specific; content authority remains pinned source commit + counts + Dark Black hash.",
+      "manifest": {
+        "file_id": "1SmVLyO881txBuKZS3Q9PuRuwqx4T9TB6",
+        "name": "blackblue-v110-manifest-e6ab.zip",
+        "bytes": 2692,
+        "wrapper_sha256": "b9c3bde3797fe5165e5c95375f09526d1f8c399751f4f41fd18c70b6e5b2a947"
+      }
     },
     "metal_gtx": {
       "status": "DURABLE",
@@ -44,15 +146,255 @@
       "authoritative_source_sha256": "c5756f95fcc30ac680f6034bb2e54c636e67fd0b53b1d40babada7257e782e73",
       "drive_folder_id": "15BDyYyfg2OZ7dRvtpRtC2f_dvxAF85pP",
       "drive_part_count": 15,
-      "drive_manifest_name": "metal-gtx-drive-manifest.zip"
+      "drive_manifest_name": "metal-gtx-drive-manifest.zip",
+      "drive_manifest": {
+        "file_id": "1wfBY7cDCkBV8VwxXWJQQU4ujKqnoR-yi",
+        "name": "metal-gtx-drive-manifest.zip",
+        "bytes": 2466,
+        "wrapper_sha256": "26dd7a4486d68c2ef6b51f7ca7e6a811946ec0f72e965e85a2b6b6ee22d4d523"
+      },
+      "drive_objects": [
+        {
+          "file_id": "1ciuPiNUvbaTCFWV-aFrVy1_AA9DtEfTY",
+          "name": "metal-gtx-drive-part-000.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1bUGnZ3qg8ggo4Agq_8_UHJo4PsIxVMid",
+          "name": "metal-gtx-drive-part-001.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1xt8PZXkhM0B5FAr515vdwj7hOeC0x8l5",
+          "name": "metal-gtx-drive-part-002.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1p_li1Fc2nNbWyV4WeAtfqeoniVERNTun",
+          "name": "metal-gtx-drive-part-003.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1OcxMGvSbI9GqVj4DG05qncRzpJQUo9pm",
+          "name": "metal-gtx-drive-part-004.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1g1RzEpIeHPdcyAe0YOn_lCBoh440yTqM",
+          "name": "metal-gtx-drive-part-005.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1TXcpcp2w44BU2IIeELsdlF5AzDkHMdLC",
+          "name": "metal-gtx-drive-part-006.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1rajGqszGizIirAB0cLoXM3dDva73kmw2",
+          "name": "metal-gtx-drive-part-007.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1C_G_ZgcqIU_W4qncwJ7JS5MOtBrkNoOh",
+          "name": "metal-gtx-drive-part-008.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1YCmKtNkTpczniy6kyLUMf6AP9jbiV9Zq",
+          "name": "metal-gtx-drive-part-009.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1RFs19YnPOKWSdmCDDmPDWn0o2mWL3tQz",
+          "name": "metal-gtx-drive-part-010.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1pspPnQOMWm6Lam2Gw05duPGNvlh87eEr",
+          "name": "metal-gtx-drive-part-011.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1FeP7MyTxt7KkIh9wb-zgDWz45vxxYaY0",
+          "name": "metal-gtx-drive-part-012.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1kCmvBtEN7-u_z3Yki9BvGa-x3vJiTVMM",
+          "name": "metal-gtx-drive-part-013.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1_wnexyjm0O0kE6hao9guow8lCEwfMlV-",
+          "name": "metal-gtx-drive-part-014.zip",
+          "bytes": 22767585
+        }
+      ]
     },
     "vsco_2_ce": {
-      "status": "PENDING_DURABLE_COPY",
+      "status": "DURABLE",
       "version": "1.1.0",
       "archive_sha256": "ac577fd3bc9171560087c8182ef6072f11ae0b63b3c3af9a5f752b91e26d3b96",
       "sfz_files": 75,
       "wav_files": 3168,
-      "drive_objects": []
+      "drive_objects": [
+        {
+          "file_id": "1Hq_aiSaNSniC4wRkPtk3ASc3xhPdJAwc",
+          "name": "vcso-ce-part-000.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "3da815f193ce904f6a9caf44f0c402a7b8bd19e7245643a7c46c99b25e4b7103"
+        },
+        {
+          "file_id": "1sug134LfYCM0mRUefg6ydfo6csuAv3lu",
+          "name": "vcso-ce-part-001.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "f9601ab8dea9f65ca54e750343656f53ffce5aae358cbf68fe160d86d7a9c729"
+        },
+        {
+          "file_id": "1OwpOh4MzywcfMmQL7zsag8IqRsRDZEQO",
+          "name": "vcso-ce-part-002.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "50d12163373ff7689f2d7ca73eede89e3bb8ad9d07ef13693de235ff0e773bc3"
+        },
+        {
+          "file_id": "1QfXLOVAaY8e25iGIG10yFOcm_wypOGH9",
+          "name": "vcso-ce-part-003.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "e7d2cd2e8a4eac144cb17da3816e5984649d3f47dcf3394c856e5f8e39db1626"
+        },
+        {
+          "file_id": "1dardmxYwamSJPHN_ualY9ewVDTbb0r41",
+          "name": "vcso-ce-part-004.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "44a38a94116f886351fa898f65f8968936e74dc6a540c914e9a695cd6ef36e7b"
+        },
+        {
+          "file_id": "1gzwEMzvmzEOlGDKaM8WtkBMEfw7zPIA9",
+          "name": "vcso-ce-part-005.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "9e1bdc25620cb2b075f4b9c5bc57297acdc82e163a02b853c4e0fcc259b7b55a"
+        },
+        {
+          "file_id": "154sVR6lK2mI0qLWjkomCGPh2C3vD-DZD",
+          "name": "vcso-ce-part-006.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "30ee04a17fbe09135fb91f8baab30d042b678b5b0a1faa561711b983a7fe43b6"
+        },
+        {
+          "file_id": "1fJ52zutQ7YeEMwvVHP171jzMYHZ3NJOI",
+          "name": "vcso-ce-part-007.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "8dce515c23b383bf38acaac19e4cb0d70ed82bcd1c514a2f339cde7581cd6122"
+        },
+        {
+          "file_id": "1ojMpr-4YQebr-JEcezRCoQDQ1Fo3UbTi",
+          "name": "vcso-ce-part-008.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "1fd14fa90220e38b75bf457dcf0b70235c486d81c3c2166ad1f4545f0a9280b5"
+        },
+        {
+          "file_id": "1W5UdSLCT9TwaooeCcMGH7sFQxHSvZvDE",
+          "name": "vcso-ce-part-009.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "15ea7f2d0201f5ecc9f752c98eab3ddeb8ebd0232504d07992ac56bf36d66f84"
+        },
+        {
+          "file_id": "1HR8RBv_J7i4P5rTFK4EkT-vUMwjXnu_q",
+          "name": "vcso-ce-part-010.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "f0ca29cce2014d6cc5414f3c643b6cae9d4e05345f6d993db2f10536708d0076"
+        },
+        {
+          "file_id": "1pN-RGuwyBqg9qjH32hqQyVO-hmBdCIZR",
+          "name": "vcso-ce-part-011.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "3b04b860ba2a8f2646ae84aa0321675c2ba28b5edf4b2a6d72347f54d4d0293a"
+        },
+        {
+          "file_id": "1vNiW_frAXlJRlfJs9lsBfFyzyYhocSJx",
+          "name": "vcso-ce-part-012.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "6b719f5b218c39f94ac78871cb1900e050fa2c0fd681173fed6ae671013d80dd"
+        },
+        {
+          "file_id": "1HewYzBf82sECW-ktdlqQU2M_9D2nrHM2",
+          "name": "vcso-ce-part-013.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "b76cee61632aa4b1caf560311c9910aaf963d469b579fae7a3ad9ba5e1edd0b3"
+        },
+        {
+          "file_id": "1G8qMd0oE9FDkl43M0T92RKjPnvWt4xbI",
+          "name": "vcso-ce-part-014.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "8d9ae28d42fe4cc496e63bc9cba969531e2dd4d96fed71065d068358b2898c9f"
+        },
+        {
+          "file_id": "1j8YjGNH-Xv9VihvWInxRi47tjKgI3NKx",
+          "name": "vcso-ce-part-015.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "7c25df329c69b2f13592ecb830df1cb37f3424bbb4f74b9b83852a860f15bbfa"
+        },
+        {
+          "file_id": "1zd9Sz0PdKt8Ta1swVsenZYnNenV05jnE",
+          "name": "vcso-ce-part-016.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "ddcc4d99d05c29dd5e130f019986f127cf5bcabab204f82f369a8dc03a042f5a"
+        },
+        {
+          "file_id": "1c12YpvDpFtQLsfCx3WqBOILN5eVRreJN",
+          "name": "vcso-ce-part-017.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "95829c8e40cabd5848a18c2becedb5dbc1ac033f8053e63f5a8e4922f9b8d57c"
+        },
+        {
+          "file_id": "1czb7eCm8pVfQckmO0KEwyZa96twXF689",
+          "name": "vcso-ce-part-018.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "1b598200c1f9e2539771cf96260b8a3c04af1b8054d1432d1f9d41511de7a8cb"
+        },
+        {
+          "file_id": "1mwtnl1Z1AOIQinWpunotgiMcDnsaN91v",
+          "name": "vcso-ce-part-019.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "82854a0341761f7d17cac146b68005f5c79064a7b926e47626dc471b97a4e0c3"
+        },
+        {
+          "file_id": "17BA4zVvrWGJY3WTw4QpOqlwQMnNsUbY-",
+          "name": "vcso-ce-part-020.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "e063d85478b4ca0d8da382d55699d38f5a0c80baac3a8446bf5ffe25988bae81"
+        },
+        {
+          "file_id": "11r995fwCjVE7IustPyltSpp5uU0i-piD",
+          "name": "vcso-ce-part-021.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "a6300ca3859413acd997c91999d8f0f26e66470c24c55ef2c3d903b0db7e3877"
+        },
+        {
+          "file_id": "1PKNWvbHfVZB_MqMeMHdqtv2RzQ0N3DlD",
+          "name": "vcso-ce-part-022.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "b7874f1f6e0fef421f3bd846fde265ca7c5ec4231ef2b7e32c63ec9af9752a33"
+        },
+        {
+          "file_id": "1wvdESYpCjID_JlvlPvK9OxTN8_6roJfG",
+          "name": "vcso-ce-part-023.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "31f68e89b37c878fc80128bd82315f8403a9fd6daf0f9ac3351d46de1a7c39bd"
+        },
+        {
+          "file_id": "1SZlxuE5S6EIbSFapbq0zyIv3vdp7zW3V",
+          "name": "vcso-ce-part-024.zip",
+          "bytes": 37114155,
+          "wrapper_sha256": "c4a51c6acdcb9c83db9257953918c19b98aa8321ca219ee469aa8ef6132b7f83"
+        }
+      ],
+      "manifest": {
+        "file_id": "1XywhXrwjA9GYXAt58fpFEXCXfXqUXyTe",
+        "name": "vcso-ce-manifest-e6ab.zip",
+        "bytes": 5039,
+        "wrapper_sha256": "b2aabb21902edbd72ebab2fc44e8cc2859fa7e04d2938dbd864b0a53543983f0"
+      }
     },
     "nam": {
       "status": "DURABLE",
@@ -61,7 +403,9 @@
       "drive_objects": [
         {
           "file_id": "18StyZCPxE_jwiDAF1Cd0BE2ciZ-URfzc",
-          "name": "astra-nam-gm2-linux.zip"
+          "name": "astra-nam-gm2-linux.zip",
+          "bytes": 64144293,
+          "wrapper_sha256": "4f80428ed7ea94f190a4885b10113cf4d737766afd0b2791f6b45bdabc35bc22"
         }
       ]
     },
@@ -84,5 +428,11 @@
     "live_reaper_required": true,
     "virtual_apollo_non_silent_required": true,
     "merge_allowed_only_after_owner_approval": true
+  },
+  "evidence": {
+    "recovery_bridge_run_id": 35925848048,
+    "recovery_bridge_head": "e6ab03d10bc200cb07a7147d2c0d9d34c11b168b",
+    "black_and_blue_stream_reconstruction": "PASS",
+    "vsco_stream_reconstruction": "PASS"
   }
 }
