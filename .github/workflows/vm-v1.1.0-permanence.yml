@@ -24,6 +24,20 @@ jobs:
           bash -n vm-v1.1.0/bin/verify-permanence-v1.1.0.sh
           bash -n vm-v1.1.0/bin/enter-v1.1.0.sh
           bash -n vm-v1.1.0/bin/install-v1.1.0.sh
+          bash -n vm-v1.1.0/bin/sunwell-gateway-v1.1.0.sh
+          bash -n vm-v1.1.0/bin/verify-permanence.sh
+      - name: Compile embedded verifier Python
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path("vm-v1.1.0/bin/verify-permanence-v1.1.0.sh")
+          text = p.read_text()
+          marker = "<<'PY'\n"
+          start = text.index(marker) + len(marker)
+          end = text.rindex("\nPY")
+          compile(text[start:end], str(p) + ":embedded-python", "exec")
+          print("embedded verifier Python: PASS")
+          PY
       - name: Validate JSON syntax
         run: python3 -m json.tool vm-v1.1.0/config/permanence-v1.1.0.json >/dev/null
       - name: Package vm-v1.1.0 source
