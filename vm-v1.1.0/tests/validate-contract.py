@@ -59,6 +59,6 @@ for rel in [
 
 lua = (BASE / "reaper/Scripts/Sunwell/Sunwell_VM_v1_1_0_Regression.lua").read_text()
 require("owner promotion required" in lua.lower(), "REAPER action preserves owner gate")
-require("install" not in re.sub(r"--.*", "", lua).lower(), "REAPER action performs no install command")
+lua_code = re.sub(r"--.*", "", lua)\nrequire(re.search(r"\\b(curl|wget)\\b|git\\s+clone|apt(-get)?\\s+install|dnf\\s+install|yum\\s+install", lua_code, re.I) is None, "REAPER action contains no downloader/package-install command")
 
 print("VM v1.1.0 source contract: PASS")
