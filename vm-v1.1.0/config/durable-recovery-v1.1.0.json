@@ -407,7 +407,8 @@
           "bytes": 64144293,
           "wrapper_sha256": "4f80428ed7ea94f190a4885b10113cf4d737766afd0b2791f6b45bdabc35bc22"
         }
-      ]
+      ],
+      "inner_tar_sha256": "66fe16f1a1161ae8230edff38cee6c5fc4fb1d1e65e87aebb9bcf91c48424f17"
     },
     "obsidian": {
       "status": "DURABLE",
@@ -433,6 +434,11 @@
     "recovery_bridge_run_id": 35925848048,
     "recovery_bridge_head": "e6ab03d10bc200cb07a7147d2c0d9d34c11b168b",
     "black_and_blue_stream_reconstruction": "PASS",
-    "vsco_stream_reconstruction": "PASS"
+    "vsco_stream_reconstruction": "PASS",
+    "black_and_blue_audio_files": 2208,
+    "black_and_blue_sfz_files": 64,
+    "black_and_blue_dark_black_sha256": "98ce9c4a206a4807c934286e663dafaf6d7d89f4b7a98a22cc5d251c1b808699",
+    "vsco_wav_files": 3168,
+    "vsco_sfz_files": 75
   }
 }
