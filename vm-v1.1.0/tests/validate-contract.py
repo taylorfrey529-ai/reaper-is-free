@@ -113,6 +113,27 @@ require(str(durable["evidence"]["black_and_blue_stream_reconstruction"]).startsw
 require(durable["evidence"]["vsco_stream_reconstruction"] == "PASS", "VSCO streamed reconstruction evidence")
 require((BASE / "bin/verify-durable-recovery-v1.1.0.py").is_file(), "offline durable recovery verifier present")
 
+rehydrator = BASE / "bin/rehydrate-offline-v1.1.0.py"
+require(rehydrator.is_file(), "offline durable rehydrator present")
+rehydrate_text = rehydrator.read_text()
+require('ap.add_argument("--apply", action="store_true"' in rehydrate_text,
+        "offline rehydrator requires explicit --apply")
+require("verify_durable_set(" in rehydrate_text,
+        "offline rehydrator verifies durable custody before promotion")
+require("reaper_running(root)" in rehydrate_text,
+        "offline rehydrator refuses a live REAPER workspace")
+require("rollback(root, backup, rels)" in rehydrate_text,
+        "offline rehydrator retains rollback path")
+require("recovery-backups" in rehydrate_text,
+        "offline rehydrator preserves displaced runtime bytes")
+require(
+    re.search(r"\b(requests|urllib3|httpx|aiohttp|ftplib)\b|\burlopen\b|\bsocket\.(create_connection|socket)\b|\b(curl|wget)\b|git\s+clone|apt(-get)?\s+install|dnf\s+install|yum\s+install",
+              rehydrate_text, re.I) is None,
+    "offline rehydrator contains no network/downloader/package-install path",
+)
+require("projects/" not in rehydrate_text and "/projects/" not in rehydrate_text,
+        "offline rehydrator does not mutate REAPER project files")
+
 hashes = []
 def collect(v):
     if isinstance(v, dict):
