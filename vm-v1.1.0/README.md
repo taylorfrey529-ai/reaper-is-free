@@ -64,6 +64,32 @@ It verifies the exact 23-track order/colors, expected FX roles, DI-to-Neural rec
 
 No PASS from this source branch is a substitute for a fresh live REAPER + Virtual Apollo proof. Owner Golden Master/release promotion remains manual.
 
+## Fail-closed live certification
+
+Use `verify-live-certification-v1.1.0.py` to bind a fresh live proof to one certification session. Begin the session before the first live action/recording:
+
+```bash
+python3 vm-v1.1.0/bin/verify-live-certification-v1.1.0.py begin \
+  --session /mnt/data/vm-v1.1.0-live-cert \
+  --source-head <exact-git-head>
+```
+
+The final verifier reruns the full permanence gate and live process/display gate, requires a fresh `78/0` REAPER regression report, requires a genuine 2560x1440 screenshot and finalized 2560x1440 screen recording, and requires exactly eight fresh non-silent 48 kHz stereo Virtual Apollo audition captures:
+
+- `drums`
+- `bass-di`
+- `rhythm-l-neural`
+- `rhythm-r-neural`
+- `lead-neural`
+- `strings-high`
+- `strings-low`
+- `horns`
+
+The two rhythm Neural captures must also prove at least 6 dB dominance on their intended left/right channels. Bass Neural is deliberately excluded from the audition set because its model remains owner-select/unassigned; its project role and NAM receive topology remain covered by the REAPER regression gate.
+
+Until the recorder is stopped, the verifier may be run with `--allow-recording-pending` to prove all other live gates without issuing a final PASS. A complete PASS requires the finalized recording path and rejects stale reports/captures from before the certification session.
+
+
 ## Durable recovery custody
 
 The external instrument/NAM recovery layer is pinned in `config/durable-recovery-v1.1.0.json`. Google Drive is durable custody; GitHub Actions artifacts are staging only.
