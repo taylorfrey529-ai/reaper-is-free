@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - vm-v1.1.0-permanence
+      - candidate/vm-v1.1.0-certified-hardening
     paths:
       - 'vm-v1.1.0/**'
       - '.github/workflows/vm-v1.1.0-permanence.yml'
@@ -24,8 +25,33 @@ jobs:
           bash -n vm-v1.1.0/bin/verify-permanence-v1.1.0.sh
           bash -n vm-v1.1.0/bin/enter-v1.1.0.sh
           bash -n vm-v1.1.0/bin/install-v1.1.0.sh
+          bash -n vm-v1.1.0/bin/sunwell-gateway-v1.1.0.sh
+          bash -n vm-v1.1.0/bin/verify-permanence.sh
+      - name: Compile embedded verifier Python
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path("vm-v1.1.0/bin/verify-permanence-v1.1.0.sh")
+          text = p.read_text()
+          marker = "<<'PY'\n"
+          start = text.index(marker) + len(marker)
+          end = text.rindex("\nPY")
+          compile(text[start:end], str(p) + ":embedded-python", "exec")
+          print("embedded verifier Python: PASS")
+          PY
       - name: Validate JSON syntax
-        run: python3 -m json.tool vm-v1.1.0/config/permanence-v1.1.0.json >/dev/null
+        run: |
+          python3 -m json.tool vm-v1.1.0/config/permanence-v1.1.0.json >/dev/null
+          python3 -m json.tool vm-v1.1.0/config/durable-recovery-v1.1.0.json >/dev/null
+      - name: Compile permanence and recovery tools
+        run: |
+          python3 -m py_compile vm-v1.1.0/bin/verify-durable-recovery-v1.1.0.py
+          python3 -m py_compile vm-v1.1.0/bin/rehydrate-offline-v1.1.0.py
+          python3 -m py_compile vm-v1.1.0/bin/verify-live-certification-v1.1.0.py
+      - name: Run offline rehydrator regression tests
+        run: python3 vm-v1.1.0/tests/test-rehydrator.py
+      - name: Run live certification regression tests
+        run: python3 vm-v1.1.0/tests/test-live-certification.py
       - name: Package vm-v1.1.0 source
         run: tar -czf vm-v1.1.0-source.tar.gz vm-v1.1.0
       - name: Upload vm-v1.1.0 source artifact

@@ -1,0 +1,456 @@
+{
+  "schema_version": 1,
+  "version": "vm-v1.1.0",
+  "policy": {
+    "durable_custody_required": true,
+    "provider": "google_drive",
+    "fail_closed": true,
+    "upstream_network_is_not_permanence": true,
+    "actions_artifacts_are_staging_only": true,
+    "owner_release_gate": true
+  },
+  "drive": {
+    "folder_id": "19zCWV83jrSXEXkAs1WcPR4Ql1MgLk57O",
+    "folder_url": "https://drive.google.com/drive/folders/19zCWV83jrSXEXkAs1WcPR4Ql1MgLk57O"
+  },
+  "assets": {
+    "sforzando": {
+      "status": "DURABLE",
+      "source_archive_sha256": "ee6b354fd375ff9d0ce30819683f44d3b712a1fe4ff53c77e44df036da82a900",
+      "binary_sha256": "6327bb446f4a0dba8730b29d6598bc039b17db55e895eee7c95f1fa8e439d5d0",
+      "drive_objects": [
+        {
+          "file_id": "1Znzy0c1r6z7UZ1Ih43Zo8DpdEro0f1dt",
+          "name": "sforzando-1.982-final-b383.zip",
+          "bytes": 9491036,
+          "wrapper_sha256": "2262df0524ed7947585a03d8a54c7013f0923992fa14edd8e1ef20c91fddedc3"
+        }
+      ]
+    },
+    "avldrums": {
+      "status": "DURABLE",
+      "source_commit": "9389f16f139410d9a55f9006976bd54cbd8b7806",
+      "robtk_commit": "c6c3ade30b1cffb12e4cd6eda5a46bf1c96cb318",
+      "binary_sha256": "f995c3a4a359e523b78a8417e7e4a9085718659ee72050bc0d5606b21b100c8d",
+      "black_pearl_sha256": "e0542ec19f2816ef4e0d00aeb087e7aa311e888d6f4805f971688bb267c6d405",
+      "drive_objects": [
+        {
+          "file_id": "1rv6Px1y5h0xylH5Jhm8uP_Oj6Dr-oeLH",
+          "name": "avldrums-exact-9389f16-final-b383.zip",
+          "bytes": 97295631,
+          "wrapper_sha256": "d53ed58e81cbbd8ec6b0f848a579353674bfe7da07f78012204aa7ca5db47c64"
+        }
+      ],
+      "recovery_tar_sha256": "1c63a981e2f87c9b0ffe8bbfe64af9a44e6e5caed58ffd4b64cf6358e1cae0c6",
+      "recovery_policy": "normalized tar metadata + gzip -n; active plugin and Black Pearl hashes remain authoritative"
+    },
+    "black_and_blue": {
+      "status": "DURABLE",
+      "source_commit": "6e7d674cdb41be7a54dbccb15472401ad01099b9",
+      "sample_files": 2208,
+      "sample_bytes": 1123279082,
+      "sfz_files": 64,
+      "dark_black_sha256": "98ce9c4a206a4807c934286e663dafaf6d7d89f4b7a98a22cc5d251c1b808699",
+      "drive_objects": [
+        {
+          "file_id": "1xZ2mIC_Y19Z2n7BxHfzYJtmK71Wyb0AJ",
+          "name": "b383-blackblue-v110-part-000.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "c3d0010f7c423eb0314af25b9195de842ef47ec91e358fb13bb35359b6ea6e7e"
+        },
+        {
+          "file_id": "17J08YoqvrOwfp4CdOQigRs_f2jbcFd38",
+          "name": "b383-blackblue-v110-part-001.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "f68df5fab67ed58770d5a162f64f5b7873f64385fb115827dcd06f73aa7561af"
+        },
+        {
+          "file_id": "1FYANgp0UDpPj6UfkiOhERLWLe1X8L25t",
+          "name": "b383-blackblue-v110-part-002.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "fd16f33ee17409c42dffcaa1b576e307022dee94b92539a2335ed738f6568833"
+        },
+        {
+          "file_id": "11vi_OZA6TE1OojbKzJxVZl7u-48p4UhT",
+          "name": "b383-blackblue-v110-part-003.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "e60751cf3387437c19f138c7f8012c33e8e3bcf50c2c6df443dc751e589036ec"
+        },
+        {
+          "file_id": "13KXxDBQY0wasgR6dnxg2yUSzbP5eniMV",
+          "name": "b383-blackblue-v110-part-004.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "837184c74b4039143ba92eac365bf11045b350766ead255e4f6f23c5bbd2db8a"
+        },
+        {
+          "file_id": "1J_Dys5t7Qp1ox1C74n2gn54oM5zgZYff",
+          "name": "b383-blackblue-v110-part-005.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "7bb7991b444640fb64db71b810b087dfb8b3dfb01bf6947bd0ef828cb2f8c730"
+        },
+        {
+          "file_id": "1eKNDODKxZMCms_Wuv3yXhg89-nqsFddg",
+          "name": "b383-blackblue-v110-part-006.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "503ef5effe0aed9440ca40a7b0b0536bcc3b2d6368c37cc9a19d8595944fef0f"
+        },
+        {
+          "file_id": "1xrpRGQ3XmRi9UvfHxFeI1B-Lfft-lknB",
+          "name": "b383-blackblue-v110-part-007.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "ba7ac90010ebe71de50866249cb7ffc4f2cd868cb98fe1175a9f36ada350c79e"
+        },
+        {
+          "file_id": "1M_Jqp9ok4q1WimR6PptRVWM1PoI1c6O4",
+          "name": "b383-blackblue-v110-part-008.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "0ecd9d01809fbdc9b1219d7a870c560a316bf3fd2086ce1de9fe64802fcf476e"
+        },
+        {
+          "file_id": "1bYFR8PpnWw8_1M4Vo-GfcjBfdVkykylQ",
+          "name": "b383-blackblue-v110-part-009.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "a9834d707cefd0e71497e24e690500f77ffe0dd05ba2abcdf99f565107bc034e"
+        },
+        {
+          "file_id": "1P4lbQAQKaFOyvuKSFax3_tZiFKvYcbbn",
+          "name": "b383-blackblue-v110-part-010.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "524b5c26096a7713c402460c87cf0ece356588b7435bb8f0128d0c7bcdf4f012"
+        },
+        {
+          "file_id": "1v17wVzxmEbmhGgxfNK92EtAPW631zScC",
+          "name": "b383-blackblue-v110-part-011.zip",
+          "bytes": 94371998,
+          "wrapper_sha256": "23bae4fd0f99dcdcdc06780fdd67be2cc8f5e9d94d5a37c8522b833c1228877b"
+        },
+        {
+          "file_id": "1A7iz3T12zTt9I9GnXjeN-W7Jtnp5L4ta",
+          "name": "b383-blackblue-v110-part-012.zip",
+          "bytes": 3747998,
+          "wrapper_sha256": "a3ddb25108857d04821299dee260c86353a7b2692d77491003aa7d2d626c8fb0"
+        }
+      ],
+      "logical_tar_sha256": "3cb100299cb8b2800fdb99a13747a8908c6b74c2f97b1d66653023db8f996d9f",
+      "logical_tar_bytes": 1136209920,
+      "note": "Canonical recovery tar uses normalized name/mtime/owner/group metadata; source content authority remains pinned commit + inventory + Dark Black hash.",
+      "manifest": {
+        "file_id": "11PGpuJvzVpDGL25laE3qHbPAQnLQiyDb",
+        "name": "b383-blackblue-v110-manifest.zip",
+        "bytes": 2692,
+        "wrapper_sha256": "7fedd24b64f92f50ce125d786d1f06d90ad61416ad4e0ca1cd5abe7aaabc16e3"
+      }
+    },
+    "metal_gtx": {
+      "status": "DURABLE",
+      "logical_archive_sha256": "9abb7c5618830c32e565ed331d386d4539d5a7d45a4ce836f2f941cd2ff51336",
+      "authoritative_source_sha256": "c5756f95fcc30ac680f6034bb2e54c636e67fd0b53b1d40babada7257e782e73",
+      "drive_folder_id": "15BDyYyfg2OZ7dRvtpRtC2f_dvxAF85pP",
+      "drive_part_count": 15,
+      "drive_manifest_name": "metal-gtx-drive-manifest.zip",
+      "drive_manifest": {
+        "file_id": "1wfBY7cDCkBV8VwxXWJQQU4ujKqnoR-yi",
+        "name": "metal-gtx-drive-manifest.zip",
+        "bytes": 2466,
+        "wrapper_sha256": "26dd7a4486d68c2ef6b51f7ca7e6a811946ec0f72e965e85a2b6b6ee22d4d523"
+      },
+      "drive_objects": [
+        {
+          "file_id": "1ciuPiNUvbaTCFWV-aFrVy1_AA9DtEfTY",
+          "name": "metal-gtx-drive-part-000.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1bUGnZ3qg8ggo4Agq_8_UHJo4PsIxVMid",
+          "name": "metal-gtx-drive-part-001.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1xt8PZXkhM0B5FAr515vdwj7hOeC0x8l5",
+          "name": "metal-gtx-drive-part-002.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1p_li1Fc2nNbWyV4WeAtfqeoniVERNTun",
+          "name": "metal-gtx-drive-part-003.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1OcxMGvSbI9GqVj4DG05qncRzpJQUo9pm",
+          "name": "metal-gtx-drive-part-004.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1g1RzEpIeHPdcyAe0YOn_lCBoh440yTqM",
+          "name": "metal-gtx-drive-part-005.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1TXcpcp2w44BU2IIeELsdlF5AzDkHMdLC",
+          "name": "metal-gtx-drive-part-006.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1rajGqszGizIirAB0cLoXM3dDva73kmw2",
+          "name": "metal-gtx-drive-part-007.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1C_G_ZgcqIU_W4qncwJ7JS5MOtBrkNoOh",
+          "name": "metal-gtx-drive-part-008.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1YCmKtNkTpczniy6kyLUMf6AP9jbiV9Zq",
+          "name": "metal-gtx-drive-part-009.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1RFs19YnPOKWSdmCDDmPDWn0o2mWL3tQz",
+          "name": "metal-gtx-drive-part-010.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1pspPnQOMWm6Lam2Gw05duPGNvlh87eEr",
+          "name": "metal-gtx-drive-part-011.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1FeP7MyTxt7KkIh9wb-zgDWz45vxxYaY0",
+          "name": "metal-gtx-drive-part-012.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1kCmvBtEN7-u_z3Yki9BvGa-x3vJiTVMM",
+          "name": "metal-gtx-drive-part-013.zip",
+          "bytes": 94372016
+        },
+        {
+          "file_id": "1_wnexyjm0O0kE6hao9guow8lCEwfMlV-",
+          "name": "metal-gtx-drive-part-014.zip",
+          "bytes": 22767585
+        }
+      ],
+      "clean_di_derivative": {
+        "source_runtime_path": "instruments/Metal-GTX/Programs/03-METAL-GTX XTracking.sfz",
+        "source_sha256": "4072694674f583befec92f64a52b1cbaf08a00c73913220f95cd2d30429596c7",
+        "exact_replacement_from": "set_cc48=64",
+        "exact_replacement_to": "set_cc48=0",
+        "exact_replacement_count": 1,
+        "derived_runtime_path": "instruments/Metal-GTX/Programs/03-METAL-GTX XTracking Clean DI.sfz",
+        "derived_sha256": "a5cb148de4600a16a8b5ebca7ddfae325a29f49874985f3a7d044e6a49a10d27",
+        "policy": "derive only during explicit offline recovery when absent; reject a present mismatched derivative"
+      }
+    },
+    "vsco_2_ce": {
+      "status": "DURABLE",
+      "version": "1.1.0",
+      "archive_sha256": "ac577fd3bc9171560087c8182ef6072f11ae0b63b3c3af9a5f752b91e26d3b96",
+      "sfz_files": 75,
+      "wav_files": 3168,
+      "drive_objects": [
+        {
+          "file_id": "1Hq_aiSaNSniC4wRkPtk3ASc3xhPdJAwc",
+          "name": "vcso-ce-part-000.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "3da815f193ce904f6a9caf44f0c402a7b8bd19e7245643a7c46c99b25e4b7103"
+        },
+        {
+          "file_id": "1sug134LfYCM0mRUefg6ydfo6csuAv3lu",
+          "name": "vcso-ce-part-001.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "f9601ab8dea9f65ca54e750343656f53ffce5aae358cbf68fe160d86d7a9c729"
+        },
+        {
+          "file_id": "1OwpOh4MzywcfMmQL7zsag8IqRsRDZEQO",
+          "name": "vcso-ce-part-002.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "50d12163373ff7689f2d7ca73eede89e3bb8ad9d07ef13693de235ff0e773bc3"
+        },
+        {
+          "file_id": "1QfXLOVAaY8e25iGIG10yFOcm_wypOGH9",
+          "name": "vcso-ce-part-003.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "e7d2cd2e8a4eac144cb17da3816e5984649d3f47dcf3394c856e5f8e39db1626"
+        },
+        {
+          "file_id": "1dardmxYwamSJPHN_ualY9ewVDTbb0r41",
+          "name": "vcso-ce-part-004.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "44a38a94116f886351fa898f65f8968936e74dc6a540c914e9a695cd6ef36e7b"
+        },
+        {
+          "file_id": "1gzwEMzvmzEOlGDKaM8WtkBMEfw7zPIA9",
+          "name": "vcso-ce-part-005.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "9e1bdc25620cb2b075f4b9c5bc57297acdc82e163a02b853c4e0fcc259b7b55a"
+        },
+        {
+          "file_id": "154sVR6lK2mI0qLWjkomCGPh2C3vD-DZD",
+          "name": "vcso-ce-part-006.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "30ee04a17fbe09135fb91f8baab30d042b678b5b0a1faa561711b983a7fe43b6"
+        },
+        {
+          "file_id": "1fJ52zutQ7YeEMwvVHP171jzMYHZ3NJOI",
+          "name": "vcso-ce-part-007.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "8dce515c23b383bf38acaac19e4cb0d70ed82bcd1c514a2f339cde7581cd6122"
+        },
+        {
+          "file_id": "1ojMpr-4YQebr-JEcezRCoQDQ1Fo3UbTi",
+          "name": "vcso-ce-part-008.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "1fd14fa90220e38b75bf457dcf0b70235c486d81c3c2166ad1f4545f0a9280b5"
+        },
+        {
+          "file_id": "1W5UdSLCT9TwaooeCcMGH7sFQxHSvZvDE",
+          "name": "vcso-ce-part-009.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "15ea7f2d0201f5ecc9f752c98eab3ddeb8ebd0232504d07992ac56bf36d66f84"
+        },
+        {
+          "file_id": "1HR8RBv_J7i4P5rTFK4EkT-vUMwjXnu_q",
+          "name": "vcso-ce-part-010.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "f0ca29cce2014d6cc5414f3c643b6cae9d4e05345f6d993db2f10536708d0076"
+        },
+        {
+          "file_id": "1pN-RGuwyBqg9qjH32hqQyVO-hmBdCIZR",
+          "name": "vcso-ce-part-011.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "3b04b860ba2a8f2646ae84aa0321675c2ba28b5edf4b2a6d72347f54d4d0293a"
+        },
+        {
+          "file_id": "1vNiW_frAXlJRlfJs9lsBfFyzyYhocSJx",
+          "name": "vcso-ce-part-012.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "6b719f5b218c39f94ac78871cb1900e050fa2c0fd681173fed6ae671013d80dd"
+        },
+        {
+          "file_id": "1HewYzBf82sECW-ktdlqQU2M_9D2nrHM2",
+          "name": "vcso-ce-part-013.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "b76cee61632aa4b1caf560311c9910aaf963d469b579fae7a3ad9ba5e1edd0b3"
+        },
+        {
+          "file_id": "1G8qMd0oE9FDkl43M0T92RKjPnvWt4xbI",
+          "name": "vcso-ce-part-014.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "8d9ae28d42fe4cc496e63bc9cba969531e2dd4d96fed71065d068358b2898c9f"
+        },
+        {
+          "file_id": "1j8YjGNH-Xv9VihvWInxRi47tjKgI3NKx",
+          "name": "vcso-ce-part-015.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "7c25df329c69b2f13592ecb830df1cb37f3424bbb4f74b9b83852a860f15bbfa"
+        },
+        {
+          "file_id": "1zd9Sz0PdKt8Ta1swVsenZYnNenV05jnE",
+          "name": "vcso-ce-part-016.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "ddcc4d99d05c29dd5e130f019986f127cf5bcabab204f82f369a8dc03a042f5a"
+        },
+        {
+          "file_id": "1c12YpvDpFtQLsfCx3WqBOILN5eVRreJN",
+          "name": "vcso-ce-part-017.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "95829c8e40cabd5848a18c2becedb5dbc1ac033f8053e63f5a8e4922f9b8d57c"
+        },
+        {
+          "file_id": "1czb7eCm8pVfQckmO0KEwyZa96twXF689",
+          "name": "vcso-ce-part-018.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "1b598200c1f9e2539771cf96260b8a3c04af1b8054d1432d1f9d41511de7a8cb"
+        },
+        {
+          "file_id": "1mwtnl1Z1AOIQinWpunotgiMcDnsaN91v",
+          "name": "vcso-ce-part-019.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "82854a0341761f7d17cac146b68005f5c79064a7b926e47626dc471b97a4e0c3"
+        },
+        {
+          "file_id": "17BA4zVvrWGJY3WTw4QpOqlwQMnNsUbY-",
+          "name": "vcso-ce-part-020.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "e063d85478b4ca0d8da382d55699d38f5a0c80baac3a8446bf5ffe25988bae81"
+        },
+        {
+          "file_id": "11r995fwCjVE7IustPyltSpp5uU0i-piD",
+          "name": "vcso-ce-part-021.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "a6300ca3859413acd997c91999d8f0f26e66470c24c55ef2c3d903b0db7e3877"
+        },
+        {
+          "file_id": "1PKNWvbHfVZB_MqMeMHdqtv2RzQ0N3DlD",
+          "name": "vcso-ce-part-022.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "b7874f1f6e0fef421f3bd846fde265ca7c5ec4231ef2b7e32c63ec9af9752a33"
+        },
+        {
+          "file_id": "1wvdESYpCjID_JlvlPvK9OxTN8_6roJfG",
+          "name": "vcso-ce-part-023.zip",
+          "bytes": 94372016,
+          "wrapper_sha256": "31f68e89b37c878fc80128bd82315f8403a9fd6daf0f9ac3351d46de1a7c39bd"
+        },
+        {
+          "file_id": "1SZlxuE5S6EIbSFapbq0zyIv3vdp7zW3V",
+          "name": "vcso-ce-part-024.zip",
+          "bytes": 37114155,
+          "wrapper_sha256": "c4a51c6acdcb9c83db9257953918c19b98aa8321ca219ee469aa8ef6132b7f83"
+        }
+      ],
+      "manifest": {
+        "file_id": "1XywhXrwjA9GYXAt58fpFEXCXfXqUXyTe",
+        "name": "vcso-ce-manifest-e6ab.zip",
+        "bytes": 5039,
+        "wrapper_sha256": "b2aabb21902edbd72ebab2fc44e8cc2859fa7e04d2938dbd864b0a53543983f0"
+      }
+    },
+    "nam": {
+      "status": "DURABLE",
+      "artifact_sha256": "4f80428ed7ea94f190a4885b10113cf4d737766afd0b2791f6b45bdabc35bc22",
+      "plugin_sha256": "9096a4480621733a6a18c5f1af5edcd7f4d1188a5d7b1327d2b6406dddb1e692",
+      "drive_objects": [
+        {
+          "file_id": "18StyZCPxE_jwiDAF1Cd0BE2ciZ-URfzc",
+          "name": "astra-nam-gm2-linux.zip",
+          "bytes": 64144293,
+          "wrapper_sha256": "4f80428ed7ea94f190a4885b10113cf4d737766afd0b2791f6b45bdabc35bc22"
+        }
+      ],
+      "inner_tar_sha256": "66fe16f1a1161ae8230edff38cee6c5fc4fb1d1e65e87aebb9bcf91c48424f17"
+    },
+    "obsidian": {
+      "status": "DURABLE",
+      "model_sha256": "8d5d62626945e079a34a09e91d6ddef575beaea3bc17efdb4dee4afed9be81c7",
+      "drive_objects": [
+        {
+          "file_id": "1HxHoT3AnhzSCAC_jFJqZbG9Cwqda6ZUJ",
+          "name": "Obsidian.nam",
+          "bytes": 296243
+        }
+      ]
+    }
+  },
+  "admission": {
+    "allowed_status": "DURABLE",
+    "require_all_assets_durable": true,
+    "cold_restore_required": true,
+    "live_reaper_required": true,
+    "virtual_apollo_non_silent_required": true,
+    "merge_allowed_only_after_owner_approval": true
+  },
+  "evidence": {
+    "recovery_bridge_run_id": 35927801811,
+    "recovery_bridge_head": "b383cc7af4ffddd674356fb0a0b4c38e86696697",
+    "black_and_blue_stream_reconstruction": "PASS_DETERMINISTIC",
+    "vsco_stream_reconstruction": "PASS",
+    "black_and_blue_audio_files": 2208,
+    "black_and_blue_sfz_files": 64,
+    "black_and_blue_dark_black_sha256": "98ce9c4a206a4807c934286e663dafaf6d7d89f4b7a98a22cc5d251c1b808699",
+    "vsco_wav_files": 3168,
+    "vsco_sfz_files": 75,
+    "recovery_bridge_result": "PASS_ALL_4_JOBS"
+  }
+}

@@ -14,11 +14,13 @@
     "display_geometry": "2560x1440x24",
     "audio_backend": "ALSA",
     "sample_rate_hz": 48000,
-    "input_device": "apollo_spdif_capture",
-    "output_device": "apollo_spdif_playback"
+    "input_device": "apollo_spdif",
+    "output_device": "apollo_spdif",
+    "underlying_capture": "apollo_spdif_capture",
+    "underlying_playback": "apollo_spdif_playback"
   },
   "project": {
-    "path": "projects/ultra-realism/Ultra-Realism-seed16-g1-NAM-retained.RPP",
+    "path": "projects/Ultra-Realism/Ultra-Realism-seed16-g1-NAM-retained.RPP",
     "sha256": "bd6d031156df0ab024e0a624ca05d368859d652846447a547433bd4dea08a751",
     "original_sha256": "97fbe088a673649a72a7dfe467e9868e02aacc781b5354c67877652d98279056"
   },
@@ -33,13 +35,16 @@
     },
     "avldrums": {
       "plugin_path": "home/.lv2/avldrums.lv2/avldrums.so",
-      "plugin_sha256": "d095514e1a132fb95949a30b54091689af2af9549402cb3a013159918f60564d",
+      "plugin_sha256": "f995c3a4a359e523b78a8417e7e4a9085718659ee72050bc0d5606b21b100c8d",
       "black_pearl_path": "home/.lv2/avldrums.lv2/Black_Pearl_4_LV2.sf2",
       "black_pearl_sha256": "e0542ec19f2816ef4e0d00aeb087e7aa311e888d6f4805f971688bb267c6d405",
       "recovery": {
-        "directory": "packages/gm2-runtimes/avldrums",
-        "note": "Recovery cache must remain non-empty; active binary and Black Pearl hashes are authoritative."
-      }
+        "path": "packages/gm2-runtimes/avldrums/avldrums-exact-9389f16.tar.gz",
+        "sha256": "1c63a981e2f87c9b0ffe8bbfe64af9a44e6e5caed58ffd4b64cf6358e1cae0c6",
+        "build_policy": "normalized deterministic archive from pinned source/submodule; active binary/SF2 hashes independently pinned"
+      },
+      "source_commit": "9389f16f139410d9a55f9006976bd54cbd8b7806",
+      "robtk_commit": "c6c3ade30b1cffb12e4cd6eda5a46bf1c96cb318"
     },
     "black_and_blue": {
       "root": "instruments/Black-And-Blue-Basses-Upstream",
@@ -56,9 +61,11 @@
         "sha256": "98ce9c4a206a4807c934286e663dafaf6d7d89f4b7a98a22cc5d251c1b808699"
       },
       "recovery": {
-        "path": "/mnt/data/bab-restore-parts/black-and-blue-basses.tar",
-        "sha256": "36a7270acb08333e47fe13b5fbd2d6977a65eaae6e598d6e14c1a3c2110093d7"
-      }
+        "path": "packages/source-archives/black-and-blue-basses-v1.1.0.tar",
+        "sha256": "3cb100299cb8b2800fdb99a13747a8908c6b74c2f97b1d66653023db8f996d9f",
+        "build_policy": "normalized deterministic tar from pinned source commit"
+      },
+      "source_commit": "6e7d674cdb41be7a54dbccb15472401ad01099b9"
     },
     "metal_gtx": {
       "root": "instruments/Metal-GTX",
@@ -67,8 +74,12 @@
         "bytes": 1324342318
       },
       "sfz": {
-        "files": 578,
-        "bytes": 5467084
+        "files": 579,
+        "bytes": 5478452,
+        "upstream_files": 578,
+        "upstream_bytes": 5467084,
+        "approved_clean_di_derivative_files": 1,
+        "approved_clean_di_derivative_bytes": 11368
       },
       "stock_xtracking": {
         "path": "instruments/Metal-GTX/Programs/03-METAL-GTX XTracking.sfz",
@@ -78,7 +89,15 @@
         "path": "instruments/Metal-GTX/Programs/03-METAL-GTX XTracking Clean DI.sfz",
         "sha256": "a5cb148de4600a16a8b5ebca7ddfae325a29f49874985f3a7d044e6a49a10d27",
         "magnet_cc48": 0,
-        "mute_time_cc22": 51
+        "mute_time_cc22": 51,
+        "recovery_derivation": {
+          "source": "stock_xtracking",
+          "source_sha256": "4072694674f583befec92f64a52b1cbaf08a00c73913220f95cd2d30429596c7",
+          "exact_replacement_from": "set_cc48=64",
+          "exact_replacement_to": "set_cc48=0",
+          "exact_replacement_count": 1,
+          "derived_sha256": "a5cb148de4600a16a8b5ebca7ddfae325a29f49874985f3a7d044e6a49a10d27"
+        }
       },
       "authoritative_source_sha256": "c5756f95fcc30ac680f6034bb2e54c636e67fd0b53b1d40babada7257e782e73",
       "recovery_bridge": {
