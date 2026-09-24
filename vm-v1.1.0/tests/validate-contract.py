@@ -134,6 +134,14 @@ require(
 require("projects/" not in rehydrate_text and "/projects/" not in rehydrate_text,
         "offline rehydrator does not mutate REAPER project files")
 
+installer_text = (BASE / "bin/install-v1.1.0.sh").read_text()
+require("durable-recovery-v1.1.0.json" in installer_text,
+        "installed vm layer retains durable custody manifest")
+require("verify-durable-recovery-v1.1.0.py" in installer_text,
+        "installed vm layer retains durable verifier")
+require("rehydrate-offline-v1.1.0.py" in installer_text,
+        "installed vm layer retains explicit offline rehydrator")
+
 hashes = []
 def collect(v):
     if isinstance(v, dict):
