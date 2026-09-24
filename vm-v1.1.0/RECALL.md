@@ -28,6 +28,7 @@ Audio boundary: ALSA / `apollo_spdif_capture` + `apollo_spdif_playback` / 48 kHz
 - Black & Blue, Metal GTX, AVLDrums, sforzando, VSCO 2 CE, NAM, the Obsidian guitar model, and the 23-track color/routing contract must verify before promotion.
 - A missing or changed asset causes FAIL, not self-healing.
 - The three Metal GTX clean-DI sampler instances remain independent.
+- Metal GTX Clean DI recovery is deterministic and hash-pinned: stock XTracking -> exactly one `set_cc48=64` to `set_cc48=0` replacement -> approved Clean-DI SHA-256. A present mismatched derivative fails closed.
 - The three guitar Neural tracks use the verified Obsidian NAM state; Bass Neural remains owner-select until a separately verified bass model is approved.
 - Preserve the original Ultra Realism project/hash as authority; revisions are branches, not silent overwrites.
 - Never infer a PASS from serialized plugin state alone. Live REAPER instantiation plus Virtual Apollo audio is the final runtime gate.
