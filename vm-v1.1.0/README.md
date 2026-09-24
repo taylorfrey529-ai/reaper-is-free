@@ -90,3 +90,5 @@ python3 vm-v1.1.0/bin/rehydrate-offline-v1.1.0.py \
 The rehydrator first runs the full durable-custody verifier. It then constructs and validates a complete replacement payload without network access, package installation, project mutation, or model substitution. Existing runtime targets are moved into a timestamped `recovery-backups/vm-v1.1.0/` checkpoint before promotion, and a failed post-promotion validation rolls the old targets back.
 
 The ordinary startup gate never invokes this command automatically. After a successful explicit restore, run `install-v1.1.0.sh`, the full permanence gate, the in-REAPER regression action, and a fresh non-silent 48 kHz Virtual Apollo proof before calling the runtime live-certified.
+
+Candidate-branch CI compiles both offline recovery tools and applies the same no-download/no-package-install source policy before packaging the vm-v1.1.0 gate bundle.
