@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import importlib.util
+import json
 import math
 import os
 import pathlib
@@ -111,6 +112,54 @@ def test_missing_audio_label_rejected():
         print("PASS: incomplete eight-window audio set rejected")
 
 
+def test_session_audio_provenance_passes():
+    with tempfile.TemporaryDirectory(prefix="vm-v110-live-provenance-") as td:
+        session = pathlib.Path(td)
+        audio = session / "audio"
+        audio.mkdir()
+        paths = make_audio_set(audio)
+        started = time.time() - 2.0
+        for label, wav in paths.items():
+            sidecar = audio / (label + ".capture.json")
+            sidecar.write_text(json.dumps({
+                "label": label,
+                "device": "apollo_spdif_capture",
+                "format": "S32_LE",
+                "sample_rate_hz": 48000,
+                "channels": 2,
+                "wav_sha256": mod.sha256(wav),
+            }) + "\n")
+        entries = mod.session_audio_entries(session, started)
+        assert len(entries) == 8
+        result = mod.validate_audio_set(entries, started)
+        assert tuple(result) == mod.EXPECTED_AUDIO
+        print("PASS: session-local Virtual Apollo provenance admitted")
+
+
+def test_wrong_audio_device_provenance_rejected():
+    with tempfile.TemporaryDirectory(prefix="vm-v110-live-bad-device-") as td:
+        session = pathlib.Path(td)
+        audio = session / "audio"
+        audio.mkdir()
+        paths = make_audio_set(audio)
+        started = time.time() - 2.0
+        for label, wav in paths.items():
+            sidecar = audio / (label + ".capture.json")
+            sidecar.write_text(json.dumps({
+                "label": label,
+                "device": "not_apollo",
+                "format": "S32_LE",
+                "sample_rate_hz": 48000,
+                "channels": 2,
+                "wav_sha256": mod.sha256(wav),
+            }) + "\n")
+        expect_fail(
+            lambda: mod.session_audio_entries(session, started),
+            "provenance device is not apollo_spdif_capture",
+        )
+        print("PASS: non-Apollo audio provenance rejected")
+
+
 def test_stale_evidence_rejected():
     with tempfile.TemporaryDirectory(prefix="vm-v110-live-stale-") as td:
         p = pathlib.Path(td) / "report.txt"
@@ -159,6 +208,8 @@ def main():
     test_audio_label_set_and_pan_dominance()
     test_wrong_left_dominance_rejected()
     test_missing_audio_label_rejected()
+    test_session_audio_provenance_passes()
+    test_wrong_audio_device_provenance_rejected()
     test_stale_evidence_rejected()
     test_report_fail_entry_rejected()
     test_png_geometry_validation()
