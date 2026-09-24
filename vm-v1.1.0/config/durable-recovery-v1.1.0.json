@@ -230,7 +230,17 @@
           "name": "metal-gtx-drive-part-014.zip",
           "bytes": 22767585
         }
-      ]
+      ],
+      "clean_di_derivative": {
+        "source_runtime_path": "instruments/Metal-GTX/Programs/03-METAL-GTX XTracking.sfz",
+        "source_sha256": "4072694674f583befec92f64a52b1cbaf08a00c73913220f95cd2d30429596c7",
+        "exact_replacement_from": "set_cc48=64",
+        "exact_replacement_to": "set_cc48=0",
+        "exact_replacement_count": 1,
+        "derived_runtime_path": "instruments/Metal-GTX/Programs/03-METAL-GTX XTracking Clean DI.sfz",
+        "derived_sha256": "a5cb148de4600a16a8b5ebca7ddfae325a29f49874985f3a7d044e6a49a10d27",
+        "policy": "derive only during explicit offline recovery when absent; reject a present mismatched derivative"
+      }
     },
     "vsco_2_ce": {
       "status": "DURABLE",
