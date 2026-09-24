@@ -33,6 +33,7 @@ Audio boundary: ALSA / `apollo_spdif_capture` + `apollo_spdif_playback` / 48 kHz
 - Preserve the original Ultra Realism project/hash as authority; revisions are branches, not silent overwrites.
 - Never infer a PASS from serialized plugin state alone. Live REAPER instantiation plus Virtual Apollo audio is the final runtime gate.
 - The live certification verifier rejects evidence older than the current certification session, requires the full 78/0 in-REAPER report, all eight approved audition windows, rhythm L/R dominance, a real 2560x1440 screenshot, and a finalized 2560x1440 recording. Bass Neural is not an audition window until the owner approves a bass NAM model.
+- Every audition WAV must be created by the verifier's `capture` command directly from `apollo_spdif_capture` at S32_LE / 48 kHz / stereo and retain a matching SHA-256 provenance sidecar; arbitrary external WAVs are not final-certification evidence.
 
 ## Current branch status
 
