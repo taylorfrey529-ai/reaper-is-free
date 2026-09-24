@@ -159,11 +159,18 @@ require("run_live_gate(root, args.display_num" in live_cert_text,
         "live certifier requires live process/display gate")
 require("run_permanence(root)" in live_cert_text,
         "live certifier reruns full permanence gate")
-require("validate_audio_set(args.audio, started)" in live_cert_text,
-        "live certifier requires fresh eight-window Virtual Apollo evidence")
+require("session_audio_entries(session, started)" in live_cert_text,
+        "live certifier requires session-local provenanced Virtual Apollo evidence")
 require("validate_screenshot(" in live_cert_text
         and "validate_recording(" in live_cert_text,
         "live certifier requires screenshot and finalized recording evidence")
+require('"apollo_spdif_capture"' in live_cert_text
+        and "arecord" in live_cert_text
+        and "S32_LE" in live_cert_text,
+        "live certifier captures directly from pinned Virtual Apollo ALSA boundary")
+require(".capture.json" in live_cert_text
+        and "wav_sha256" in live_cert_text,
+        "live certifier binds audio capture provenance to WAV hashes")
 require("owner_release_gate" in live_cert_text and "owner promotion required" in live_cert_text,
         "live certifier preserves owner promotion gate")
 require(
