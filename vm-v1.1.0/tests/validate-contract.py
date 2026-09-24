@@ -137,6 +137,40 @@ require((BASE / "bin/verify-durable-recovery-v1.1.0.py").is_file(), "offline dur
 rehydrator = BASE / "bin/rehydrate-offline-v1.1.0.py"
 require(rehydrator.is_file(), "offline durable rehydrator present")
 require((BASE / "tests/test-rehydrator.py").is_file(), "offline rehydrator regression tests present")
+live_certifier = BASE / "bin/verify-live-certification-v1.1.0.py"
+require(live_certifier.is_file(), "live certification verifier present")
+require((BASE / "tests/test-live-certification.py").is_file(), "live certification regression tests present")
+live_cert_text = live_certifier.read_text()
+require('EXPECTED_AUDIO = (' in live_cert_text
+        and '"drums"' in live_cert_text
+        and '"bass-di"' in live_cert_text
+        and '"rhythm-l-neural"' in live_cert_text
+        and '"rhythm-r-neural"' in live_cert_text
+        and '"lead-neural"' in live_cert_text
+        and '"strings-high"' in live_cert_text
+        and '"strings-low"' in live_cert_text
+        and '"horns"' in live_cert_text,
+        "live certifier pins exact eight audition windows")
+require("Bass Neural" not in live_cert_text,
+        "live certifier does not invent a Bass Neural audio model/window")
+require("parse_summary_report(regression, 78" in live_cert_text,
+        "live certifier requires 78-pass REAPER regression report")
+require("run_live_gate(root, args.display_num" in live_cert_text,
+        "live certifier requires live process/display gate")
+require("run_permanence(root)" in live_cert_text,
+        "live certifier reruns full permanence gate")
+require("validate_audio_set(args.audio, started)" in live_cert_text,
+        "live certifier requires fresh eight-window Virtual Apollo evidence")
+require("validate_screenshot(" in live_cert_text
+        and "validate_recording(" in live_cert_text,
+        "live certifier requires screenshot and finalized recording evidence")
+require("owner_release_gate" in live_cert_text and "owner promotion required" in live_cert_text,
+        "live certifier preserves owner promotion gate")
+require(
+    re.search(r"\b(requests|urllib3|httpx|aiohttp|ftplib)\b|\burlopen\b|\bsocket\.(create_connection|socket)\b|\b(curl|wget)\b|git\s+clone|apt(-get)?\s+install|dnf\s+install|yum\s+install",
+              live_cert_text, re.I) is None,
+    "live certifier contains no network/downloader/package-install path",
+)
 rehydrate_text = rehydrator.read_text()
 require('ap.add_argument("--apply", action="store_true"' in rehydrate_text,
         "offline rehydrator requires explicit --apply")
@@ -169,6 +203,8 @@ require("verify-durable-recovery-v1.1.0.py" in installer_text,
         "installed vm layer retains durable verifier")
 require("rehydrate-offline-v1.1.0.py" in installer_text,
         "installed vm layer retains explicit offline rehydrator")
+require("verify-live-certification-v1.1.0.py" in installer_text,
+        "installed vm layer retains live certification verifier")
 
 hashes = []
 def collect(v):
