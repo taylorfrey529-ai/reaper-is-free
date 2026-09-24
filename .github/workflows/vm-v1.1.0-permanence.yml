@@ -47,6 +47,8 @@ jobs:
         run: |
           python3 -m py_compile vm-v1.1.0/bin/verify-durable-recovery-v1.1.0.py
           python3 -m py_compile vm-v1.1.0/bin/rehydrate-offline-v1.1.0.py
+      - name: Run offline rehydrator regression tests
+        run: python3 vm-v1.1.0/tests/test-rehydrator.py
       - name: Package vm-v1.1.0 source
         run: tar -czf vm-v1.1.0-source.tar.gz vm-v1.1.0
       - name: Upload vm-v1.1.0 source artifact
