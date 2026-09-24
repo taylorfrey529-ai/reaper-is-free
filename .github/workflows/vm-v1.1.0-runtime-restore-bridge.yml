@@ -2,9 +2,12 @@ name: VM v1.1.0 Runtime Restore Bridge
 on:
   push:
     branches: [vm-v1.1.0-permanence, candidate/vm-v1.1.0-certified-hardening]
-    paths: [.github/workflows/vm-v1.1.0-runtime-restore-bridge.yml]
+    paths:
+      - 'vm-v1.1.0/**'
+      - '.github/workflows/vm-v1.1.0-runtime-restore-bridge.yml'
   pull_request:
     paths:
+      - 'vm-v1.1.0/**'
       - '.github/workflows/vm-v1.1.0-runtime-restore-bridge.yml'
   workflow_dispatch:
 permissions:
