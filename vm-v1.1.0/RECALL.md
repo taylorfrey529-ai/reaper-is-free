@@ -38,6 +38,7 @@ Audio boundary: ALSA / `apollo_spdif_capture` + `apollo_spdif_playback` / 48 kHz
 ## Current branch status
 
 Source hardening is implemented. A fresh live `:88` re-application/cold-cycle remains the runtime certification gate.
+Candidate `vm-v1.1.0/**` changes must produce raw-head push evidence for both the permanence contract and Runtime Restore Bridge. Pull-request merge-ref runs are separate merge-compatibility evidence and must not be mislabeled as exact-head certification.
 
 ## Durable recovery authority
 
