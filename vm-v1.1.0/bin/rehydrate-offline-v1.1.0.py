@@ -325,21 +325,59 @@ def stage_metal(staging, durable, permanence, payload, scratch):
     extract.mkdir()
     with tarfile.open(archive, mode="r:gz") as tf:
         safe_tar_extract(tf, extract)
-    clean_hits = list(extract.rglob("03-METAL-GTX XTracking Clean DI.sfz"))
-    if len(clean_hits) != 1:
-        fail("Metal GTX Clean DI derivative is not present exactly once in durable archive")
+
+    stock_hits = list(extract.rglob("03-METAL-GTX XTracking.sfz"))
+    if len(stock_hits) != 1:
+        fail("Metal GTX stock XTracking selection failed")
+    stock = stock_hits[0]
+    if sha256(stock) != pm["stock_xtracking"]["sha256"]:
+        fail("Metal GTX stock XTracking hash mismatch")
 
     def match(candidate):
         audio_count, audio_bytes = count_inventory(candidate, {".wav", ".flac", ".aif", ".aiff"})
         sfz_count, sfz_bytes = count_inventory(candidate, {".sfz"})
+        sfz_ok = (
+            (sfz_count == pm["sfz"]["files"] and sfz_bytes == pm["sfz"]["bytes"])
+            or (
+                sfz_count == pm["sfz"]["upstream_files"]
+                and sfz_bytes == pm["sfz"]["upstream_bytes"]
+            )
+        )
         return (
             audio_count == pm["samples"]["files"]
             and audio_bytes == pm["samples"]["bytes"]
-            and sfz_count == pm["sfz"]["files"]
-            and sfz_bytes == pm["sfz"]["bytes"]
+            and sfz_ok
         )
 
-    root = find_ancestor_matching(clean_hits[0].parent, extract, match)
+    root = find_ancestor_matching(stock.parent, extract, match)
+    clean = root / "Programs" / "03-METAL-GTX XTracking Clean DI.sfz"
+    if clean.is_file():
+        if sha256(clean) != pm["clean_di_xtracking"]["sha256"]:
+            fail("Metal GTX carried Clean DI derivative hash mismatch")
+    else:
+        stock_bytes = stock.read_bytes()
+        source_token = b"set_cc48=64"
+        target_token = b"set_cc48=0"
+        if stock_bytes.count(source_token) != 1:
+            fail("Metal GTX stock XTracking does not contain exactly one approved Magnet default")
+        derived = stock_bytes.replace(source_token, target_token, 1)
+        if digest_bytes(derived) != pm["clean_di_xtracking"]["sha256"]:
+            fail("Metal GTX deterministic Clean DI derivation hash mismatch")
+        clean.parent.mkdir(parents=True, exist_ok=True)
+        clean.write_bytes(derived)
+        print("PASS: Metal GTX Clean DI derivative reconstructed from pinned stock XTracking")
+
+    final_audio_count, final_audio_bytes = count_inventory(root, {".wav", ".flac", ".aif", ".aiff"})
+    final_sfz_count, final_sfz_bytes = count_inventory(root, {".sfz"})
+    if (
+        final_audio_count != pm["samples"]["files"]
+        or final_audio_bytes != pm["samples"]["bytes"]
+        or final_sfz_count != pm["sfz"]["files"]
+        or final_sfz_bytes != pm["sfz"]["bytes"]
+        or sha256(clean) != pm["clean_di_xtracking"]["sha256"]
+    ):
+        fail("Metal GTX final recovered inventory mismatch")
+
     target = payload / "instruments/Metal-GTX"
     target.parent.mkdir(parents=True, exist_ok=True)
     shutil.move(str(root), str(target))
