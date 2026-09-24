@@ -75,3 +75,18 @@ python3 vm-v1.1.0/bin/verify-durable-recovery-v1.1.0.py --staging /path/to/stage
 ```
 
 The verifier performs no downloads, installs, repairs, or substitutions. It validates sforzando, AVL/Black Pearl, Black & Blue, Metal GTX, VSCO 2 CE, NAM, and Obsidian and reconstructs the chunked library digests fail-closed.
+
+## Explicit offline rehydration
+
+When the normal permanence gate fails because one or more pinned runtime assets are missing or changed, recovery remains a separate owner-invoked operation. Stop REAPER, stage the complete Drive custody set locally, then run:
+
+```bash
+python3 vm-v1.1.0/bin/rehydrate-offline-v1.1.0.py \
+  --staging /path/to/staged-drive-files \
+  --root /mnt/data/ubuntu-desktop-workspace \
+  --apply
+```
+
+The rehydrator first runs the full durable-custody verifier. It then constructs and validates a complete replacement payload without network access, package installation, project mutation, or model substitution. Existing runtime targets are moved into a timestamped `recovery-backups/vm-v1.1.0/` checkpoint before promotion, and a failed post-promotion validation rolls the old targets back.
+
+The ordinary startup gate never invokes this command automatically. After a successful explicit restore, run `install-v1.1.0.sh`, the full permanence gate, the in-REAPER regression action, and a fresh non-silent 48 kHz Virtual Apollo proof before calling the runtime live-certified.
