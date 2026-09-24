@@ -89,7 +89,15 @@
         "path": "instruments/Metal-GTX/Programs/03-METAL-GTX XTracking Clean DI.sfz",
         "sha256": "a5cb148de4600a16a8b5ebca7ddfae325a29f49874985f3a7d044e6a49a10d27",
         "magnet_cc48": 0,
-        "mute_time_cc22": 51
+        "mute_time_cc22": 51,
+        "recovery_derivation": {
+          "source": "stock_xtracking",
+          "source_sha256": "4072694674f583befec92f64a52b1cbaf08a00c73913220f95cd2d30429596c7",
+          "exact_replacement_from": "set_cc48=64",
+          "exact_replacement_to": "set_cc48=0",
+          "exact_replacement_count": 1,
+          "derived_sha256": "a5cb148de4600a16a8b5ebca7ddfae325a29f49874985f3a7d044e6a49a10d27"
+        }
       },
       "authoritative_source_sha256": "c5756f95fcc30ac680f6034bb2e54c636e67fd0b53b1d40babada7257e782e73",
       "recovery_bridge": {
