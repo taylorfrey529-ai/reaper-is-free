@@ -136,6 +136,7 @@ require((BASE / "bin/verify-durable-recovery-v1.1.0.py").is_file(), "offline dur
 
 rehydrator = BASE / "bin/rehydrate-offline-v1.1.0.py"
 require(rehydrator.is_file(), "offline durable rehydrator present")
+require((BASE / "tests/test-rehydrator.py").is_file(), "offline rehydrator regression tests present")
 rehydrate_text = rehydrator.read_text()
 require('ap.add_argument("--apply", action="store_true"' in rehydrate_text,
         "offline rehydrator requires explicit --apply")
