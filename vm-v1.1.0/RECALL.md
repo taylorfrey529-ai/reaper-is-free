@@ -3,7 +3,8 @@
 ## Authority
 
 Repository: `taylorfrey529-ai/reaper-is-free`  
-Branch: `vm-v1.1.0-permanence`  
+Candidate branch: `candidate/vm-v1.1.0-certified-hardening`  
+Historical certified source branch: `vm-v1.1.0-permanence`  
 Base continuity: `linux-ububtu-vm-workspace`  
 REAPER: 7.79 Linux x86_64  
 Canonical display: `:88` at 2560x1440x24  
@@ -12,9 +13,9 @@ Audio boundary: ALSA / `apollo_spdif_capture` + `apollo_spdif_playback` / 48 kHz
 ## Restore order
 
 1. Restore the existing VM/workspace from admitted backups. Do not recreate instrument libraries from guesses.
-2. Restore the verified local instrument payloads and NAM runtime/model.
-3. Check out this branch.
-4. Run `bash vm-v1.1.0/bin/install-v1.1.0.sh`.
+2. Stage the complete durable Drive custody set locally and run the offline verifier.
+3. If pinned runtime assets are missing or changed, stop REAPER and run `rehydrate-offline-v1.1.0.py --apply`; never auto-heal on ordinary startup.
+4. Check out the admitted source revision and run `bash vm-v1.1.0/bin/install-v1.1.0.sh`.
 5. Enter only through the v1.1.0 fail-closed launcher.
 6. After the retained Ultra Realism project opens, run `Sunwell_VM_v1_1_0_Regression.lua`.
 7. Require a new non-silent 48 kHz Virtual Apollo proof before calling the runtime live-certified.
@@ -23,6 +24,7 @@ Audio boundary: ALSA / `apollo_spdif_capture` + `apollo_spdif_playback` / 48 kHz
 ## Non-regression rules
 
 - No automatic download, clone, package install, reinstallation, repair, or model substitution is allowed in the gate.
+- Offline rehydration is a separate explicit owner-invoked cold operation. It must verify the entire durable set first, construct a complete replacement payload before promotion, preserve displaced runtime bytes under `recovery-backups/vm-v1.1.0/`, and roll back on failed post-install verification.
 - Black & Blue, Metal GTX, AVLDrums, sforzando, VSCO 2 CE, NAM, the Obsidian guitar model, and the 23-track color/routing contract must verify before promotion.
 - A missing or changed asset causes FAIL, not self-healing.
 - The three Metal GTX clean-DI sampler instances remain independent.
@@ -38,6 +40,7 @@ Source hardening is implemented. A fresh live `:88` re-application/cold-cycle re
 
 - Custody manifest: `vm-v1.1.0/config/durable-recovery-v1.1.0.json`
 - Offline verifier: `vm-v1.1.0/bin/verify-durable-recovery-v1.1.0.py`
+- Explicit offline rehydrator: `vm-v1.1.0/bin/rehydrate-offline-v1.1.0.py`
 - Durable Drive folder: `VM v1.1.0 Durable Recovery - 2026-09-23`
 - The verifier must PASS after staging Drive bytes before a cold runtime restore is admitted.
 - GitHub Actions artifacts are staging evidence only and are never the permanence authority.
