@@ -18,7 +18,7 @@ Audio boundary: ALSA / `apollo_spdif_capture` + `apollo_spdif_playback` / 48 kHz
 4. Check out the admitted source revision and run `bash vm-v1.1.0/bin/install-v1.1.0.sh`.
 5. Enter only through the v1.1.0 fail-closed launcher.
 6. After the retained Ultra Realism project opens, run `Sunwell_VM_v1_1_0_Regression.lua`.
-7. Require a new non-silent 48 kHz Virtual Apollo proof before calling the runtime live-certified.
+7. Run `verify-live-certification-v1.1.0.py` against the fresh 78/0 REAPER report, genuine 2560x1440 screenshot/recording, and the exact eight non-silent 48 kHz Virtual Apollo audition windows: drums, bass DI, L/R rhythm Neural, lead Neural, Strings High, Strings Low, Horns.
 8. Keep Golden Master/release promotion owner-gated.
 
 ## Non-regression rules
@@ -32,6 +32,7 @@ Audio boundary: ALSA / `apollo_spdif_capture` + `apollo_spdif_playback` / 48 kHz
 - The three guitar Neural tracks use the verified Obsidian NAM state; Bass Neural remains owner-select until a separately verified bass model is approved.
 - Preserve the original Ultra Realism project/hash as authority; revisions are branches, not silent overwrites.
 - Never infer a PASS from serialized plugin state alone. Live REAPER instantiation plus Virtual Apollo audio is the final runtime gate.
+- The live certification verifier rejects evidence older than the current certification session, requires the full 78/0 in-REAPER report, all eight approved audition windows, rhythm L/R dominance, a real 2560x1440 screenshot, and a finalized 2560x1440 recording. Bass Neural is not an audition window until the owner approves a bass NAM model.
 
 ## Current branch status
 
@@ -42,6 +43,7 @@ Source hardening is implemented. A fresh live `:88` re-application/cold-cycle re
 - Custody manifest: `vm-v1.1.0/config/durable-recovery-v1.1.0.json`
 - Offline verifier: `vm-v1.1.0/bin/verify-durable-recovery-v1.1.0.py`
 - Explicit offline rehydrator: `vm-v1.1.0/bin/rehydrate-offline-v1.1.0.py`
+- Fail-closed live certification verifier: `vm-v1.1.0/bin/verify-live-certification-v1.1.0.py`
 - Durable Drive folder: `VM v1.1.0 Durable Recovery - 2026-09-23`
 - The verifier must PASS after staging Drive bytes before a cold runtime restore is admitted.
 - GitHub Actions artifacts are staging evidence only and are never the permanence authority.
