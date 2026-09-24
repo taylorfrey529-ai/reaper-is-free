@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - vm-v1.1.0-permanence
+      - candidate/vm-v1.1.0-certified-hardening
     paths:
       - 'vm-v1.1.0/**'
       - '.github/workflows/vm-v1.1.0-permanence.yml'
