@@ -87,6 +87,16 @@ The final verifier reruns the full permanence gate and live process/display gate
 
 The two rhythm Neural captures must also prove at least 6 dB dominance on their intended left/right channels. Bass Neural is deliberately excluded from the audition set because its model remains owner-select/unassigned; its project role and NAM receive topology remain covered by the REAPER regression gate.
 
+Capture each audition directly from the pinned Virtual Apollo ALSA boundary while the corresponding REAPER audition is playing:
+
+```bash
+python3 vm-v1.1.0/bin/verify-live-certification-v1.1.0.py capture \
+  --session /mnt/data/vm-v1.1.0-live-cert \
+  --label drums
+```
+
+Repeat with each approved label. The capture command uses `arecord` against `apollo_spdif_capture` at S32_LE / 48 kHz / stereo, rejects silent output, refuses to overwrite existing certification evidence, and writes a `*.capture.json` sidecar containing the WAV SHA-256 and boundary provenance. Final verification reads only those session-local provenanced captures; arbitrary external WAV paths are not admitted.
+
 Until the recorder is stopped, the verifier may be run with `--allow-recording-pending` to prove all other live gates without issuing a final PASS. A complete PASS requires the finalized recording path and rejects stale reports/captures from before the certification session.
 
 
