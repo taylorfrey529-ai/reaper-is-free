@@ -10,6 +10,7 @@ This repository is the recovery and continuity authority for the custom REAPER 7
 - [`linux-ububtu-vm-workspace/RECALL.md`](linux-ububtu-vm-workspace/RECALL.md) — live Linux/X11/Openbox/REAPER boot card.
 - [`linux-ububtu-vm-workspace/BOOT-HANDOFF-CURRENT.md`](linux-ububtu-vm-workspace/BOOT-HANDOFF-CURRENT.md) — current detailed boot authority.
 - [`linux-ububtu-vm-workspace/SNAPSHOT-INTEGRITY.md`](linux-ububtu-vm-workspace/SNAPSHOT-INTEGRITY.md) — admitted, historical, reconstructed, and rejected snapshot identities.
+- [`linux-ububtu-vm-workspace/OVERLAY-MANIFEST.md`](linux-ububtu-vm-workspace/OVERLAY-MANIFEST.md) — current display/depth overlay applied during restore.
 - [`audio/SETUP.md`](audio/SETUP.md) — audio workspace setup details.
 
 ## Included
@@ -31,6 +32,8 @@ The drum alignment workflow keeps the stereo overheads fixed and non-destructive
 REAPER: 7.79 Linux x86_64
 Desktop: X11 / Openbox
 Display: :88
+Geometry: 2560x1440x24
+Desktop depth: 24 transparent RGBA planes, one-pixel steps
 Audio backend: ALSA (linux_audio_mode=1)
 Interface: apollo_spdif
 S/PDIF: stereo 2-in / 2-out
