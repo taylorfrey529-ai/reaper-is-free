@@ -200,6 +200,87 @@ def validate_audio_set(entries: list[str], started_at_epoch: float) -> dict:
     return result
 
 
+def session_audio_entries(session: pathlib.Path, started_at_epoch: float) -> list[str]:
+    audio_dir = session / "audio"
+    entries = []
+    for label in EXPECTED_AUDIO:
+        wav = audio_dir / (label + ".wav")
+        sidecar = audio_dir / (label + ".capture.json")
+        require_fresh(wav, started_at_epoch, f"audio capture {label}")
+        require_fresh(sidecar, started_at_epoch, f"audio provenance {label}")
+        meta = json.loads(sidecar.read_text())
+        if meta.get("label") != label:
+            fail(f"{label}: provenance label mismatch")
+        if meta.get("device") != "apollo_spdif_capture":
+            fail(f"{label}: provenance device is not apollo_spdif_capture")
+        if meta.get("format") != "S32_LE" or meta.get("sample_rate_hz") != 48000 or meta.get("channels") != 2:
+            fail(f"{label}: provenance PCM contract mismatch")
+        if meta.get("wav_sha256") != sha256(wav):
+            fail(f"{label}: provenance WAV hash mismatch")
+        entries.append(f"{label}={wav}")
+    return entries
+
+
+def capture_audio(args) -> int:
+    session = args.session.resolve()
+    data = json.loads(require_file(session / "session.json", "session manifest").read_text())
+    if data.get("version") != "vm-v1.1.0":
+        fail("session manifest version mismatch")
+    started = float(data["started_at_epoch"])
+    config = load_config(args.config)
+    expected_device = config["runtime"]["underlying_capture"]
+    if args.device != expected_device or args.device != "apollo_spdif_capture":
+        fail(f"capture device must be pinned Virtual Apollo boundary {expected_device}")
+    if args.label not in EXPECTED_AUDIO:
+        fail("unapproved audio label: " + args.label)
+    if args.seconds < 1 or args.seconds > 30:
+        fail("capture duration must be between 1 and 30 seconds")
+
+    audio_dir = session / "audio"
+    audio_dir.mkdir(parents=True, exist_ok=True)
+    wav = audio_dir / (args.label + ".wav")
+    sidecar = audio_dir / (args.label + ".capture.json")
+    if wav.exists() or sidecar.exists():
+        fail(f"capture already exists for label {args.label}; do not overwrite certification evidence")
+
+    arecord = shutil.which("arecord")
+    if not arecord:
+        fail("arecord unavailable for Virtual Apollo boundary capture")
+    cmd = [
+        arecord, "-q", "-D", args.device, "-f", "S32_LE",
+        "-r", "48000", "-c", "2", "-d", str(args.seconds), str(wav),
+    ]
+    captured_at = time.time()
+    proc = subprocess.run(cmd, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False)
+    if proc.returncode != 0:
+        fail("Virtual Apollo arecord capture failed: " + proc.stderr[-4000:].strip())
+    require_fresh(wav, max(started, captured_at - 2.0), f"audio capture {args.label}")
+    analysis = analyze_wav(wav)
+    meta = {
+        "schema_version": 1,
+        "version": "vm-v1.1.0",
+        "label": args.label,
+        "device": args.device,
+        "format": "S32_LE",
+        "sample_rate_hz": 48000,
+        "channels": 2,
+        "seconds_requested": args.seconds,
+        "captured_at_epoch": captured_at,
+        "captured_at_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(captured_at)),
+        "wav_path": str(wav),
+        "wav_sha256": analysis["sha256"],
+        "analysis": analysis,
+        "command": cmd,
+        "policy": "direct Virtual Apollo ALSA capture; no normalization or processing",
+    }
+    sidecar.write_text(json.dumps(meta, indent=2) + "\n")
+    print("VIRTUAL APOLLO CAPTURE: PASS")
+    print("label=" + args.label)
+    print("wav=" + str(wav))
+    print("provenance=" + str(sidecar))
+    return 0
+
+
 def png_geometry(path: pathlib.Path) -> tuple[int, int]:
     require_file(path, "final screenshot")
     with path.open("rb") as f:
@@ -376,7 +457,7 @@ def verify(args) -> int:
     require_fresh(regression, started, "REAPER regression")
     result["reaper_regression"] = parse_summary_report(regression, 78, "REAPER regression")
 
-    result["audio"] = validate_audio_set(args.audio, started)
+    result["audio"] = validate_audio_set(session_audio_entries(session, started), started)
     screenshot = pathlib.Path(args.screenshot).resolve()
     result["screenshot"] = validate_screenshot(screenshot, started)
 
@@ -409,12 +490,19 @@ def build_parser():
     b.add_argument("--source-head", required=True)
     b.set_defaults(func=begin)
 
+    a = sub.add_parser("capture")
+    a.add_argument("--session", type=pathlib.Path, required=True)
+    a.add_argument("--config", type=pathlib.Path, default=DEFAULT_CONFIG)
+    a.add_argument("--label", required=True, choices=EXPECTED_AUDIO)
+    a.add_argument("--seconds", type=int, default=3)
+    a.add_argument("--device", default="apollo_spdif_capture")
+    a.set_defaults(func=capture_audio)
+
     v = sub.add_parser("verify")
     v.add_argument("--session", type=pathlib.Path, required=True)
     v.add_argument("--config", type=pathlib.Path, default=DEFAULT_CONFIG)
     v.add_argument("--display-num", type=int, default=88)
     v.add_argument("--regression-report", required=True)
-    v.add_argument("--audio", action="append", default=[], metavar="LABEL=PATH")
     v.add_argument("--screenshot", required=True)
     v.add_argument("--recording")
     v.add_argument("--allow-recording-pending", action="store_true")
