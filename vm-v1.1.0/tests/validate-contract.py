@@ -86,6 +86,27 @@ require(da["metal_gtx"]["logical_archive_sha256"] == pa["metal_gtx"]["recovery_b
         "Metal GTX logical archive agrees across manifests")
 require(da["metal_gtx"]["authoritative_source_sha256"] == pa["metal_gtx"]["authoritative_source_sha256"],
         "Metal GTX source authority agrees across manifests")
+
+metal_derivation = pa["metal_gtx"]["clean_di_xtracking"]["recovery_derivation"]
+require(metal_derivation["source"] == "stock_xtracking",
+        "Metal GTX Clean DI recovery derives only from stock XTracking")
+require(metal_derivation["source_sha256"] == pa["metal_gtx"]["stock_xtracking"]["sha256"],
+        "Metal GTX Clean DI recovery source hash pinned")
+require(metal_derivation["exact_replacement_from"] == "set_cc48=64"
+        and metal_derivation["exact_replacement_to"] == "set_cc48=0"
+        and metal_derivation["exact_replacement_count"] == 1,
+        "Metal GTX Clean DI recovery transform pinned")
+require(metal_derivation["derived_sha256"] == pa["metal_gtx"]["clean_di_xtracking"]["sha256"],
+        "Metal GTX Clean DI recovery result hash pinned")
+durable_metal_derivation = da["metal_gtx"]["clean_di_derivative"]
+require(durable_metal_derivation["source_sha256"] == metal_derivation["source_sha256"],
+        "Metal GTX durable Clean DI source hash agrees")
+require(durable_metal_derivation["exact_replacement_from"] == metal_derivation["exact_replacement_from"]
+        and durable_metal_derivation["exact_replacement_to"] == metal_derivation["exact_replacement_to"]
+        and durable_metal_derivation["exact_replacement_count"] == metal_derivation["exact_replacement_count"],
+        "Metal GTX durable Clean DI transform agrees")
+require(durable_metal_derivation["derived_sha256"] == metal_derivation["derived_sha256"],
+        "Metal GTX durable Clean DI result hash agrees")
 require(da["vsco_2_ce"]["archive_sha256"] == pa["vsco_2_ce"]["archive_sha256"],
         "VSCO archive hash agrees across manifests")
 require(da["vsco_2_ce"]["sfz_files"] == pa["vsco_2_ce"]["sfz_files"],
@@ -126,6 +147,12 @@ require("rollback(root, backup, rels)" in rehydrate_text,
         "offline rehydrator retains rollback path")
 require("recovery-backups" in rehydrate_text,
         "offline rehydrator preserves displaced runtime bytes")
+
+require('source_token = b"set_cc48=64"' in rehydrate_text
+        and 'target_token = b"set_cc48=0"' in rehydrate_text,
+        "offline rehydrator implements the pinned Metal GTX Clean DI transform")
+require("Metal GTX carried Clean DI derivative hash mismatch" in rehydrate_text,
+        "offline rehydrator rejects a mismatched carried Clean DI derivative")
 require(
     re.search(r"\b(requests|urllib3|httpx|aiohttp|ftplib)\b|\burlopen\b|\bsocket\.(create_connection|socket)\b|\b(curl|wget)\b|git\s+clone|apt(-get)?\s+install|dnf\s+install|yum\s+install",
               rehydrate_text, re.I) is None,
