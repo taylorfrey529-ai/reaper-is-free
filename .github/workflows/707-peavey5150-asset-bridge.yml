@@ -1,0 +1,35 @@
+name: 707 Peavey 5150 Asset Bridge
+on:
+  push:
+    branches:
+      - temp/707-peavey5150-assets-20260924
+  workflow_dispatch:
+
+jobs:
+  bridge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch selected NAM and IR assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq git-lfs
+          git lfs install
+          export GIT_LFS_SKIP_SMUDGE=1
+          git clone --depth 1 https://github.com/jpfaria/OpenRig-plugins.git openrig
+          cd openrig
+          git lfs pull --include="plugins/source/nam/peavey_5150_a2/captures/block_letter_a2.nam,plugins/source/ir/mesa_os_4x12_v30/ir/sm57_1.wav,plugins/source/ir/marshall_1960_g12m25/ir/sm57_cap_edge_1in.wav"
+          mkdir -p ../bridge-assets
+          cp plugins/source/nam/peavey_5150_a2/captures/block_letter_a2.nam ../bridge-assets/Peavey-5150-Block-Letter-A2.nam
+          cp plugins/source/ir/mesa_os_4x12_v30/ir/sm57_1.wav ../bridge-assets/Mesa-OS-4x12-V30-SM57-1.wav
+          cp plugins/source/ir/marshall_1960_g12m25/ir/sm57_cap_edge_1in.wav ../bridge-assets/Marshall-1960A-G12M25-Greenback-SM57-CapEdge-1in.wav
+          cd ../bridge-assets
+          sha256sum * > SHA256SUMS.txt
+          wc -c * > SIZES.txt
+      - name: Upload bridge assets
+        uses: actions/upload-artifact@v4
+        with:
+          name: 707-peavey5150-cab-assets
+          path: bridge-assets/
+          retention-days: 1
