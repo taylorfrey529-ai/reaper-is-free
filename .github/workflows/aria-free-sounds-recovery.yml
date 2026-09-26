@@ -20,16 +20,14 @@ jobs:
           curl -L --fail --retry 3 --output WIN_ARIA_Engine_Free_Sounds_Vol1.exe "$URL"
           sha256sum WIN_ARIA_Engine_Free_Sounds_Vol1.exe | tee ARIA-INSTALLER-SHA256.txt
 
-      - name: Extract without installing
+      - name: Extract Inno Setup payload without installing
         shell: bash
         run: |
           set -euo pipefail
-          if ! command -v 7z >/dev/null 2>&1; then
-            sudo apt-get update -qq
-            sudo apt-get install -y p7zip-full
-          fi
+          sudo apt-get update -qq
+          sudo apt-get install -y innoextract
           mkdir aria-extracted
-          7z x -y -oaria-extracted WIN_ARIA_Engine_Free_Sounds_Vol1.exe
+          innoextract -d aria-extracted WIN_ARIA_Engine_Free_Sounds_Vol1.exe
           HIT="$(find aria-extracted -type f -name 'Jazz Piano Lite.sfz' -print -quit)"
           test -n "$HIT"
           printf '%s\n' "$HIT" | tee ARIA-JAZZ-PIANO-PATH.txt
