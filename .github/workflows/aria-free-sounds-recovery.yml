@@ -1,0 +1,51 @@
+name: ARIA Free Sounds Recovery Bridge
+
+on:
+  push:
+    branches:
+      - repair/aria-free-sounds-v1-20260926
+
+permissions:
+  contents: read
+
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch official Plogue Free Sounds Vol.1
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL='https://s3.amazonaws.com/sforzando/FreeSounds/WIN_ARIA_Engine_Free_Sounds_Vol1.exe'
+          curl -L --fail --retry 3 --output WIN_ARIA_Engine_Free_Sounds_Vol1.exe "$URL"
+          sha256sum WIN_ARIA_Engine_Free_Sounds_Vol1.exe | tee ARIA-INSTALLER-SHA256.txt
+
+      - name: Extract without installing
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v 7z >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo apt-get install -y p7zip-full
+          fi
+          mkdir aria-extracted
+          7z x -y -oaria-extracted WIN_ARIA_Engine_Free_Sounds_Vol1.exe
+          HIT="$(find aria-extracted -type f -name 'Jazz Piano Lite.sfz' -print -quit)"
+          test -n "$HIT"
+          printf '%s\n' "$HIT" | tee ARIA-JAZZ-PIANO-PATH.txt
+          find aria-extracted -type f | sort > ARIA-EXTRACTED-FILES.txt
+          tar -czf aria-engine-free-sounds-vol1-extracted.tar.gz aria-extracted ARIA-INSTALLER-SHA256.txt ARIA-JAZZ-PIANO-PATH.txt ARIA-EXTRACTED-FILES.txt
+          test "$(stat -c %s aria-engine-free-sounds-vol1-extracted.tar.gz)" -lt 250000000
+          sha256sum aria-engine-free-sounds-vol1-extracted.tar.gz | tee ARIA-EXTRACTED-TAR-SHA256.txt
+
+      - name: Upload recovery artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aria-engine-free-sounds-vol1
+          path: |
+            aria-engine-free-sounds-vol1-extracted.tar.gz
+            ARIA-EXTRACTED-TAR-SHA256.txt
+            ARIA-INSTALLER-SHA256.txt
+            ARIA-JAZZ-PIANO-PATH.txt
+          compression-level: 0
+          retention-days: 1
