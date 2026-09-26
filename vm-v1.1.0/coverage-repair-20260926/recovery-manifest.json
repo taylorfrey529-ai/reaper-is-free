@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "candidate": "vm-v1.1.0-coverage-repair-20260926",
+  "golden_master_promoted": false,
+  "workspace": "/mnt/data/ubuntu-desktop-workspace",
+  "canonical_project": {
+    "path": "projects/ASIO-Routing-Project/ASIO-Routing-Project.RPP",
+    "sha256": "2ea85263d6dc125bf7739264956a1ee1a8074c2b42f69b606b5e9d8b7e9771f1"
+  },
+  "runtime_identities": {
+    "sforzando_so": "6327bb446f4a0dba8730b29d6598bc039b17db55e895eee7c95f1fa8e439d5d0",
+    "avldrums_so": "f995c3a4a359e523b78a8417e7e4a9085718659ee72050bc0d5606b21b100c8d",
+    "nam_so": "9096a4480621733a6a18c5f1af5edcd7f4d1188a5d7b1327d2b6406dddb1e692",
+    "obsidian_nam": "8d5d62626945e079a34a09e91d6ddef575beaea3bc17efdb4dee4afed9be81c7",
+    "dark_black_sfz": "98ce9c4a206a4807c934286e663dafaf6d7d89f4b7a98a22cc5d251c1b808699",
+    "metal_gtx_stock_xtracking_sfz": "4072694674f583befec92f64a52b1cbaf08a00c73913220f95cd2d30429596c7",
+    "metal_gtx_clean_di_sfz": "a5cb148de4600a16a8b5ebca7ddfae325a29f49874985f3a7d044e6a49a10d27"
+  },
+  "logical_archives": {
+    "black_and_blue": {
+      "sha256": "3cb100299cb8b2800fdb99a13747a8908c6b74c2f97b1d66653023db8f996d9f",
+      "size": 1136209920
+    },
+    "metal_gtx": {
+      "sha256": "9abb7c5618830c32e565ed331d386d4539d5a7d45a4ce836f2f941cd2ff51336",
+      "size": 1343973169
+    },
+    "aria_free_sounds_vol1": {
+      "sha256": "a728885bd07f5befac34c910cec62b4bf0c028319423d7f0f48d367de6a5e3d3",
+      "size": 179557125
+    }
+  },
+  "drive": {
+    "coverage_repair_folder": "1ufmnT2xZd7OW37B-U50-SsOpS59yHIab",
+    "vm_v110_certification_folder": "1FSu6cqFHpEtKIU35KrkQOGWQAbWYZQA0",
+    "metal_gtx_durable_folder": "15BDyYyfg2OZ7dRvtpRtC2f_dvxAF85pP",
+    "aria_recovery_parts": {
+      "part_00": "1PlWKpaPdqWkmugHPsWUSlAJ6V89M-jo-",
+      "part_01": "1tSh_wgp8fpXJWgIe9OoP4nOjm0jz7J-W",
+      "manifest": "1KDRgj0CgkIBTC-77-MyaMUzI4MqCoCBG"
+    },
+    "small_runtime_files": {
+      "sforzando": "1Znzy0c1r6z7UZ1Ih43Zo8DpdEro0f1dt",
+      "avldrums": "1rv6Px1y5h0xylH5Jhm8uP_Oj6Dr-oeLH",
+      "nam": "18StyZCPxE_jwiDAF1Cd0BE2ciZ-URfzc",
+      "obsidian": "1HxHoT3AnhzSCAC_jFJqZbG9Cwqda6ZUJ"
+    }
+  },
+  "evidence": {
+    "cold_feature_verifier": "37 pass / 0 fail",
+    "main_instance_regression": "25 pass / 0 fail",
+    "candidate_local_verifier": "18 pass / 0 fail",
+    "apollo": {
+      "sample_rate": 48000,
+      "channels": 2,
+      "sample_width_bits": 32,
+      "peak_dbfs": [-2.0, -2.0613],
+      "rms_dbfs": [-24.9343, -25.3487],
+      "correlation_lr": 0.988551
+    }
+  },
+  "launcher_boundary": {
+    "status": "known limitation",
+    "description": "In this reconstructed runtime, reaper -nonewinst <script.lua> starts a second REAPER process rather than attaching to the canonical instance. Run Sunwell_Regression_Check.lua from the Actions window in the canonical REAPER instance."
+  }
+}
